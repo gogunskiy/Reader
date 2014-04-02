@@ -22,6 +22,9 @@
 		797EBC8118EC4B3C0049C061 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 797EBC7518EC4B3C0049C061 /* Images.xcassets */; };
 		797EBC8318EC4B3C0049C061 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 797EBC7918EC4B3C0049C061 /* Main_iPad.storyboard */; };
 		797EBC8418EC4B3C0049C061 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 797EBC7B18EC4B3C0049C061 /* Main_iPhone.storyboard */; };
+		797EBC9118EC4CFC0049C061 /* REMainReaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 797EBC9018EC4CFC0049C061 /* REMainReaderView.m */; };
+		797EBC9318EC4DC40049C061 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 797EBC9218EC4DC40049C061 /* CoreText.framework */; };
+		797EBC9718EC51C40049C061 /* REAttributedElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 797EBC9618EC51C40049C061 /* REAttributedElement.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +58,11 @@
 		797EBC7718EC4B3C0049C061 /* Reader-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Reader-Info.plist"; sourceTree = "<group>"; };
 		797EBC7A18EC4B3C0049C061 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		797EBC7C18EC4B3C0049C061 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
+		797EBC8F18EC4CFC0049C061 /* REMainReaderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REMainReaderView.h; sourceTree = "<group>"; };
+		797EBC9018EC4CFC0049C061 /* REMainReaderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REMainReaderView.m; sourceTree = "<group>"; };
+		797EBC9218EC4DC40049C061 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		797EBC9518EC51C40049C061 /* REAttributedElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REAttributedElement.h; sourceTree = "<group>"; };
+		797EBC9618EC51C40049C061 /* REAttributedElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REAttributedElement.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				797EBC9318EC4DC40049C061 /* CoreText.framework in Frameworks */,
 				797EBC2D18EC4A830049C061 /* CoreGraphics.framework in Frameworks */,
 				797EBC2F18EC4A830049C061 /* UIKit.framework in Frameworks */,
 				797EBC2B18EC4A830049C061 /* Foundation.framework in Frameworks */,
@@ -103,6 +112,7 @@
 		797EBC2918EC4A830049C061 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				797EBC9218EC4DC40049C061 /* CoreText.framework */,
 				797EBC2A18EC4A830049C061 /* Foundation.framework */,
 				797EBC2C18EC4A830049C061 /* CoreGraphics.framework */,
 				797EBC2E18EC4A830049C061 /* UIKit.framework */,
@@ -142,10 +152,7 @@
 		797EBC6318EC4B3C0049C061 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				797EBC8518EC4BC70049C061 /* Controllers */,
-				797EBC8618EC4BC70049C061 /* DataModel */,
-				797EBC8718EC4BC70049C061 /* Support */,
-				797EBC8818EC4BC70049C061 /* UI */,
+				797EBC8918EC4CDE0049C061 /* ReaderCore */,
 				797EBC6418EC4B3C0049C061 /* AppDelegate */,
 				797EBC6718EC4B3C0049C061 /* Other */,
 				797EBC6A18EC4B3C0049C061 /* UI */,
@@ -247,36 +254,63 @@
 			path = Storyboard;
 			sourceTree = "<group>";
 		};
-		797EBC8518EC4BC70049C061 /* Controllers */ = {
+		797EBC8918EC4CDE0049C061 /* ReaderCore */ = {
 			isa = PBXGroup;
 			children = (
+				797EBC8A18EC4CDE0049C061 /* Controllers */,
+				797EBC8B18EC4CDE0049C061 /* DataModel */,
+				797EBC8C18EC4CDE0049C061 /* Support */,
+				797EBC8D18EC4CDE0049C061 /* UI */,
 			);
-			name = Controllers;
-			path = ReaderCore/Controllers;
+			path = ReaderCore;
 			sourceTree = "<group>";
 		};
-		797EBC8618EC4BC70049C061 /* DataModel */ = {
+		797EBC8A18EC4CDE0049C061 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			name = DataModel;
-			path = ReaderCore/DataModel;
+			path = Controllers;
 			sourceTree = "<group>";
 		};
-		797EBC8718EC4BC70049C061 /* Support */ = {
+		797EBC8B18EC4CDE0049C061 /* DataModel */ = {
 			isa = PBXGroup;
 			children = (
+				797EBC9418EC51B30049C061 /* REAttributedElement */,
 			);
-			name = Support;
-			path = ReaderCore/Support;
+			path = DataModel;
 			sourceTree = "<group>";
 		};
-		797EBC8818EC4BC70049C061 /* UI */ = {
+		797EBC8C18EC4CDE0049C061 /* Support */ = {
 			isa = PBXGroup;
 			children = (
 			);
-			name = UI;
-			path = ReaderCore/UI;
+			path = Support;
+			sourceTree = "<group>";
+		};
+		797EBC8D18EC4CDE0049C061 /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				797EBC8E18EC4CDE0049C061 /* REMainReaderView */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		797EBC8E18EC4CDE0049C061 /* REMainReaderView */ = {
+			isa = PBXGroup;
+			children = (
+				797EBC8F18EC4CFC0049C061 /* REMainReaderView.h */,
+				797EBC9018EC4CFC0049C061 /* REMainReaderView.m */,
+			);
+			path = REMainReaderView;
+			sourceTree = "<group>";
+		};
+		797EBC9418EC51B30049C061 /* REAttributedElement */ = {
+			isa = PBXGroup;
+			children = (
+				797EBC9518EC51C40049C061 /* REAttributedElement.h */,
+				797EBC9618EC51C40049C061 /* REAttributedElement.m */,
+			);
+			path = REAttributedElement;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -378,9 +412,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				797EBC9718EC51C40049C061 /* REAttributedElement.m in Sources */,
 				797EBC7F18EC4B3C0049C061 /* REMainViewController.m in Sources */,
 				797EBC7E18EC4B3C0049C061 /* main.m in Sources */,
 				797EBC7D18EC4B3C0049C061 /* REAppDelegate.m in Sources */,
+				797EBC9118EC4CFC0049C061 /* REMainReaderView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
