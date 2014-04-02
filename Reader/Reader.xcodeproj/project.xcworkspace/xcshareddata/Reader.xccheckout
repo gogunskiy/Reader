@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>3CF4E88B-A14A-4B9A-951A-E42890E509E8</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Reader</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>C893DF04-3E9F-4A83-9674-1D94C3C746E5</key>
+		<string>https://github.com/gogunskiy/Reader.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>Reader/Reader.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>C893DF04-3E9F-4A83-9674-1D94C3C746E5</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/gogunskiy/Reader.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>C893DF04-3E9F-4A83-9674-1D94C3C746E5</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>C893DF04-3E9F-4A83-9674-1D94C3C746E5</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Reader</string>
+		</dict>
+	</array>
+</dict>
+</plist>
