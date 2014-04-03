@@ -14,9 +14,19 @@
 
 @interface REMainReaderView()
 
+@property (nonatomic, assign) CGFloat nextPosition;
+@property (nonatomic, assign) CGFloat lastDisplayedPosition;
+
 @end
 
 @implementation REMainReaderView
+
+- (void)awakeFromNib
+{
+    [super awakeFromNib];
+    
+    [self setNextPosition:0];
+}
 
 
 - (void)drawRect:(CGRect)rect
@@ -73,7 +83,10 @@
     CTFramesetterCreateWithAttributedString((CFAttributedStringRef)attString);
     CTFrameRef frame =
     CTFramesetterCreateFrame(framesetter,
-                             CFRangeMake(0, [attString length]), path, NULL);
+                             CFRangeMake([self nextPosition], 2200), path, NULL);
+    
+    CFRange frameRange = CTFrameGetVisibleStringRange(frame); //5
+    [self setLastDisplayedPosition:frameRange.location + frameRange.length];
     
     CGContextSetTextMatrix(context, CGAffineTransformIdentity);
     CGContextTranslateCTM(context, 0, self.bounds.size.height);
@@ -84,6 +97,12 @@
     CFRelease(frame);
     CFRelease(path);
     CFRelease(framesetter);
+}
+
+- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
+{
+    _nextPosition = _lastDisplayedPosition;
+    [self setNeedsDisplay];
 }
 
 
