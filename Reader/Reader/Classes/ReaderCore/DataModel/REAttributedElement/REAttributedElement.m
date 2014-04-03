@@ -11,12 +11,4 @@
 @implementation REAttributedElement
 
 
-- (NSDictionary *) attributes
-{
-    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    
-
-    return dict;
-}
-
 @end

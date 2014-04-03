@@ -8,6 +8,13 @@
 
 #import "REMainReaderView.h"
 #import <CoreText/CoreText.h>
+#import "RECoreTextNode.h"
+#import "REChapter.h"
+#import "REAttributedElement.h"
+
+@interface REMainReaderView()
+
+@end
 
 @implementation REMainReaderView
 
@@ -16,47 +23,67 @@
 {
     [super drawRect:rect];
 
-	// create a font, quasi systemFontWithSize:24.0
-	CTFontRef sysUIFont = CTFontCreateUIFontForLanguage(kCTFontSystemFontType, 24.0, NULL);
+    CGContextRef context = UIGraphicsGetCurrentContext();
     
-	// create a naked string
-	NSString *string = @"Some Text";
+    CGMutablePathRef path = CGPathCreateMutable();
+    CGPathAddRect(path, NULL, self.bounds);
     
-	// blue
-	CGColorRef color = [UIColor blueColor].CGColor;
-    
-	// single underline
-	NSNumber *underline = [NSNumber numberWithInt:kCTUnderlineStyleSingle];
-    
-	// pack it into attributes dictionary
-	NSDictionary *attributesDict = [NSDictionary dictionaryWithObjectsAndKeys:
-                                    (__bridge id)sysUIFont, (id)kCTFontAttributeName,
-                                    color, (id)kCTForegroundColorAttributeName,
-                                    underline, (id)kCTUnderlineStyleAttributeName, nil];
-    
-	// make the attributed string
-	NSAttributedString *stringToDraw = [[NSAttributedString alloc] initWithString:string
-                                                                       attributes:attributesDict];
-    
-	// now for the actual drawing
-	CGContextRef context = UIGraphicsGetCurrentContext();
-    
-	// flip the coordinate system
-	CGContextSetTextMatrix(context, CGAffineTransformIdentity);
-	CGContextTranslateCTM(context, 0, self.bounds.size.height);
-	CGContextScaleCTM(context, 1.0, -1.0);
-    
-	// draw
-	CTLineRef line = CTLineCreateWithAttributedString(
-                                                      (CFAttributedStringRef)stringToDraw);
-	CGContextSetTextPosition(context, 140.0, 40.0);
-	CTLineDraw(line, context);
-    
-	// clean up
-	CFRelease(line);
-	CFRelease(sysUIFont);
+    CTTextAlignment alignment = kCTJustifiedTextAlignment;
 
+    CGFloat minMineHeight = 10;
+    CGFloat leading = 2;
+    CGFloat space = 10;
+        CGFloat firstLineHeadIndent = 10;
+    
+    CTParagraphStyleSetting styleSettings[] = {
+        
+        {kCTParagraphStyleSpecifierMinimumLineSpacing, sizeof(CGFloat), &minMineHeight},
+        {kCTParagraphStyleSpecifierMinimumLineHeight, sizeof(CGFloat), &minMineHeight},
+        {kCTParagraphStyleSpecifierLineSpacing, sizeof(CGFloat), &leading},
+        {kCTParagraphStyleSpecifierParagraphSpacing, sizeof(CGFloat), &leading},
+        {kCTParagraphStyleSpecifierAlignment, sizeof(CTTextAlignment), &alignment},
+        {kCTParagraphStyleSpecifierParagraphSpacing,  sizeof(CGFloat), &space},
+        {kCTParagraphStyleSpecifierFirstLineHeadIndent,  sizeof(CGFloat), &firstLineHeadIndent},
+    };
+    
+    CTParagraphStyleRef paragraphStyle = CTParagraphStyleCreate(styleSettings, sizeof(styleSettings) / sizeof(styleSettings[0]));
+    
 
+    
+    NSMutableAttributedString* attString = [[NSMutableAttributedString alloc] initWithString:@""];
+    
+    REChapter *chapter = [[self document] chapters][0];
+    
+    for (REAttributedElement *element in [chapter elements]) 
+    {
+        NSMutableAttributedString* elementString = [[NSMutableAttributedString alloc] initWithString:[element text]];
+        
+        [elementString setAttributes:@{(id)kCTForegroundColorAttributeName : [element color],
+                                   (id)kCTParagraphStyleAttributeName : (__bridge id)paragraphStyle}
+                           range:NSMakeRange(0, elementString.length)];
+     
+        
+        [attString appendAttributedString:elementString];
+        [attString appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@"\n"]];
+    }
+    
+    
+    
+    CTFramesetterRef framesetter =
+    CTFramesetterCreateWithAttributedString((CFAttributedStringRef)attString);
+    CTFrameRef frame =
+    CTFramesetterCreateFrame(framesetter,
+                             CFRangeMake(0, [attString length]), path, NULL);
+    
+    CGContextSetTextMatrix(context, CGAffineTransformIdentity);
+    CGContextTranslateCTM(context, 0, self.bounds.size.height);
+    CGContextScaleCTM(context, 1.0, -1.0);
+    
+    CTFrameDraw(frame, context);
+    
+    CFRelease(frame);
+    CFRelease(path);
+    CFRelease(framesetter);
 }
 
 

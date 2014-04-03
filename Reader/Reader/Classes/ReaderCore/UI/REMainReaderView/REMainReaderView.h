@@ -7,7 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "REDocument.h"
+
 
 @interface REMainReaderView : UIView
+
+@property (nonatomic) REDocument *document;
 
 @end

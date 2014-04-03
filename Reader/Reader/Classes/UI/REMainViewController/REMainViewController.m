@@ -7,8 +7,12 @@
 //
 
 #import "REMainViewController.h"
+#import "REReaderController.h"
+#import "REMainReaderView.h"
 
 @interface REMainViewController ()
+
+@property (nonatomic, weak) IBOutlet REMainReaderView *readerView;
 
 @end
 
@@ -18,6 +22,20 @@
 {
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
+    
+    REReaderController *viewController = [[REReaderController alloc] init];
+    
+    NSString *filePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"chapter-001.xml"];
+    [viewController loadFile:filePath completionBlock:^(REDocument *document) 
+    {
+        [[self readerView] setDocument:document];
+        [[self readerView] setNeedsDisplay];
+    } 
+                  errorBlock:^(NSError *error) 
+    {
+        
+    }];
+    
 }
 
 - (void)didReceiveMemoryWarning
