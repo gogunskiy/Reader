@@ -77,13 +77,18 @@
         [attString appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@"\n"]];
     }
     
-    
+    CGFloat nextPos = [self nextPosition];
+    CGFloat length = 2100;
+    if (nextPos + length > attString.length)
+    {
+        length = attString.length - nextPos;
+    }
     
     CTFramesetterRef framesetter =
     CTFramesetterCreateWithAttributedString((CFAttributedStringRef)attString);
     CTFrameRef frame =
     CTFramesetterCreateFrame(framesetter,
-                             CFRangeMake([self nextPosition], 2200), path, NULL);
+                             CFRangeMake([self nextPosition], length), path, NULL);
     
     CFRange frameRange = CTFrameGetVisibleStringRange(frame); //5
     [self setLastDisplayedPosition:frameRange.location + frameRange.length];
