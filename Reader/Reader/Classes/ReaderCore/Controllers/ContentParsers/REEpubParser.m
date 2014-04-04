@@ -27,30 +27,26 @@
     REChapter *chapter = [[REChapter alloc] init];
     [[document chapters] addObject:chapter];
     
-    RXMLElement *chapterTitle = [element childrenWithRootXPath:@"//* [@class='chapter-title']"][0];
-    RXMLElement *chapterSubTitle = [element childrenWithRootXPath:@"//* [@class='chapter-subtitle']"][0];
-    
-
-    attrElement = [[REAttributedElement alloc] init];
-    [attrElement setName:@"h1"];
-    [attrElement setText:[chapterTitle text]];
-    [attrElement setColor:[UIColor redColor]];
-    [[chapter elements] addObject:attrElement];
-    
-    attrElement = [[REAttributedElement alloc] init];
-    [attrElement setName:@"h2"];
-    [attrElement setText:[chapterSubTitle text]];
-    [attrElement setColor:[UIColor redColor]];
-    [[chapter elements] addObject:attrElement];
-    
-    
-    [chapterTag iterate:@"p" 
+    [chapterTag iterate:@"*" 
           usingBlock:^(RXMLElement *element) 
     {
         REAttributedElement *attrElement = [[REAttributedElement alloc] init];
         [attrElement setName:@"p"];
-        [attrElement setText:[element text]];
+        [attrElement setText:[element innerXml]];
         [attrElement setColor:[UIColor blackColor]];
+        
+        if ([[element tag] isEqualToString:@"p"]) 
+        {
+            [attrElement setName:@"p"];
+        } 
+        else if ([[element attribute:@"class"] isEqualToString:@"chapter-subtitle"])
+        {
+            [attrElement setName:@"subheader"];
+        }  
+        else if ([[element attribute:@"class"] isEqualToString:@"chapter-title"])
+        {
+            [attrElement setName:@"header"];
+        }
         
         [[chapter elements] addObject:attrElement];
     }];

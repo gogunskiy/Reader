@@ -26,7 +26,6 @@
 		797EBC9318EC4DC40049C061 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 797EBC9218EC4DC40049C061 /* CoreText.framework */; };
 		797EBC9718EC51C40049C061 /* REAttributedElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 797EBC9618EC51C40049C061 /* REAttributedElement.m */; };
 		79A4FF2D18EEA82500F79347 /* REPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A4FF2C18EEA82500F79347 /* REPageView.m */; };
-		79E4AB8518ED6104000003C7 /* RECoreTextNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E4AB8418ED6104000003C7 /* RECoreTextNode.m */; };
 		79E4AB8B18ED8110000003C7 /* REBaseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E4AB8A18ED8110000003C7 /* REBaseParser.m */; };
 		79E4AB8E18ED811D000003C7 /* REEpubParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E4AB8D18ED811D000003C7 /* REEpubParser.m */; };
 		79E4AB9218ED8779000003C7 /* REDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E4AB9118ED8779000003C7 /* REDocument.m */; };
@@ -76,8 +75,6 @@
 		797EBC9618EC51C40049C061 /* REAttributedElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REAttributedElement.m; sourceTree = "<group>"; };
 		79A4FF2B18EEA82500F79347 /* REPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REPageView.h; sourceTree = "<group>"; };
 		79A4FF2C18EEA82500F79347 /* REPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REPageView.m; sourceTree = "<group>"; };
-		79E4AB8318ED6104000003C7 /* RECoreTextNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RECoreTextNode.h; sourceTree = "<group>"; };
-		79E4AB8418ED6104000003C7 /* RECoreTextNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RECoreTextNode.m; sourceTree = "<group>"; };
 		79E4AB8918ED8110000003C7 /* REBaseParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REBaseParser.h; sourceTree = "<group>"; };
 		79E4AB8A18ED8110000003C7 /* REBaseParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REBaseParser.m; sourceTree = "<group>"; };
 		79E4AB8C18ED811D000003C7 /* REEpubParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REEpubParser.h; sourceTree = "<group>"; };
@@ -343,8 +340,6 @@
 			children = (
 				797EBC8F18EC4CFC0049C061 /* REMainReaderView.h */,
 				797EBC9018EC4CFC0049C061 /* REMainReaderView.m */,
-				79E4AB8318ED6104000003C7 /* RECoreTextNode.h */,
-				79E4AB8418ED6104000003C7 /* RECoreTextNode.m */,
 			);
 			path = REMainReaderView;
 			sourceTree = "<group>";
@@ -524,7 +519,6 @@
 				797EBC7E18EC4B3C0049C061 /* main.m in Sources */,
 				79E4ABA618EDB41A000003C7 /* REChapter.m in Sources */,
 				797EBC7D18EC4B3C0049C061 /* REAppDelegate.m in Sources */,
-				79E4AB8518ED6104000003C7 /* RECoreTextNode.m in Sources */,
 				797EBC9118EC4CFC0049C061 /* REMainReaderView.m in Sources */,
 				79A4FF2D18EEA82500F79347 /* REPageView.m in Sources */,
 			);

@@ -7,19 +7,27 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <CoreText/CoreText.h>
 
 @interface REAttributedElement : NSObject
 
 @property (nonatomic) REAttributedElement *parent;
-@property (nonatomic) NSArray *children;
+
+@property (nonatomic) CTParagraphStyleRef paragraphStyle;
+@property (nonatomic) CTFontRef font;
+
+
+
+@property (nonatomic) NSMutableArray *children;
 
 @property (nonatomic) NSString * name;
 @property (nonatomic) NSString * text;
-@property (nonatomic) UIFont * font;
 @property (nonatomic) UIColor *color;
 
 @property (nonatomic) NSNumber *bold;
 @property (nonatomic) NSNumber *italic;
 @property (nonatomic) NSNumber *underlined;
+
+- (NSAttributedString *) attributedString;
 
 @end

@@ -8,7 +8,6 @@
 
 #import "REMainReaderView.h"
 #import <CoreText/CoreText.h>
-#import "RECoreTextNode.h"
 #import "REChapter.h"
 #import "REAttributedElement.h"
 #import "REPageView.h"
@@ -89,45 +88,13 @@
 
 - (NSMutableAttributedString*) attributedStringForDocument:(REDocument *)document
 {
-    
-    CTTextAlignment alignment = kCTJustifiedTextAlignment;
-    
-    CGFloat minMineHeight = 10;
-    CGFloat leading = 2;
-    CGFloat space = 10;
-    CGFloat firstLineHeadIndent = 20;
-    CGFloat lineHeadIndent = 5;
-    CGFloat linetTailIndent = self.frame.size.width - 5;
-    
-    CTParagraphStyleSetting styleSettings[] = {
-        
-        {kCTParagraphStyleSpecifierMinimumLineSpacing, sizeof(CGFloat), &minMineHeight},
-        {kCTParagraphStyleSpecifierMinimumLineHeight, sizeof(CGFloat), &minMineHeight},
-        {kCTParagraphStyleSpecifierLineSpacing, sizeof(CGFloat), &leading},
-        {kCTParagraphStyleSpecifierParagraphSpacing, sizeof(CGFloat), &leading},
-        {kCTParagraphStyleSpecifierAlignment, sizeof(CTTextAlignment), &alignment},
-        {kCTParagraphStyleSpecifierParagraphSpacing,  sizeof(CGFloat), &space},
-        {kCTParagraphStyleSpecifierFirstLineHeadIndent,  sizeof(CGFloat), &firstLineHeadIndent},
-        {kCTParagraphStyleSpecifierHeadIndent,  sizeof(CGFloat), &lineHeadIndent},
-        {kCTParagraphStyleSpecifierTailIndent,  sizeof(CGFloat), &linetTailIndent},
-    };
-    
-    CTParagraphStyleRef paragraphStyle = CTParagraphStyleCreate(styleSettings, sizeof(styleSettings) / sizeof(styleSettings[0]));
-    
     NSMutableAttributedString* attString = [[NSMutableAttributedString alloc] initWithString:@""];
     
     REChapter *chapter = [document chapters][0];
     
     for (REAttributedElement *element in [chapter elements]) 
     {
-        NSMutableAttributedString* elementString = [[NSMutableAttributedString alloc] initWithString:[element text]];
-        
-        [elementString setAttributes:@{(id)kCTForegroundColorAttributeName : [element color],
-                                       (id)kCTParagraphStyleAttributeName : (__bridge id)paragraphStyle}
-                               range:NSMakeRange(0, elementString.length)];
-        
-        
-        [attString appendAttributedString:elementString];
+        [attString appendAttributedString:[element attributedString]];
         [attString appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@"\n"]];
     }
     
