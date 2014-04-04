@@ -25,8 +25,24 @@
     [attrElement setName:@"chapter"];
     
     REChapter *chapter = [[REChapter alloc] init];
-    
     [[document chapters] addObject:chapter];
+    
+    RXMLElement *chapterTitle = [element childrenWithRootXPath:@"//* [@class='chapter-title']"][0];
+    RXMLElement *chapterSubTitle = [element childrenWithRootXPath:@"//* [@class='chapter-subtitle']"][0];
+    
+
+    attrElement = [[REAttributedElement alloc] init];
+    [attrElement setName:@"h1"];
+    [attrElement setText:[chapterTitle text]];
+    [attrElement setColor:[UIColor redColor]];
+    [[chapter elements] addObject:attrElement];
+    
+    attrElement = [[REAttributedElement alloc] init];
+    [attrElement setName:@"h2"];
+    [attrElement setText:[chapterSubTitle text]];
+    [attrElement setColor:[UIColor redColor]];
+    [[chapter elements] addObject:attrElement];
+    
     
     [chapterTag iterate:@"p" 
           usingBlock:^(RXMLElement *element) 

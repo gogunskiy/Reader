@@ -25,6 +25,7 @@
 		797EBC9118EC4CFC0049C061 /* REMainReaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 797EBC9018EC4CFC0049C061 /* REMainReaderView.m */; };
 		797EBC9318EC4DC40049C061 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 797EBC9218EC4DC40049C061 /* CoreText.framework */; };
 		797EBC9718EC51C40049C061 /* REAttributedElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 797EBC9618EC51C40049C061 /* REAttributedElement.m */; };
+		79A4FF2D18EEA82500F79347 /* REPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A4FF2C18EEA82500F79347 /* REPageView.m */; };
 		79E4AB8518ED6104000003C7 /* RECoreTextNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E4AB8418ED6104000003C7 /* RECoreTextNode.m */; };
 		79E4AB8B18ED8110000003C7 /* REBaseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E4AB8A18ED8110000003C7 /* REBaseParser.m */; };
 		79E4AB8E18ED811D000003C7 /* REEpubParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E4AB8D18ED811D000003C7 /* REEpubParser.m */; };
@@ -73,6 +74,8 @@
 		797EBC9218EC4DC40049C061 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		797EBC9518EC51C40049C061 /* REAttributedElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REAttributedElement.h; sourceTree = "<group>"; };
 		797EBC9618EC51C40049C061 /* REAttributedElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REAttributedElement.m; sourceTree = "<group>"; };
+		79A4FF2B18EEA82500F79347 /* REPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REPageView.h; sourceTree = "<group>"; };
+		79A4FF2C18EEA82500F79347 /* REPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REPageView.m; sourceTree = "<group>"; };
 		79E4AB8318ED6104000003C7 /* RECoreTextNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RECoreTextNode.h; sourceTree = "<group>"; };
 		79E4AB8418ED6104000003C7 /* RECoreTextNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RECoreTextNode.m; sourceTree = "<group>"; };
 		79E4AB8918ED8110000003C7 /* REBaseParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REBaseParser.h; sourceTree = "<group>"; };
@@ -329,6 +332,7 @@
 		797EBC8D18EC4CDE0049C061 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				79A4FF2A18EEA81500F79347 /* REPageView */,
 				797EBC8E18EC4CDE0049C061 /* REMainReaderView */,
 			);
 			path = UI;
@@ -352,6 +356,15 @@
 				797EBC9618EC51C40049C061 /* REAttributedElement.m */,
 			);
 			path = REAttributedElement;
+			sourceTree = "<group>";
+		};
+		79A4FF2A18EEA81500F79347 /* REPageView */ = {
+			isa = PBXGroup;
+			children = (
+				79A4FF2B18EEA82500F79347 /* REPageView.h */,
+				79A4FF2C18EEA82500F79347 /* REPageView.m */,
+			);
+			path = REPageView;
 			sourceTree = "<group>";
 		};
 		79E4AB8818ED8101000003C7 /* ContentParsers */ = {
@@ -513,6 +526,7 @@
 				797EBC7D18EC4B3C0049C061 /* REAppDelegate.m in Sources */,
 				79E4AB8518ED6104000003C7 /* RECoreTextNode.m in Sources */,
 				797EBC9118EC4CFC0049C061 /* REMainReaderView.m in Sources */,
+				79A4FF2D18EEA82500F79347 /* REPageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -647,6 +661,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Vladimir Gogunsky (9552S36M2H)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Reader/Classes/Other/Reader-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -655,6 +670,7 @@
 					"$(SDK_DIR)\"/usr/include/libxml2",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Reader/Resources/Plist/Reader-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;
@@ -666,6 +682,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Vladimir Gogunsky (9552S36M2H)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Reader/Classes/Other/Reader-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -674,6 +691,7 @@
 					"$(SDK_DIR)\"/usr/include/libxml2",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Reader/Resources/Plist/Reader-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				USER_HEADER_SEARCH_PATHS = "";
 				WRAPPER_EXTENSION = app;

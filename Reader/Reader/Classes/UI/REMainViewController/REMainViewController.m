@@ -29,7 +29,7 @@
     [viewController loadFile:filePath completionBlock:^(REDocument *document) 
     {
         [[self readerView] setDocument:document];
-        [[self readerView] setNeedsDisplay];
+        [[self readerView] needsUpdatePages];
     } 
                   errorBlock:^(NSError *error) 
     {

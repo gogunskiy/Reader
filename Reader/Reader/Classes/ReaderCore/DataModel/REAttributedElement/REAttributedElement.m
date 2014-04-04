@@ -11,4 +11,16 @@
 @implementation REAttributedElement
 
 
+- (void) setName:(NSString *)name
+{
+    _name = name;
+    
+    [self makeStyleChangesWithName:name];
+}
+
+- (void) makeStyleChangesWithName:(NSString *)name
+{
+    
+}
+
 @end

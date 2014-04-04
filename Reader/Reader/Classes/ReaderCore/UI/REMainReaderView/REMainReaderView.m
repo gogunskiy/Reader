@@ -11,11 +11,13 @@
 #import "RECoreTextNode.h"
 #import "REChapter.h"
 #import "REAttributedElement.h"
+#import "REPageView.h"
 
 @interface REMainReaderView()
 
-@property (nonatomic, assign) CGFloat nextPosition;
-@property (nonatomic, assign) CGFloat lastDisplayedPosition;
+@property (nonatomic, strong) NSMutableArray *pageViews;
+
+@property (nonatomic)  CTFramesetterRef framesetter;
 
 @end
 
@@ -25,25 +27,77 @@
 {
     [super awakeFromNib];
     
-    [self setNextPosition:0];
+    [self setPageViews:[NSMutableArray array]];
 }
 
-
-- (void)drawRect:(CGRect)rect
+- (void) needsUpdatePages
 {
-    [super drawRect:rect];
+    [self createPages];
+}
 
-    CGContextRef context = UIGraphicsGetCurrentContext();
+- (void) createPages
+{
+    NSInteger pointer = 0;
+    CGFloat xOffset = 0;
+    
+    NSAttributedString *attString = [self attributedStringForDocument:self.document];
+    
+    [self createFrameSetterWithString:attString];
     
     CGMutablePathRef path = CGPathCreateMutable();
     CGPathAddRect(path, NULL, self.bounds);
     
-    CTTextAlignment alignment = kCTJustifiedTextAlignment;
+    while (pointer < attString.length)
+    {
+        REPageView *pageView = [[REPageView alloc] initWithFrame:self.bounds];
+        [pageView setBackgroundColor:[UIColor whiteColor]];
+        
+        CGRect pageFrame = pageView.frame;
+        pageFrame.origin.x = xOffset;
+        [pageView setFrame:pageFrame];
+        
+        CTFrameRef frame = CTFramesetterCreateFrame(_framesetter, CFRangeMake(pointer, attString.length - pointer), path, NULL);
+        
+        CFRange frameRange = CTFrameGetVisibleStringRange(frame); 
+        pointer += frameRange.length;
+        
+        xOffset += self.bounds.size.width;
+    
+        [self addSubview:pageView];
+        [[self pageViews] addObject:pageView];
+    
+        [pageView setCTFrame:frame];
+        
+    }
 
+    [self setContentSize:CGSizeMake(xOffset, self.bounds.size.height)];
+    
+    CFRelease(path);
+}
+
+- (void) createFrameSetterWithString:(NSAttributedString *)string
+{
+    if (_framesetter) 
+    {
+        CFRelease(_framesetter);
+    }
+    
+    CTFramesetterRef framesetter = CTFramesetterCreateWithAttributedString((CFAttributedStringRef)string);
+    
+    [self setFramesetter:framesetter];
+}
+
+- (NSMutableAttributedString*) attributedStringForDocument:(REDocument *)document
+{
+    
+    CTTextAlignment alignment = kCTJustifiedTextAlignment;
+    
     CGFloat minMineHeight = 10;
     CGFloat leading = 2;
     CGFloat space = 10;
-        CGFloat firstLineHeadIndent = 10;
+    CGFloat firstLineHeadIndent = 20;
+    CGFloat lineHeadIndent = 5;
+    CGFloat linetTailIndent = self.frame.size.width - 5;
     
     CTParagraphStyleSetting styleSettings[] = {
         
@@ -54,60 +108,34 @@
         {kCTParagraphStyleSpecifierAlignment, sizeof(CTTextAlignment), &alignment},
         {kCTParagraphStyleSpecifierParagraphSpacing,  sizeof(CGFloat), &space},
         {kCTParagraphStyleSpecifierFirstLineHeadIndent,  sizeof(CGFloat), &firstLineHeadIndent},
+        {kCTParagraphStyleSpecifierHeadIndent,  sizeof(CGFloat), &lineHeadIndent},
+        {kCTParagraphStyleSpecifierTailIndent,  sizeof(CGFloat), &linetTailIndent},
     };
     
     CTParagraphStyleRef paragraphStyle = CTParagraphStyleCreate(styleSettings, sizeof(styleSettings) / sizeof(styleSettings[0]));
     
-
-    
     NSMutableAttributedString* attString = [[NSMutableAttributedString alloc] initWithString:@""];
     
-    REChapter *chapter = [[self document] chapters][0];
+    REChapter *chapter = [document chapters][0];
     
     for (REAttributedElement *element in [chapter elements]) 
     {
         NSMutableAttributedString* elementString = [[NSMutableAttributedString alloc] initWithString:[element text]];
         
         [elementString setAttributes:@{(id)kCTForegroundColorAttributeName : [element color],
-                                   (id)kCTParagraphStyleAttributeName : (__bridge id)paragraphStyle}
-                           range:NSMakeRange(0, elementString.length)];
-     
+                                       (id)kCTParagraphStyleAttributeName : (__bridge id)paragraphStyle}
+                               range:NSMakeRange(0, elementString.length)];
+        
         
         [attString appendAttributedString:elementString];
         [attString appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@"\n"]];
     }
     
-    CGFloat nextPos = [self nextPosition];
-    CGFloat length = 2100;
-    if (nextPos + length > attString.length)
-    {
-        length = attString.length - nextPos;
-    }
-    
-    CTFramesetterRef framesetter =
-    CTFramesetterCreateWithAttributedString((CFAttributedStringRef)attString);
-    CTFrameRef frame =
-    CTFramesetterCreateFrame(framesetter,
-                             CFRangeMake([self nextPosition], length), path, NULL);
-    
-    CFRange frameRange = CTFrameGetVisibleStringRange(frame); //5
-    [self setLastDisplayedPosition:frameRange.location + frameRange.length];
-    
-    CGContextSetTextMatrix(context, CGAffineTransformIdentity);
-    CGContextTranslateCTM(context, 0, self.bounds.size.height);
-    CGContextScaleCTM(context, 1.0, -1.0);
-    
-    CTFrameDraw(frame, context);
-    
-    CFRelease(frame);
-    CFRelease(path);
-    CFRelease(framesetter);
+    return attString;
 }
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
 {
-    _nextPosition = _lastDisplayedPosition;
-    [self setNeedsDisplay];
 }
 
 
