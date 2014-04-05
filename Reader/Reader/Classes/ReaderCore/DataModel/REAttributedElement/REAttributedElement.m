@@ -69,8 +69,6 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
     NSMutableString *tag = [[NSMutableString alloc] init];
     
     BOOL inTag = FALSE;
-    REInnerTagType mask;
-
     
     REInnerTagAttribute *bAttribute = [[REInnerTagAttribute alloc] init];
     [bAttribute setType:REInnerTagBold];
@@ -83,27 +81,29 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
     
     for (int i = 0; i < [inputString length]; i++) 
     {
-        unichar character = [inputString characterAtIndex:i];
+        NSString * character = [inputString substringWithRange:NSMakeRange(i, 1)];
         
-        if (character == '<') 
+        if ([character isEqualToString:@"<"])
         {
             inTag = TRUE;
         }
         
         if (inTag) 
         {
-            [tag appendFormat:@"%c", character];
+            [tag appendString:character];
         }
         else
         {
-            [resultString appendFormat:@"%c", character];
+            [resultString appendString:character];
         }
         
-        if (character == '>') 
+        if ([character isEqualToString:@">"])
         {
             inTag = FALSE;
             
-            if ([tag isEqualToString:@"<b>"]) 
+            NSLog(@"%@", tag);
+            
+            if ([tag isEqualToString:@"<b>"] || [tag isEqualToString:@"<strong>"])
             {
                 [bAttribute setStart:resultString.length];
             } 
@@ -116,7 +116,7 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
             {
                 [uAttribute setStart:resultString.length];
             }
-            else if ([tag isEqualToString:@"</b>"]) 
+            else if ([tag isEqualToString:@"</b>"] || [tag isEqualToString:@"</strong>"])
             {
                 [bAttribute setEnd:resultString.length];
                 [attributes addObject:[bAttribute copy]];
@@ -130,6 +130,10 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
             {
                 [uAttribute setEnd:resultString.length];
                 [attributes addObject:[uAttribute copy]];
+            }
+            else  if ([tag isEqualToString:@"</br>"] || [tag isEqualToString:@"<br>"] || [tag isEqualToString:@"<br/>"])
+            {
+                [resultString appendString:@"\n"];
             }
             
             tag = [NSMutableString stringWithFormat:@""];
@@ -216,8 +220,8 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
     CGFloat leading = 2;
     CGFloat space = 10;
     CGFloat firstLineHeadIndent = 20;
-    CGFloat lineHeadIndent = 5;
-    CGFloat linetTailIndent = -5;
+    CGFloat lineHeadIndent = 8;
+    CGFloat linetTailIndent = -8;
     
     return [self _paragraphStyleWithAligment:aligment 
                                minMineHeight:minMineHeight 
@@ -236,8 +240,8 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
     CGFloat leading = 2;
     CGFloat space = 10;
     CGFloat firstLineHeadIndent = 20;
-    CGFloat lineHeadIndent = 5;
-    CGFloat linetTailIndent = -5;
+    CGFloat lineHeadIndent = 8;
+    CGFloat linetTailIndent = -8;
     
     return [self _paragraphStyleWithAligment:aligment 
                                minMineHeight:minMineHeight 

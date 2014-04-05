@@ -20,9 +20,12 @@ typedef NS_ENUM(NSInteger, REParserType)
 
 + (REBaseParser *) parserForType:(REParserType)type;
 
+- (void) parseBookAtPath:(NSString *)path
+         completionBlock:(void(^)(REDocument *document))completionBlock
+              errorBlock:(void(^)(NSError * error))errorBlock;
 
-- (void) parseAttributedDocumentFromData:(NSData *)data 
-                         completionBlock:(void(^)(REDocument *document))completionBlock 
-                              errorBlock:(void(^)(NSError * error))errorBlock;
+- (void) parseAttributedElementFromHtml:(NSString *)html
+                        completionBlock:(void(^)(REDocument *document))completionBlock
+                             errorBlock:(void(^)(NSError * error))errorBlock;
 
 @end

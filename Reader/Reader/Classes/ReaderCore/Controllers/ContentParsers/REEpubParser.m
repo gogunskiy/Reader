@@ -10,15 +10,33 @@
 #import "RXMLElement.h"
 #import "REAttributedElement.h"
 #import "REChapter.h"
+#import "ZipArchive.h"
+#import "REPathManager.h"
 
 @implementation REEpubParser
 
-- (void) parseAttributedDocumentFromData:(NSData *)data 
+#pragma mark - Chapter Parsing -
+
+- (void) parseBookAtPath:(NSString *)path
+         completionBlock:(void(^)(REDocument *document))completionBlock
+              errorBlock:(void(^)(NSError * error))errorBlock
+{
+    NSString * booksDirectory = [REPathManager booksDirectory];
+    
+    [self unzipEpub:path
+          directory:booksDirectory
+         completion:^(BOOL saved)
+    {
+             
+    }];
+}
+
+- (void) parseAttributedElementFromHtml:(NSString *)html
                          completionBlock:(void(^)(REDocument *document))completionBlock 
                               errorBlock:(void(^)(NSError * error))errorBlock
 {
     REDocument *document = [[REDocument alloc] init];
-    RXMLElement *element = [[RXMLElement alloc] initFromHTMLData:data];
+    RXMLElement *element = [[RXMLElement alloc] initFromHTMLString:html encoding:NSUTF8StringEncoding];
     RXMLElement *chapterTag = [element childrenWithRootXPath:@"//div [@class='chapter']"][0];
    
     REAttributedElement *attrElement = [[REAttributedElement alloc] init];
@@ -54,5 +72,28 @@
     completionBlock(document);
 }
 
+#pragma mark - File Management -
+
+- (void) unzipEpub:(NSString *)epubPath directory:(NSString *)directory completion:(void(^)(BOOL saved))completion
+{
+    ZipArchive *zip = [ZipArchive new];
+    
+    if (![REPathManager createDirectory:directory])
+    {
+        completion(0);
+    }
+    
+    
+    if (![zip UnzipOpenFile:epubPath])
+    {
+        completion(0);
+    }
+    
+    BOOL retVal = [zip UnzipFileTo:directory overWrite:YES];
+    
+    [zip UnzipCloseFile];
+    
+    completion(retVal);
+}
 
 @end

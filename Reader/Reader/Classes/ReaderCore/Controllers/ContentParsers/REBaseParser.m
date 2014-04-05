@@ -38,9 +38,16 @@
     return nil;
 }
 
-- (void) parseAttributedDocumentFromData:(NSData *)data 
-                         completionBlock:(void(^)(REDocument *document))completionBlock 
-                              errorBlock:(void(^)(NSError * error))errorBlock
+- (void) parseBookAtPath:(NSString *)path
+         completionBlock:(void(^)(REDocument *document))completionBlock
+              errorBlock:(void(^)(NSError * error))errorBlock
+{
+    
+}
+
+- (void) parseAttributedElementFromHtml:(NSString *)html
+                        completionBlock:(void(^)(REDocument *document))completionBlock
+                             errorBlock:(void(^)(NSError * error))errorBlock;
 {
     
 }

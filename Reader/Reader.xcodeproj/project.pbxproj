@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		63D4695718EF3AE600E5E6E7 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 63D4694D18EF3AE600E5E6E7 /* ioapi.c */; };
+		63D4695818EF3AE600E5E6E7 /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 63D4694F18EF3AE600E5E6E7 /* mztools.c */; };
+		63D4695918EF3AE600E5E6E7 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 63D4695118EF3AE600E5E6E7 /* unzip.c */; };
+		63D4695A18EF3AE600E5E6E7 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 63D4695318EF3AE600E5E6E7 /* zip.c */; };
+		63D4695B18EF3AE600E5E6E7 /* ZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D4695618EF3AE600E5E6E7 /* ZipArchive.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		63D4695F18EF3EFB00E5E6E7 /* REPathManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D4695E18EF3EFB00E5E6E7 /* REPathManager.m */; };
+		63D4696418EF409A00E5E6E7 /* 000000000001.epub in Resources */ = {isa = PBXBuildFile; fileRef = 63D4696118EF409A00E5E6E7 /* 000000000001.epub */; };
+		63D4696518EF409A00E5E6E7 /* 000000000002.epub in Resources */ = {isa = PBXBuildFile; fileRef = 63D4696218EF409A00E5E6E7 /* 000000000002.epub */; };
+		63D4696618EF409A00E5E6E7 /* 000000000003.epub in Resources */ = {isa = PBXBuildFile; fileRef = 63D4696318EF409A00E5E6E7 /* 000000000003.epub */; };
 		797EBC2B18EC4A830049C061 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 797EBC2A18EC4A830049C061 /* Foundation.framework */; };
 		797EBC2D18EC4A830049C061 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 797EBC2C18EC4A830049C061 /* CoreGraphics.framework */; };
 		797EBC2F18EC4A830049C061 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 797EBC2E18EC4A830049C061 /* UIKit.framework */; };
@@ -48,6 +57,22 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		63D4694C18EF3AE600E5E6E7 /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
+		63D4694D18EF3AE600E5E6E7 /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
+		63D4694E18EF3AE600E5E6E7 /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
+		63D4694F18EF3AE600E5E6E7 /* mztools.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = mztools.c; sourceTree = "<group>"; };
+		63D4695018EF3AE600E5E6E7 /* mztools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = mztools.h; sourceTree = "<group>"; };
+		63D4695118EF3AE600E5E6E7 /* unzip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = unzip.c; sourceTree = "<group>"; };
+		63D4695218EF3AE600E5E6E7 /* unzip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = unzip.h; sourceTree = "<group>"; };
+		63D4695318EF3AE600E5E6E7 /* zip.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = zip.c; sourceTree = "<group>"; };
+		63D4695418EF3AE600E5E6E7 /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
+		63D4695518EF3AE600E5E6E7 /* ZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipArchive.h; sourceTree = "<group>"; };
+		63D4695618EF3AE600E5E6E7 /* ZipArchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipArchive.m; sourceTree = "<group>"; };
+		63D4695D18EF3EFB00E5E6E7 /* REPathManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REPathManager.h; sourceTree = "<group>"; };
+		63D4695E18EF3EFB00E5E6E7 /* REPathManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REPathManager.m; sourceTree = "<group>"; };
+		63D4696118EF409A00E5E6E7 /* 000000000001.epub */ = {isa = PBXFileReference; lastKnownFileType = file; path = 000000000001.epub; sourceTree = "<group>"; };
+		63D4696218EF409A00E5E6E7 /* 000000000002.epub */ = {isa = PBXFileReference; lastKnownFileType = file; path = 000000000002.epub; sourceTree = "<group>"; };
+		63D4696318EF409A00E5E6E7 /* 000000000003.epub */ = {isa = PBXFileReference; lastKnownFileType = file; path = 000000000003.epub; sourceTree = "<group>"; };
 		797EBC2718EC4A830049C061 /* Reader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		797EBC2A18EC4A830049C061 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		797EBC2C18EC4A830049C061 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -120,6 +145,51 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		63D4694A18EF3AE600E5E6E7 /* ZipArchive */ = {
+			isa = PBXGroup;
+			children = (
+				63D4694B18EF3AE600E5E6E7 /* minizip */,
+				63D4695518EF3AE600E5E6E7 /* ZipArchive.h */,
+				63D4695618EF3AE600E5E6E7 /* ZipArchive.m */,
+			);
+			path = ZipArchive;
+			sourceTree = "<group>";
+		};
+		63D4694B18EF3AE600E5E6E7 /* minizip */ = {
+			isa = PBXGroup;
+			children = (
+				63D4694C18EF3AE600E5E6E7 /* crypt.h */,
+				63D4694D18EF3AE600E5E6E7 /* ioapi.c */,
+				63D4694E18EF3AE600E5E6E7 /* ioapi.h */,
+				63D4694F18EF3AE600E5E6E7 /* mztools.c */,
+				63D4695018EF3AE600E5E6E7 /* mztools.h */,
+				63D4695118EF3AE600E5E6E7 /* unzip.c */,
+				63D4695218EF3AE600E5E6E7 /* unzip.h */,
+				63D4695318EF3AE600E5E6E7 /* zip.c */,
+				63D4695418EF3AE600E5E6E7 /* zip.h */,
+			);
+			path = minizip;
+			sourceTree = "<group>";
+		};
+		63D4695C18EF3EFB00E5E6E7 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				63D4695D18EF3EFB00E5E6E7 /* REPathManager.h */,
+				63D4695E18EF3EFB00E5E6E7 /* REPathManager.m */,
+			);
+			path = Support;
+			sourceTree = "<group>";
+		};
+		63D4696018EF409A00E5E6E7 /* Epub */ = {
+			isa = PBXGroup;
+			children = (
+				63D4696118EF409A00E5E6E7 /* 000000000001.epub */,
+				63D4696218EF409A00E5E6E7 /* 000000000002.epub */,
+				63D4696318EF409A00E5E6E7 /* 000000000003.epub */,
+			);
+			path = Epub;
+			sourceTree = "<group>";
+		};
 		797EBC1E18EC4A830049C061 = {
 			isa = PBXGroup;
 			children = (
@@ -231,6 +301,7 @@
 		797EBC6E18EC4B3C0049C061 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				63D4694A18EF3AE600E5E6E7 /* ZipArchive */,
 				79E4AB9318ED9927000003C7 /* RaptureXML */,
 			);
 			path = Libraries;
@@ -251,6 +322,7 @@
 		797EBC7018EC4B3C0049C061 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				63D4696018EF409A00E5E6E7 /* Epub */,
 				79E4ABA118ED9D76000003C7 /* chapter-001.xml */,
 			);
 			path = Data;
@@ -292,9 +364,9 @@
 		797EBC8918EC4CDE0049C061 /* ReaderCore */ = {
 			isa = PBXGroup;
 			children = (
+				63D4695C18EF3EFB00E5E6E7 /* Support */,
 				797EBC8A18EC4CDE0049C061 /* Controllers */,
 				797EBC8B18EC4CDE0049C061 /* DataModel */,
-				797EBC8C18EC4CDE0049C061 /* Support */,
 				797EBC8D18EC4CDE0049C061 /* UI */,
 			);
 			path = ReaderCore;
@@ -317,13 +389,6 @@
 				797EBC9418EC51B30049C061 /* REAttributedElement */,
 			);
 			path = DataModel;
-			sourceTree = "<group>";
-		};
-		797EBC8C18EC4CDE0049C061 /* Support */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Support;
 			sourceTree = "<group>";
 		};
 		797EBC8D18EC4CDE0049C061 /* UI */ = {
@@ -488,8 +553,11 @@
 			files = (
 				797EBC8018EC4B3C0049C061 /* InfoPlist.strings in Resources */,
 				797EBC8318EC4B3C0049C061 /* Main_iPad.storyboard in Resources */,
+				63D4696418EF409A00E5E6E7 /* 000000000001.epub in Resources */,
 				79E4ABA218ED9D76000003C7 /* chapter-001.xml in Resources */,
+				63D4696518EF409A00E5E6E7 /* 000000000002.epub in Resources */,
 				797EBC8418EC4B3C0049C061 /* Main_iPhone.storyboard in Resources */,
+				63D4696618EF409A00E5E6E7 /* 000000000003.epub in Resources */,
 				797EBC8118EC4B3C0049C061 /* Images.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -510,17 +578,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				797EBC9718EC51C40049C061 /* REAttributedElement.m in Sources */,
+				63D4695718EF3AE600E5E6E7 /* ioapi.c in Sources */,
 				79E4AB8E18ED811D000003C7 /* REEpubParser.m in Sources */,
 				79E4ABA018ED9AC4000003C7 /* REReaderController.m in Sources */,
+				63D4695818EF3AE600E5E6E7 /* mztools.c in Sources */,
+				63D4695B18EF3AE600E5E6E7 /* ZipArchive.m in Sources */,
 				797EBC7F18EC4B3C0049C061 /* REMainViewController.m in Sources */,
+				63D4695918EF3AE600E5E6E7 /* unzip.c in Sources */,
 				79E4AB9618ED9927000003C7 /* RXMLElement.m in Sources */,
 				79E4AB8B18ED8110000003C7 /* REBaseParser.m in Sources */,
+				63D4695A18EF3AE600E5E6E7 /* zip.c in Sources */,
 				79E4AB9218ED8779000003C7 /* REDocument.m in Sources */,
 				797EBC7E18EC4B3C0049C061 /* main.m in Sources */,
 				79E4ABA618EDB41A000003C7 /* REChapter.m in Sources */,
 				797EBC7D18EC4B3C0049C061 /* REAppDelegate.m in Sources */,
 				797EBC9118EC4CFC0049C061 /* REMainReaderView.m in Sources */,
 				79A4FF2D18EEA82500F79347 /* REPageView.m in Sources */,
+				63D4695F18EF3EFB00E5E6E7 /* REPathManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -655,7 +729,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Vladimir Gogunsky (9552S36M2H)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Reader/Classes/Other/Reader-Prefix.pch";
 				HEADER_SEARCH_PATHS = (
@@ -676,7 +750,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Vladimir Gogunsky (9552S36M2H)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Reader/Classes/Other/Reader-Prefix.pch";
 				HEADER_SEARCH_PATHS = (

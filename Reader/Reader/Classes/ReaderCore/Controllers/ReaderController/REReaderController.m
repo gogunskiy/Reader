@@ -14,12 +14,24 @@
 - (void) loadFile:(NSString *)filePath                        
   completionBlock:(void(^)(REDocument *document))completionBlock 
        errorBlock:(void(^)(NSError * error))errorBlock
-{
-    NSData *data = [NSData dataWithContentsOfFile:filePath];
+{    
+    NSString *string = [[NSString alloc] initWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
     
     REBaseParser * parser = [REBaseParser parserForType:REParserTypeEpub];
-    
-    [parser parseAttributedDocumentFromData:data 
+    /*
+    NSString *bookFilePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"000000000002.epub"];
+ 
+    [parser parseBookAtPath:bookFilePath
+            completionBlock:^(REDocument *document)
+     {
+         
+     }
+                 errorBlock:^(NSError *error)
+     {
+         
+     }];
+    */
+    [parser parseAttributedElementFromHtml:string
                             completionBlock:completionBlock
                                  errorBlock:errorBlock];
 }
