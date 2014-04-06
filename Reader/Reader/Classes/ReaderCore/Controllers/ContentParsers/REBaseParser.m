@@ -45,11 +45,11 @@
     
 }
 
-- (void) parseAttributedElementFromHtml:(NSString *)html
-                        completionBlock:(void(^)(REDocument *document))completionBlock
-                             errorBlock:(void(^)(NSError * error))errorBlock;
+- (void) parseDataToAttributedString:(NSString *)data
+                     completionBlock:(void(^)(REChapter *chapter))completionBlock
+                          errorBlock:(void(^)(NSError * error))errorBlock
 {
-    
+
 }
 
 @end

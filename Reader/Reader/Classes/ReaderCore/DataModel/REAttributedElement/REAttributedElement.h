@@ -11,23 +11,24 @@
 
 @interface REAttributedElement : NSObject
 
+
+
 @property (nonatomic) REAttributedElement *parent;
 
 @property (nonatomic) CTParagraphStyleRef paragraphStyle;
-@property (nonatomic) CTFontRef font;
+@property (nonatomic) NSString * fontName;
 
-
+@property (nonatomic, assign) CGFloat fontSize;
 
 @property (nonatomic) NSMutableArray *children;
 
 @property (nonatomic) NSString * name;
+@property (nonatomic) NSDictionary * attributes;
 @property (nonatomic) NSString * text;
 @property (nonatomic) UIColor *color;
 
-@property (nonatomic) NSNumber *bold;
-@property (nonatomic) NSNumber *italic;
-@property (nonatomic) NSNumber *underlined;
+@property (nonatomic) NSMutableAttributedString *attributedString;
 
-- (NSAttributedString *) attributedString;
+- (void) apply;
 
 @end

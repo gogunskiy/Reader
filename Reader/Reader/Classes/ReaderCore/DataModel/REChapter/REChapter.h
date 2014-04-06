@@ -14,7 +14,7 @@
 @property (nonatomic) NSString *title;
 @property (nonatomic) NSString *subTitle;
 
-@property (nonatomic) NSMutableArray *elements;
+@property (nonatomic) NSAttributedString *attributedString;
 
 
 @end

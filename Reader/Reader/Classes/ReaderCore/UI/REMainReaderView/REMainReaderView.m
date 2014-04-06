@@ -89,12 +89,10 @@
 - (NSMutableAttributedString*) attributedStringForDocument:(REDocument *)document
 {
     NSMutableAttributedString* attString = [[NSMutableAttributedString alloc] initWithString:@""];
-    
-    REChapter *chapter = [document chapters][0];
-    
-    for (REAttributedElement *element in [chapter elements]) 
+
+    for (REChapter *chapter in [document chapters])
     {
-        [attString appendAttributedString:[element attributedString]];
+        [attString appendAttributedString:[chapter attributedString]];
         [attString appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@"\n"]];
     }
     

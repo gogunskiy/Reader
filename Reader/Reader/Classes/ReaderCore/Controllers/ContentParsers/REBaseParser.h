@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "REDocument.h"
+#import "REChapter.h"
 
 typedef NS_ENUM(NSInteger, REParserType)
 {
@@ -24,8 +25,8 @@ typedef NS_ENUM(NSInteger, REParserType)
          completionBlock:(void(^)(REDocument *document))completionBlock
               errorBlock:(void(^)(NSError * error))errorBlock;
 
-- (void) parseAttributedElementFromHtml:(NSString *)html
-                        completionBlock:(void(^)(REDocument *document))completionBlock
-                             errorBlock:(void(^)(NSError * error))errorBlock;
+- (void) parseDataToAttributedString:(NSString *)data
+                     completionBlock:(void(^)(REChapter *chapter))completionBlock
+                          errorBlock:(void(^)(NSError * error))errorBlock;
 
 @end

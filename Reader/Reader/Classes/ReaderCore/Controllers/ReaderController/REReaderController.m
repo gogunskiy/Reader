@@ -18,8 +18,8 @@
     NSString *string = [[NSString alloc] initWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
     
     REBaseParser * parser = [REBaseParser parserForType:REParserTypeEpub];
-    /*
-    NSString *bookFilePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"000000000002.epub"];
+    
+    NSString *bookFilePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"000000000003.epub"];
  
     [parser parseBookAtPath:bookFilePath
             completionBlock:^(REDocument *document)
@@ -30,10 +30,16 @@
      {
          
      }];
-    */
-    [parser parseAttributedElementFromHtml:string
-                            completionBlock:completionBlock
-                                 errorBlock:errorBlock];
+    
+    [parser parseDataToAttributedString:string
+                        completionBlock:^(REChapter *chapter)
+     {
+         REDocument *document = [REDocument new];
+         [[document chapters] addObject:chapter];
+         
+         completionBlock(document);
+     }
+                             errorBlock:errorBlock];
 }
 
 @end

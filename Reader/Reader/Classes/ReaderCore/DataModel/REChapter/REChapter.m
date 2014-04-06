@@ -16,7 +16,7 @@
     
     if (self) 
     {
-        [self setElements:[NSMutableArray new]];
+
     }
     
     return self;

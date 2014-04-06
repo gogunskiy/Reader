@@ -7,10 +7,11 @@
 //
 
 #import "REEpubParser.h"
-#import "RXMLElement.h"
-#import "REAttributedElement.h"
 #import "REChapter.h"
 #import "ZipArchive.h"
+#import "NSString+HTML.h"
+#import "REAttributedElement.h"
+#import "RXMLElement.h"
 #import "REPathManager.h"
 
 @implementation REEpubParser
@@ -21,7 +22,7 @@
          completionBlock:(void(^)(REDocument *document))completionBlock
               errorBlock:(void(^)(NSError * error))errorBlock
 {
-    NSString * booksDirectory = [REPathManager booksDirectory];
+    NSString * booksDirectory = [[REPathManager booksDirectory] stringByAppendingPathComponent:[path lastPathComponent]];
     
     [self unzipEpub:path
           directory:booksDirectory
@@ -31,45 +32,59 @@
     }];
 }
 
-- (void) parseAttributedElementFromHtml:(NSString *)html
-                         completionBlock:(void(^)(REDocument *document))completionBlock 
-                              errorBlock:(void(^)(NSError * error))errorBlock
+- (void) parseDataToAttributedString:(NSString *)data
+                     completionBlock:(void(^)(REChapter *chapter))completionBlock
+                          errorBlock:(void(^)(NSError * error))errorBlock
 {
-    REDocument *document = [[REDocument alloc] init];
-    RXMLElement *element = [[RXMLElement alloc] initFromHTMLString:html encoding:NSUTF8StringEncoding];
-    RXMLElement *chapterTag = [element childrenWithRootXPath:@"//div [@class='chapter']"][0];
-   
-    REAttributedElement *attrElement = [[REAttributedElement alloc] init];
-    [attrElement setName:@"chapter"];
+    NSMutableAttributedString *result = [[NSMutableAttributedString alloc] initWithString:@""];
+    
+    RXMLElement *htmlTree = [[RXMLElement alloc] initFromHTMLString:data encoding:NSUTF8StringEncoding];
+    
+    NSArray *elements = [self childAttributedElementsFor:htmlTree];
+
+    for (REAttributedElement *element in elements)
+    {
+        [result appendAttributedString:[element attributedString]];
+        [result appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
+    }
     
     REChapter *chapter = [[REChapter alloc] init];
-    [[document chapters] addObject:chapter];
+    [chapter setAttributedString:result];
     
-    [chapterTag iterate:@"*" 
-          usingBlock:^(RXMLElement *element) 
+    
+    completionBlock(chapter);
+}
+
+- (NSArray *) childAttributedElementsFor:(RXMLElement *)element
+{
+    NSMutableArray *attributedElements = [[NSMutableArray alloc] init];
+    
+    NSArray *children = [element childrenWithRootXPath:@"//*"];
+    
+    for (RXMLElement *child in children)
     {
-        REAttributedElement *attrElement = [[REAttributedElement alloc] init];
-        [attrElement setName:@"p"];
-        [attrElement setText:[element innerXml]];
-        [attrElement setColor:[UIColor blackColor]];
-        
-        if ([[element tag] isEqualToString:@"p"]) 
+        if (![[child tag] isInlineTag] && ![[child tag] isMetaTag])
         {
-            [attrElement setName:@"p"];
-        } 
-        else if ([[element attribute:@"class"] isEqualToString:@"chapter-subtitle"])
-        {
-            [attrElement setName:@"subheader"];
-        }  
-        else if ([[element attribute:@"class"] isEqualToString:@"chapter-title"])
-        {
-            [attrElement setName:@"header"];
+            REAttributedElement *element = [[REAttributedElement alloc] init];
+            [element setText:[child xml]];
+            [element setName:[child tag]];
+            
+            NSMutableDictionary *attributes = [[NSMutableDictionary alloc] init];
+            
+            for (NSString *attrName in [child attributeNames])
+            {
+                attributes[[attrName lowercaseString]] = [[child attribute:attrName] lowercaseString];
+            }
+            
+            [element setAttributes:attributes];
+            
+            [element apply];
+            
+            [attributedElements addObject:element];
         }
-        
-        [[chapter elements] addObject:attrElement];
-    }];
+    }
     
-    completionBlock(document);
+    return attributedElements;
 }
 
 #pragma mark - File Management -

@@ -12,10 +12,11 @@
 		63D4695918EF3AE600E5E6E7 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 63D4695118EF3AE600E5E6E7 /* unzip.c */; };
 		63D4695A18EF3AE600E5E6E7 /* zip.c in Sources */ = {isa = PBXBuildFile; fileRef = 63D4695318EF3AE600E5E6E7 /* zip.c */; };
 		63D4695B18EF3AE600E5E6E7 /* ZipArchive.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D4695618EF3AE600E5E6E7 /* ZipArchive.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		63D4695F18EF3EFB00E5E6E7 /* REPathManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D4695E18EF3EFB00E5E6E7 /* REPathManager.m */; };
 		63D4696418EF409A00E5E6E7 /* 000000000001.epub in Resources */ = {isa = PBXBuildFile; fileRef = 63D4696118EF409A00E5E6E7 /* 000000000001.epub */; };
 		63D4696518EF409A00E5E6E7 /* 000000000002.epub in Resources */ = {isa = PBXBuildFile; fileRef = 63D4696218EF409A00E5E6E7 /* 000000000002.epub */; };
 		63D4696618EF409A00E5E6E7 /* 000000000003.epub in Resources */ = {isa = PBXBuildFile; fileRef = 63D4696318EF409A00E5E6E7 /* 000000000003.epub */; };
+		63D4696C18F0813000E5E6E7 /* REPathManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D4696B18F0813000E5E6E7 /* REPathManager.m */; };
+		63E12CAA18F173FD005032EA /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E12CA918F173FD005032EA /* NSString+HTML.m */; };
 		797EBC2B18EC4A830049C061 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 797EBC2A18EC4A830049C061 /* Foundation.framework */; };
 		797EBC2D18EC4A830049C061 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 797EBC2C18EC4A830049C061 /* CoreGraphics.framework */; };
 		797EBC2F18EC4A830049C061 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 797EBC2E18EC4A830049C061 /* UIKit.framework */; };
@@ -68,11 +69,13 @@
 		63D4695418EF3AE600E5E6E7 /* zip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zip.h; sourceTree = "<group>"; };
 		63D4695518EF3AE600E5E6E7 /* ZipArchive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZipArchive.h; sourceTree = "<group>"; };
 		63D4695618EF3AE600E5E6E7 /* ZipArchive.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ZipArchive.m; sourceTree = "<group>"; };
-		63D4695D18EF3EFB00E5E6E7 /* REPathManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REPathManager.h; sourceTree = "<group>"; };
-		63D4695E18EF3EFB00E5E6E7 /* REPathManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REPathManager.m; sourceTree = "<group>"; };
 		63D4696118EF409A00E5E6E7 /* 000000000001.epub */ = {isa = PBXFileReference; lastKnownFileType = file; path = 000000000001.epub; sourceTree = "<group>"; };
 		63D4696218EF409A00E5E6E7 /* 000000000002.epub */ = {isa = PBXFileReference; lastKnownFileType = file; path = 000000000002.epub; sourceTree = "<group>"; };
 		63D4696318EF409A00E5E6E7 /* 000000000003.epub */ = {isa = PBXFileReference; lastKnownFileType = file; path = 000000000003.epub; sourceTree = "<group>"; };
+		63D4696A18F0813000E5E6E7 /* REPathManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REPathManager.h; sourceTree = "<group>"; };
+		63D4696B18F0813000E5E6E7 /* REPathManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REPathManager.m; sourceTree = "<group>"; };
+		63E12CA818F173FD005032EA /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTML.h"; sourceTree = "<group>"; };
+		63E12CA918F173FD005032EA /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HTML.m"; sourceTree = "<group>"; };
 		797EBC2718EC4A830049C061 /* Reader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		797EBC2A18EC4A830049C061 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		797EBC2C18EC4A830049C061 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -174,8 +177,8 @@
 		63D4695C18EF3EFB00E5E6E7 /* Support */ = {
 			isa = PBXGroup;
 			children = (
-				63D4695D18EF3EFB00E5E6E7 /* REPathManager.h */,
-				63D4695E18EF3EFB00E5E6E7 /* REPathManager.m */,
+				63E12CA718F173FD005032EA /* NSString+HTML */,
+				63D4696918F0813000E5E6E7 /* PathManager */,
 			);
 			path = Support;
 			sourceTree = "<group>";
@@ -188,6 +191,24 @@
 				63D4696318EF409A00E5E6E7 /* 000000000003.epub */,
 			);
 			path = Epub;
+			sourceTree = "<group>";
+		};
+		63D4696918F0813000E5E6E7 /* PathManager */ = {
+			isa = PBXGroup;
+			children = (
+				63D4696A18F0813000E5E6E7 /* REPathManager.h */,
+				63D4696B18F0813000E5E6E7 /* REPathManager.m */,
+			);
+			path = PathManager;
+			sourceTree = "<group>";
+		};
+		63E12CA718F173FD005032EA /* NSString+HTML */ = {
+			isa = PBXGroup;
+			children = (
+				63E12CA818F173FD005032EA /* NSString+HTML.h */,
+				63E12CA918F173FD005032EA /* NSString+HTML.m */,
+			);
+			path = "NSString+HTML";
 			sourceTree = "<group>";
 		};
 		797EBC1E18EC4A830049C061 = {
@@ -579,6 +600,7 @@
 			files = (
 				797EBC9718EC51C40049C061 /* REAttributedElement.m in Sources */,
 				63D4695718EF3AE600E5E6E7 /* ioapi.c in Sources */,
+				63E12CAA18F173FD005032EA /* NSString+HTML.m in Sources */,
 				79E4AB8E18ED811D000003C7 /* REEpubParser.m in Sources */,
 				79E4ABA018ED9AC4000003C7 /* REReaderController.m in Sources */,
 				63D4695818EF3AE600E5E6E7 /* mztools.c in Sources */,
@@ -594,7 +616,7 @@
 				797EBC7D18EC4B3C0049C061 /* REAppDelegate.m in Sources */,
 				797EBC9118EC4CFC0049C061 /* REMainReaderView.m in Sources */,
 				79A4FF2D18EEA82500F79347 /* REPageView.m in Sources */,
-				63D4695F18EF3EFB00E5E6E7 /* REPathManager.m in Sources */,
+				63D4696C18F0813000E5E6E7 /* REPathManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
