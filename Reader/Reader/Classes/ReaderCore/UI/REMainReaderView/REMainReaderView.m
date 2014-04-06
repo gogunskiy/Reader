@@ -39,6 +39,7 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
     [super awakeFromNib];
     
     [self setFrames:[NSMutableArray array]];
+    [self setAttachments:[NSMutableArray new]];
 }
 
 - (void) needsUpdatePages
@@ -83,7 +84,11 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
 
 - (void) showPageAtIndex:(NSUInteger)index
 {
-    [[self pageView] setCTFrame:(CTFrameRef)_frames[index]];
+    CTFrameRef ctFrame = (__bridge CTFrameRef)_frames[index];
+    
+    [[self pageView] setCTFrame:ctFrame
+                    attachments:[self attachmentsForFrame:ctFrame]];
+    
     [self setCurrentFrame:index];
 }
 
@@ -98,8 +103,28 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
     
     for (REChapter *chapter in [[self document] chapters])
     {
-        
         NSAttributedString *attString = [chapter attributedString];
+        __block NSInteger index = 0;
+        [attString enumerateAttribute:(id)kCTRunDelegateAttributeName
+                              inRange:NSMakeRange(0, attString.length)
+                              options:0
+                           usingBlock:^(id value, NSRange range, BOOL *stop)
+         {
+             if (range.length == 1)
+             {
+                 if (index < [[chapter attachments] count])
+                 {
+                     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:[chapter attachments][index]];
+                     [dict setObject:@(range.location) forKey:@"location"];
+                     
+                     [[self attachments] addObject:dict];
+                     
+                     index ++;
+                 }
+             }
+     
+         }];
+        
         
         [self createFrameSetterWithString:attString];
         
@@ -160,8 +185,6 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
     pageFrame.origin.x = xOffset;
     [pageView setFrame:pageFrame];
     
-    [pageView setCTFrame:(CTFrameRef)_frames[page - 1]];
-    
     xOffset += self.bounds.size.width;
     
     [self addSubview:pageView];
@@ -171,6 +194,25 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
     [self setPageView:pageView];
     
     [self showPageAtIndex:page - 1];
+}
+
+- (NSArray *) attachmentsForFrame:(CTFrameRef)frame
+{
+    NSMutableArray *attachments = [NSMutableArray new];
+    
+    for (NSDictionary *attachment in [self attachments])
+    {
+        NSUInteger location = [attachment[@"location"] integerValue];
+        
+        CFRange frameRange = CTFrameGetVisibleStringRange(frame);
+        
+        if (location >= frameRange.location && location < frameRange.location + frameRange.length)
+        {
+            [attachments addObject:attachment];
+        }
+    }
+    
+    return attachments;
 }
 
 - (void) createFrameSetterWithString:(NSAttributedString *)string

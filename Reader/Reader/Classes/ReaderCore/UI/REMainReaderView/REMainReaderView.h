@@ -14,6 +14,8 @@
 
 @property (nonatomic) REDocument *document;
 
+@property (nonatomic) NSMutableArray *attachments;
+
 - (void) needsUpdatePages;
 
 - (NSUInteger) pageCount;

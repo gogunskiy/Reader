@@ -11,7 +11,7 @@
 
 @interface REPageView : UIView
 
-- (void) setCTFrame:(CTFrameRef)frame;
+- (void) setCTFrame:(CTFrameRef)frame attachments:(NSArray *)attachments;
 
 - (UIImage *) snapshot;
 

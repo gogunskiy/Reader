@@ -45,16 +45,19 @@
         
         RXMLElement *htmlTree = [[RXMLElement alloc] initFromHTMLString:data encoding:NSUTF8StringEncoding];
         
+        REChapter *chapter = [[REChapter alloc] init];
+        
         NSArray *elements = [self childAttributedElementsFor:htmlTree];
         
         for (REAttributedElement *element in elements)
         {
             [result appendAttributedString:[element attributedString]];
             [result appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
+            
+            [[chapter attachments] addObjectsFromArray:[element attachments]];
         }
         
-        REChapter *chapter = [[REChapter alloc] init];
-        [chapter setAttributedString:result];
+       [chapter setAttributedString:result];
         
         dispatch_async(dispatch_get_main_queue(), ^
         {

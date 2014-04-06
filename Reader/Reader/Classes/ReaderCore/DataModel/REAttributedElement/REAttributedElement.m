@@ -13,7 +13,8 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
     REInnerTagNone = 0,
     REInnerTagBold = 1 << 1,
     REInnerTagItalic = 1 << 2,
-    REInnerTagUnderlined = 1 << 3
+    REInnerTagUnderlined = 1 << 3,
+    REInnerTagAttachment = 1 << 4,
 };
 
 
@@ -22,10 +23,9 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
 @property (nonatomic, assign) NSInteger start;
 @property (nonatomic, assign) NSInteger end;
 @property (nonatomic, assign) REInnerTagType type;
+@property (nonatomic, strong) NSDictionary *info;
 
 @end
-
-
 
 @implementation REInnerTagAttribute
 
@@ -60,9 +60,11 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
     
     if (self) 
     {
+        [self setAttachments:[NSMutableArray new]];
         [self setChildren:[NSMutableArray new]];
+        
         [self setColor:[UIColor blackColor]];
-        [self setFontSize:14.0];
+        [self setFontSize:14];
         [self setFontName:@"Helvetica"];
     }
     
@@ -76,7 +78,7 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
      
     NSMutableArray * attributes = [[NSMutableArray alloc] init];
     NSMutableString *tag = [[NSMutableString alloc] init];
-    
+ 
     BOOL inTag = FALSE;
     
     REInnerTagAttribute *bAttribute = [[REInnerTagAttribute alloc] init];
@@ -154,6 +156,20 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
             {
                 [resultString appendString:@"\n"];
             }
+            else if ([tag rangeOfString:@"<img"].length)
+            {
+                NSDictionary *attachment = @{@"fileName" : [self text], @"attachmenTtype" : @"image"};
+                
+                REInnerTagAttribute *attribute = [[REInnerTagAttribute alloc] init];
+                attribute.type = REInnerTagAttachment;
+                attribute.info = attachment;
+                attribute.start = resultString.length;
+                
+                attribute.end = resultString.length;
+                
+                [attributes addObject:attribute];
+                [[self attachments] addObject:attachment];
+            }
             
             tag = [NSMutableString stringWithFormat:@""];
         }
@@ -182,11 +198,45 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
         else if ([attribute type] == REInnerTagUnderlined) 
         {
             [self applyUnderlinedFontInRange:range];
-         }
+        }
+        else if ([attribute type] == REInnerTagAttachment)
+        {
+            CTRunDelegateCallbacks callbacks;
+            callbacks.version = kCTRunDelegateVersion1;
+            callbacks.dealloc = MyDeallocationCallback;
+            callbacks.getAscent = MyGetAscentCallback;
+            callbacks.getDescent = MyGetDescentCallback;
+            callbacks.getWidth = MyGetWidthCallback;
+            CTRunDelegateRef delegate = CTRunDelegateCreate(&callbacks, (void *)@{@"key" : @"value"});
+            
+            [elementString addAttribute:(id)kCTRunDelegateAttributeName value:(__bridge id)delegate range:NSMakeRange(attribute.start, 1)];
+        }
     }
     
     return elementString;
 }
+
+
+void MyDeallocationCallback( void* refCon )
+{
+    
+}
+
+CGFloat MyGetAscentCallback( void *refCon )
+{
+    return 100.0;
+}
+
+CGFloat MyGetDescentCallback( void *refCon )
+{
+    return 100;
+}
+
+CGFloat MyGetWidthCallback( void* refCon)
+{
+    return 200;
+}
+
 
 - (void) applyItalicFontInRange:(NSRange)range
 {
@@ -265,15 +315,15 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
     
     if ([elementName rangeOfString:@"h1"].length)
     {
-        size *= 1.5;
+        size *= 1.8;
     }
     else if ( [elementName rangeOfString:@"h2"].length)
     {
-        size *= 1.4;
+        size *= 1.6;
     }
     else if ( [elementName rangeOfString:@"h3"].length)
     {
-        size *= 1.2;
+        size *= 1.3;
     }
     else if ( [elementName rangeOfString:@"h4"].length)
     {

@@ -12,17 +12,74 @@
 
 @property (nonatomic, assign) CTFrameRef frameRef;
 
+@property (nonatomic) NSArray *attachments;
+
 @end
 
 @implementation REPageView
 
 
-- (void) setCTFrame:(CTFrameRef)frame
+- (void) setCTFrame:(CTFrameRef)frame attachments:(NSArray *)attachments
 {
     _frameRef = frame;
+    _attachments = attachments;
     
     [self setNeedsDisplay];
+
 }
+
+- (void) insertAttachments:(NSArray *)array
+{
+    for (UIView *view in [self subviews])
+    {
+        [view removeFromSuperview];
+    }
+    
+    if ([_attachments count])
+    {
+        NSArray *lines = (NSArray *)CTFrameGetLines(_frameRef);
+        CGPoint origins[[lines count]];
+        CTFrameGetLineOrigins(_frameRef, CFRangeMake(0, 0), origins);
+        
+        NSInteger index = 0;
+        
+        for (id lineObj in lines)
+        {
+            CTLineRef line = (__bridge CTLineRef)lineObj;
+            
+            for (id runObj in (NSArray *)CTLineGetGlyphRuns(line))
+            {
+                CTRunRef run = (__bridge CTRunRef)runObj;
+                CFRange runRange = CTRunGetStringRange(run);
+                
+                for (NSDictionary *attachment in  array)
+                {
+                    NSInteger location = [attachment[@"location"] integerValue];
+                    if ( runRange.location <= location && runRange.location+runRange.length > location)
+                    {
+                        CGRect runBounds;
+                        CGFloat ascent;
+                        CGFloat descent;
+                        runBounds.size.width = CTRunGetTypographicBounds(run, CFRangeMake(0, 0), &ascent, &descent, NULL);
+                        runBounds.size.height = ascent + descent;
+                        
+                        CGFloat xOffset = CTLineGetOffsetForStringIndex(line, CTRunGetStringRange(run).location, NULL);
+                        runBounds.origin.x = xOffset;
+                        runBounds.origin.y = origins[index].y;
+                        runBounds.origin.y -= descent;
+                        
+                        UIImageView *view = [[UIImageView alloc] initWithFrame:runBounds];
+                        [view setBackgroundColor:[UIColor redColor]];
+                        [self addSubview:view];
+                    }
+                }
+            }
+            
+            index ++;
+        }
+    }
+}
+
 
 - (void)drawRect:(CGRect)rect
 {
@@ -33,6 +90,9 @@
     CGContextScaleCTM(context, 1.0, -1.0);
     
     CTFrameDraw(_frameRef, context);
+    
+    
+    [self insertAttachments:_attachments];
 }
 
 - (void)dealloc
