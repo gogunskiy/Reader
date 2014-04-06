@@ -24,35 +24,45 @@
 {
     NSString * booksDirectory = [[REPathManager booksDirectory] stringByAppendingPathComponent:[path lastPathComponent]];
     
-    [self unzipEpub:path
-          directory:booksDirectory
-         completion:^(BOOL saved)
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^
     {
-             
-    }];
+        [self unzipEpub:path
+              directory:booksDirectory
+             completion:^(BOOL saved)
+        {
+                            
+        }];
+    });
 }
 
 - (void) parseDataToAttributedString:(NSString *)data
                      completionBlock:(void(^)(REChapter *chapter))completionBlock
                           errorBlock:(void(^)(NSError * error))errorBlock
 {
-    NSMutableAttributedString *result = [[NSMutableAttributedString alloc] initWithString:@""];
-    
-    RXMLElement *htmlTree = [[RXMLElement alloc] initFromHTMLString:data encoding:NSUTF8StringEncoding];
-    
-    NSArray *elements = [self childAttributedElementsFor:htmlTree];
-
-    for (REAttributedElement *element in elements)
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^
     {
-        [result appendAttributedString:[element attributedString]];
-        [result appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
-    }
+        NSMutableAttributedString *result = [[NSMutableAttributedString alloc] initWithString:@""];
+        
+        RXMLElement *htmlTree = [[RXMLElement alloc] initFromHTMLString:data encoding:NSUTF8StringEncoding];
+        
+        NSArray *elements = [self childAttributedElementsFor:htmlTree];
+        
+        for (REAttributedElement *element in elements)
+        {
+            [result appendAttributedString:[element attributedString]];
+            [result appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
+        }
+        
+        REChapter *chapter = [[REChapter alloc] init];
+        [chapter setAttributedString:result];
+        
+        dispatch_async(dispatch_get_main_queue(), ^
+        {
+            completionBlock(chapter);
+        });
+    });
     
-    REChapter *chapter = [[REChapter alloc] init];
-    [chapter setAttributedString:result];
-    
-    
-    completionBlock(chapter);
+
 }
 
 - (NSArray *) childAttributedElementsFor:(RXMLElement *)element

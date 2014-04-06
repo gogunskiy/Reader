@@ -12,12 +12,24 @@
 #import "REAttributedElement.h"
 #import "REPageView.h"
 
+typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
+{
+    RESnapshotViewAnimationLeft = -1,
+    RESnapshotViewAnimationNone = 0,
+    RESnapshotViewAnimationRight = 1
+};
+
+
 @interface REMainReaderView()
 
-@property (nonatomic, strong) NSMutableArray *pageViews;
+@property (nonatomic, assign) NSUInteger currentFrame;
 
-@property (nonatomic)  CTFramesetterRef framesetter;
+@property (nonatomic, strong) NSMutableArray *frames;
 
+@property (nonatomic, assign)  CTFramesetterRef framesetter;
+
+@property (nonatomic, strong) REPageView *pageView;
+@property (nonatomic, strong) UIImageView *snapshotView;
 @end
 
 @implementation REMainReaderView
@@ -26,52 +38,139 @@
 {
     [super awakeFromNib];
     
-    [self setPageViews:[NSMutableArray array]];
+    [self setFrames:[NSMutableArray array]];
 }
 
 - (void) needsUpdatePages
 {
     [self createPages];
+    [self initializeSnapshotView];
+    [self initializeScrollViewAtPage:1];
 }
+
+- (NSUInteger) pageCount
+{
+    return self.frames.count;
+}
+
+- (NSUInteger) currentPage
+{
+    return self.currentFrame + 1;
+}
+
+- (void) showNextPage
+{
+    if (_currentFrame < self.frames.count - 1 )
+    {
+        [self addSnapshotViewWithHideAnimation:RESnapshotViewAnimationLeft];
+        
+        NSInteger frameIndex  = _currentFrame + 1;
+        [self showPageAtIndex:frameIndex];
+    }
+
+}
+
+- (void) showPreviousPage
+{
+    if (_currentFrame > 0)
+    {
+        [self addSnapshotViewWithHideAnimation:RESnapshotViewAnimationRight];
+        
+        NSInteger frameIndex = _currentFrame - 1;
+        [self showPageAtIndex:frameIndex];
+    }
+}
+
+- (void) showPageAtIndex:(NSUInteger)index
+{
+    [[self pageView] setCTFrame:(CTFrameRef)_frames[index]];
+    [self setCurrentFrame:index];
+}
+
+#pragma mark - Private -
 
 - (void) createPages
 {
     NSInteger pointer = 0;
-    CGFloat xOffset = 0;
-    
-    NSAttributedString *attString = [self attributedStringForDocument:self.document];
-    
-    [self createFrameSetterWithString:attString];
-    
+  
     CGMutablePathRef path = CGPathCreateMutable();
     CGPathAddRect(path, NULL, self.bounds);
     
-    while (pointer < attString.length)
+    for (REChapter *chapter in [[self document] chapters])
     {
-        REPageView *pageView = [[REPageView alloc] initWithFrame:self.bounds];
-        [pageView setBackgroundColor:[UIColor whiteColor]];
         
-        CGRect pageFrame = pageView.frame;
-        pageFrame.origin.x = xOffset;
-        [pageView setFrame:pageFrame];
+        NSAttributedString *attString = [chapter attributedString];
         
-        CTFrameRef frame = CTFramesetterCreateFrame(_framesetter, CFRangeMake(pointer, attString.length - pointer), path, NULL);
+        [self createFrameSetterWithString:attString];
         
-        CFRange frameRange = CTFrameGetVisibleStringRange(frame); 
-        pointer += frameRange.length;
-        
-        xOffset += self.bounds.size.width;
-    
-        [self addSubview:pageView];
-        [[self pageViews] addObject:pageView];
-    
-        [pageView setCTFrame:frame];
-        
+        while (pointer < attString.length)
+        {
+            CTFrameRef frame = CTFramesetterCreateFrame(_framesetter, CFRangeMake(pointer, attString.length - pointer), path, NULL);
+            
+            CFRange frameRange = CTFrameGetVisibleStringRange(frame);
+            pointer += frameRange.length;
+            
+            [[self frames] addObject:(__bridge id)frame];
+            
+            CFRelease(frame);
+        }
     }
-
-    [self setContentSize:CGSizeMake(xOffset, self.bounds.size.height)];
     
     CFRelease(path);
+}
+
+- (void) initializeSnapshotView
+{
+    UIImageView *view = [[UIImageView alloc] initWithFrame:CGRectZero];
+    [self setSnapshotView:view];
+}
+
+- (void) addSnapshotViewWithHideAnimation:(RESnapshotViewAnimationType)type
+{
+    [[self snapshotView] setFrame:[[self pageView] frame]];
+    [[self snapshotView] setImage:[[self pageView] snapshot]];
+    [self addSubview:[self snapshotView]];
+    
+    CGRect frame = [[self snapshotView] frame];
+    frame.origin.x += type * frame.size.width;
+    
+    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
+    
+    [UIView animateWithDuration:0.5
+                     animations:^
+     {
+         [[self snapshotView] setFrame:frame];
+     }
+                     completion:^(BOOL finished)
+     {
+         [[self snapshotView] removeFromSuperview];
+         [[UIApplication sharedApplication] endIgnoringInteractionEvents];
+     }];
+}
+
+- (void) initializeScrollViewAtPage:(NSUInteger)page
+{
+    CGFloat xOffset = 0;
+    
+    REPageView *pageView = [[REPageView alloc] initWithFrame:self.bounds];
+    [pageView setBackgroundColor:[UIColor whiteColor]];
+    [pageView setTag:1];
+    
+    CGRect pageFrame = pageView.frame;
+    pageFrame.origin.x = xOffset;
+    [pageView setFrame:pageFrame];
+    
+    [pageView setCTFrame:(CTFrameRef)_frames[page - 1]];
+    
+    xOffset += self.bounds.size.width;
+    
+    [self addSubview:pageView];
+    
+    
+    [self setContentSize:CGSizeMake(xOffset, self.bounds.size.height)];
+    [self setPageView:pageView];
+    
+    [self showPageAtIndex:page - 1];
 }
 
 - (void) createFrameSetterWithString:(NSAttributedString *)string
@@ -85,23 +184,5 @@
     
     [self setFramesetter:framesetter];
 }
-
-- (NSMutableAttributedString*) attributedStringForDocument:(REDocument *)document
-{
-    NSMutableAttributedString* attString = [[NSMutableAttributedString alloc] initWithString:@""];
-
-    for (REChapter *chapter in [document chapters])
-    {
-        [attString appendAttributedString:[chapter attributedString]];
-        [attString appendAttributedString:[[NSMutableAttributedString alloc] initWithString:@"\n"]];
-    }
-    
-    return attString;
-}
-
-- (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event
-{
-}
-
 
 @end

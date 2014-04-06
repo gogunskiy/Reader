@@ -13,4 +13,6 @@
 
 - (void) setCTFrame:(CTFrameRef)frame;
 
+- (UIImage *) snapshot;
+
 @end

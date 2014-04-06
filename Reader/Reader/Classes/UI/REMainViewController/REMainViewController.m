@@ -13,6 +13,7 @@
 @interface REMainViewController ()
 
 @property (nonatomic, weak) IBOutlet REMainReaderView *readerView;
+@property (nonatomic, weak) IBOutlet UILabel *pageCountLabel;
 
 @end
 
@@ -30,6 +31,7 @@
     {
         [[self readerView] setDocument:document];
         [[self readerView] needsUpdatePages];
+        [self updateUI];
     } 
                   errorBlock:^(NSError *error) 
     {
@@ -38,10 +40,44 @@
     
 }
 
-- (void)didReceiveMemoryWarning
+- (void) updateUI
 {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [[self pageCountLabel] setText:[NSString stringWithFormat:@"%d / %d", self.readerView.currentPage, self.readerView.pageCount]];
+}
+
+#pragma mark - Actions -
+
+- (IBAction) leftSwipe:(UIGestureRecognizer *)sender
+{
+    [[self readerView] showNextPage];
+    
+    [self updateUI];
+}
+
+- (IBAction) rightSwipe:(UIGestureRecognizer *)sender
+{
+    [[self readerView] showPreviousPage];
+    
+    [self updateUI];
+}
+
+- (IBAction) tap:(UIGestureRecognizer *)sender
+{
+    CGPoint point = [sender locationInView:[self view]];
+    CGRect frame  = [[self view] frame];
+    
+    if (point.x < frame.size.width * 0.25)
+    {
+        [self rightSwipe:nil];
+    }
+    else  if (point.x < frame.size.width * 0.75)
+    {
+        // show toolBar
+    }
+    else
+    {
+        [self leftSwipe:nil];
+    }
 }
 
 @end

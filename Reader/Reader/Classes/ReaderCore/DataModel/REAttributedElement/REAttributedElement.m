@@ -103,14 +103,24 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
         }
         else
         {
-            [resultString appendString:character];
+            if ([character isEqualToString:@" "])
+            {
+                NSString * previousCharacter = [inputString substringWithRange:NSMakeRange(i - 1, 1)];
+                
+                if (![previousCharacter isEqualToString:@" "])
+                {
+                    [resultString appendString:character];
+                }
+            }
+            else
+            {
+                [resultString appendString:character];
+            }
         }
         
         if ([character isEqualToString:@">"])
         {
             inTag = FALSE;
-            
-            NSLog(@"%@", tag);
             
             if ([tag isEqualToString:@"<b>"] || [tag isEqualToString:@"<strong>"])
             {
@@ -149,9 +159,6 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
         }
     }
     
-    if ([attributes count])
-        NSLog(@"%@", attributes);
-
     NSMutableAttributedString* elementString = [[NSMutableAttributedString alloc] initWithString:resultString];
     
     [elementString setAttributes:@{(id)kCTForegroundColorAttributeName : [self color],
@@ -214,6 +221,11 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
         [self setParagraphStyle:[self _headerParagraphStyle]];
     }
     
+    if ([[self name] rangeOfString:@"blockquote"].length)
+    {
+        [self setParagraphStyle:[self _blockquoteParagraphStyle]];
+    }
+    
     if ([[[self attributes] allValues] containsObject:@"epigraph"])
     {
         [self setParagraphStyle:[self _epigraphStyle]];
@@ -223,6 +235,8 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
     {
         [self setParagraphStyle:[self _epigraphAuthorStyle]];
     }
+    
+    
 }
 
 - (CTFontRef) _font
@@ -282,13 +296,33 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
     CGFloat minMineHeight = 10;
     CGFloat leading = 2;
     CGFloat space = 10;
-    CGFloat firstLineHeadIndent = 20;
+    CGFloat firstLineHeadIndent = 8;
     CGFloat lineHeadIndent = 8;
     CGFloat linetTailIndent = -8;
     
     return [self _paragraphStyleWithAligment:aligment 
                                minMineHeight:minMineHeight 
                                      leading:leading 
+                                       space:space
+                         firstLineHeadIndent:firstLineHeadIndent
+                              lineHeadIndent:lineHeadIndent
+                             linetTailIndent:linetTailIndent];
+}
+
+- (CTParagraphStyleRef) _blockquoteParagraphStyle
+{
+    CTTextAlignment aligment = kCTCenterTextAlignment;
+    
+    CGFloat minMineHeight = 10;
+    CGFloat leading = 2;
+    CGFloat space = 10;
+    CGFloat firstLineHeadIndent = 30;
+    CGFloat lineHeadIndent = 30;
+    CGFloat linetTailIndent = -30;
+    
+    return [self _paragraphStyleWithAligment:aligment
+                               minMineHeight:minMineHeight
+                                     leading:leading
                                        space:space
                          firstLineHeadIndent:firstLineHeadIndent
                               lineHeadIndent:lineHeadIndent

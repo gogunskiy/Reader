@@ -16,4 +16,12 @@
 
 - (void) needsUpdatePages;
 
+- (NSUInteger) pageCount;
+- (NSUInteger) currentPage;
+
+- (void) showNextPage;
+- (void) showPreviousPage;
+- (void) showPageAtIndex:(NSUInteger)index;
+
+
 @end
