@@ -13,28 +13,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" contentMode="scaleToFill" scrollEnabled="NO" pagingEnabled="YES" id="qhq-jA-fXA" customClass="REMainReaderView">
-                                <rect key="frame" x="0.0" y="27" width="320" height="502"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <gestureRecognizers/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="eUV-vh-xeX" appends="YES" id="m20-GN-AQr"/>
-                                    <outletCollection property="gestureRecognizers" destination="kOH-nO-Ut9" appends="YES" id="7Fb-bv-exa"/>
-                                    <outletCollection property="gestureRecognizers" destination="qiz-Tk-eTF" appends="YES" id="4eY-ku-bHk"/>
-                                </connections>
-                            </scrollView>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="oIO-aV-n4e">
                                 <rect key="frame" x="27" y="537" width="267" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" id="3UK-LD-hND" customClass="REMainReaderView">
+                                <rect key="frame" x="0.0" y="20" width="320" height="509"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outletCollection property="gestureRecognizers" destination="eUV-vh-xeX" appends="YES" id="kMe-wz-P9B"/>
+                                    <outletCollection property="gestureRecognizers" destination="kOH-nO-Ut9" appends="YES" id="6VR-CI-bIX"/>
+                                    <outletCollection property="gestureRecognizers" destination="qiz-Tk-eTF" appends="YES" id="rSm-HR-icE"/>
+                                </connections>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <connections>
                         <outlet property="pageCountLabel" destination="oIO-aV-n4e" id="6Vs-wB-63M"/>
-                        <outlet property="readerView" destination="qhq-jA-fXA" id="AN8-2D-w27"/>
+                        <outlet property="readerView" destination="3UK-LD-hND" id="vWP-EB-UQX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>

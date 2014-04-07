@@ -175,22 +175,12 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
 
 - (void) initializeScrollViewAtPage:(NSUInteger)page
 {
-    CGFloat xOffset = 0;
-    
     REPageView *pageView = [[REPageView alloc] initWithFrame:self.bounds];
     [pageView setBackgroundColor:[UIColor whiteColor]];
     [pageView setTag:1];
     
-    CGRect pageFrame = pageView.frame;
-    pageFrame.origin.x = xOffset;
-    [pageView setFrame:pageFrame];
-    
-    xOffset += self.bounds.size.width;
-    
     [self addSubview:pageView];
     
-    
-    [self setContentSize:CGSizeMake(xOffset, self.bounds.size.height)];
     [self setPageView:pageView];
     
     [self showPageAtIndex:page - 1];

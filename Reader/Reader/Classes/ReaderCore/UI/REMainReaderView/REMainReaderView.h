@@ -10,7 +10,7 @@
 #import "REDocument.h"
 
 
-@interface REMainReaderView : UIScrollView
+@interface REMainReaderView : UIView
 
 @property (nonatomic) REDocument *document;
 
