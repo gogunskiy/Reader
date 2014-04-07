@@ -19,7 +19,7 @@
     
     REBaseParser * parser = [REBaseParser parserForType:REParserTypeEpub];
     
-    NSString *bookFilePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"000000000003.epub"];
+    NSString *bookFilePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"000000000002.epub"];
  
     [parser parseBookAtPath:bookFilePath
             completionBlock:^(REDocument *document)

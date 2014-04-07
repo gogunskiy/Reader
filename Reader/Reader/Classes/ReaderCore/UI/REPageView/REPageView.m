@@ -63,13 +63,16 @@
                         runBounds.size.width = CTRunGetTypographicBounds(run, CFRangeMake(0, 0), &ascent, &descent, NULL);
                         runBounds.size.height = ascent + descent;
                         
-                        CGFloat xOffset = CTLineGetOffsetForStringIndex(line, CTRunGetStringRange(run).location, NULL);
-                        runBounds.origin.x = xOffset;
+                        runBounds.origin.x = self.frame.size.width / 2 - runBounds.size.width / 2;
                         runBounds.origin.y = origins[index].y;
                         runBounds.origin.y -= descent;
+                        runBounds.origin.y = self.frame.size.height - CGRectGetMaxY(runBounds);
                         
                         UIImageView *view = [[UIImageView alloc] initWithFrame:runBounds];
-                        [view setBackgroundColor:[UIColor redColor]];
+                        UIImage *image = [UIImage imageNamed:attachment[@"fileName"]];
+                        [view setContentMode:UIViewContentModeScaleAspectFit];
+                        [view setImage:image];
+                        [view setBackgroundColor:[UIColor clearColor]];
                         [self addSubview:view];
                     }
                 }

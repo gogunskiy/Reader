@@ -43,7 +43,7 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"{%d,%d} - %d",self.start, self.end, self.type];
+    return [NSString stringWithFormat:@"{%ld,%ld} - %ld",self.start, self.end, self.type];
 }
 
 @end
@@ -158,7 +158,12 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
             }
             else if ([tag rangeOfString:@"<img"].length)
             {
-                NSDictionary *attachment = @{@"fileName" : [self text], @"attachmenTtype" : @"image"};
+                NSRange range= [[self text] rangeOfString:@"src=\""];
+                
+                NSString *fileName = [[self text] substringFromIndex:range.location + range.length];
+                fileName = [fileName substringToIndex:[fileName rangeOfString:@"\""].location];
+                
+                NSDictionary *attachment = @{@"fileName" : [fileName lastPathComponent], @"attachmenTtype" : @"image"};
                 
                 REInnerTagAttribute *attribute = [[REInnerTagAttribute alloc] init];
                 attribute.type = REInnerTagAttachment;
