@@ -64,7 +64,7 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
         [self setChildren:[NSMutableArray new]];
         
         [self setColor:[UIColor blackColor]];
-        [self setFontSize:14];
+        [self setFontSize:18];
         [self setFontName:@"Helvetica"];
     }
     
