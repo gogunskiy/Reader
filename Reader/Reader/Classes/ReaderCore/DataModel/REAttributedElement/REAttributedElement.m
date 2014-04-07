@@ -158,6 +158,8 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
             }
             else if ([tag rangeOfString:@"<img"].length)
             {
+                [resultString appendString:@" "];
+                
                 NSRange range= [[self text] rangeOfString:@"src=\""];
                 
                 NSString *fileName = [[self text] substringFromIndex:range.location + range.length];
@@ -291,7 +293,10 @@ CGFloat MyGetWidthCallback( void* refCon)
         [self setParagraphStyle:[SETTINGS epigraphAuthorStyle]];
     }
     
-    
+    if ([[[self attributes] allValues] containsObject:@"pic-nazv"])
+    {
+        [self setParagraphStyle:[SETTINGS headerParagraphStyle]];
+    }
 }
 
 - (CTFontRef) _font
