@@ -12,6 +12,7 @@
 @interface RESettings()
 
 @property (nonatomic, strong) NSDictionary *settings;
+@property (nonatomic, strong) NSString *deviceId;
 
 @end
 
@@ -38,6 +39,7 @@ static RESettings *shared = nil;
     if (self) 
     {
         [self setSettings:[NSDictionary dictionaryWithContentsOfFile:[[[NSBundle mainBundle] resourcePath]stringByAppendingPathComponent:@"Settings.plist"]]];
+        [self setDeviceId:IS_IPAD ? @"iPad" : @"iPhone"];
     }
     return self;
 }
@@ -72,14 +74,14 @@ static RESettings *shared = nil;
 
 - (CTParagraphStyleRef) _paragraphStyleForType:(NSString *)type
 {
-    CTTextAlignment aligment = [_settings[DEVICE_ID][type][aligmentKey] intValue];
+    CTTextAlignment aligment = [_settings[[self deviceId]][type][aligmentKey] intValue];
     
-    CGFloat minMineHeight = [_settings[DEVICE_ID][type][minRowHeightKey] floatValue];
-    CGFloat leading =  [_settings[DEVICE_ID][type][leadingKey] floatValue];
-    CGFloat space = [_settings[DEVICE_ID][type][spaceKey] floatValue];
-    CGFloat firstLineHeadIndent =  [_settings[DEVICE_ID][type][firstLineHeadIndentKey] floatValue];
-    CGFloat lineHeadIndent =  [_settings[DEVICE_ID][type][lineHeadIndentKey] floatValue];
-    CGFloat linetTailIndent = [_settings[DEVICE_ID][type][linetTailIndentKey] floatValue];
+    CGFloat minMineHeight = [_settings[[self deviceId]][type][minRowHeightKey] floatValue];
+    CGFloat leading =  [_settings[[self deviceId]][type][leadingKey] floatValue];
+    CGFloat space = [_settings[[self deviceId]][type][spaceKey] floatValue];
+    CGFloat firstLineHeadIndent =  [_settings[[self deviceId]][type][firstLineHeadIndentKey] floatValue];
+    CGFloat lineHeadIndent =  [_settings[[self deviceId]][type][lineHeadIndentKey] floatValue];
+    CGFloat linetTailIndent = [_settings[[self deviceId]][type][linetTailIndentKey] floatValue];
     
     return [self _paragraphStyleWithAligment:aligment 
                                minMineHeight:minMineHeight 

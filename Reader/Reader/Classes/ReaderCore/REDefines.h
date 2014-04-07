@@ -10,12 +10,6 @@
 
 #define IS_IPAD                                                 UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad
 
-#ifdef IS_IPAD
-static NSString * const DEVICE_ID                              = @"iPad";
-#else
-static NSString * const DEVICE_ID                              = @"iPhone";
-#endif
-
 static NSString * const PARAGRAPH_STYLE_BASE                    = @"baseParagraphStyle";
 static NSString * const PARAGRAPH_STYLE_HEADER                  = @"headerParagraphStyle";
 static NSString * const PARAGRAPH_STYLE_EPIGRAPH                = @"epigraphStyle";
