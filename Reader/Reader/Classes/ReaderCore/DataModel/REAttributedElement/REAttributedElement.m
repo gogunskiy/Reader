@@ -43,7 +43,7 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"{%ld,%ld} - %ld",self.start, self.end, self.type];
+    return [NSString stringWithFormat:@"{%ld,%ld} - %ld",(long)self.start, (long)self.end, (long)self.type];
 }
 
 @end
@@ -269,26 +269,26 @@ CGFloat MyGetWidthCallback( void* refCon)
 
 - (void) applyParagraphStyle
 {
-    [self setParagraphStyle:[self _baseParagraphStyle]];
+    [self setParagraphStyle:[SETTINGS baseParagraphStyle]];
     
     if ([[self name] rangeOfString:@"h"].length)
     {
-        [self setParagraphStyle:[self _headerParagraphStyle]];
+        [self setParagraphStyle:[SETTINGS headerParagraphStyle]];
     }
     
     if ([[self name] rangeOfString:@"blockquote"].length)
     {
-        [self setParagraphStyle:[self _blockquoteParagraphStyle]];
+        [self setParagraphStyle:[SETTINGS blockquoteParagraphStyle]];
     }
     
     if ([[[self attributes] allValues] containsObject:@"epigraph"])
     {
-        [self setParagraphStyle:[self _epigraphStyle]];
+        [self setParagraphStyle:[SETTINGS epigraphStyle]];
     }
     
     if ([[[self attributes] allValues] containsObject:@"epigraph-avtor"])
     {
-        [self setParagraphStyle:[self _epigraphAuthorStyle]];
+        [self setParagraphStyle:[SETTINGS epigraphAuthorStyle]];
     }
     
     
@@ -342,133 +342,6 @@ CGFloat MyGetWidthCallback( void* refCon)
 {
     CTFontRef fontRef = CTFontCreateWithName((CFStringRef)name, size, NULL);
     return fontRef;
-}
-
-- (CTParagraphStyleRef) _headerParagraphStyle
-{
-    CTTextAlignment aligment = kCTCenterTextAlignment;
-    
-    CGFloat minMineHeight = 10;
-    CGFloat leading = 2;
-    CGFloat space = 10;
-    CGFloat firstLineHeadIndent = 8;
-    CGFloat lineHeadIndent = 8;
-    CGFloat linetTailIndent = -8;
-    
-    return [self _paragraphStyleWithAligment:aligment 
-                               minMineHeight:minMineHeight 
-                                     leading:leading 
-                                       space:space
-                         firstLineHeadIndent:firstLineHeadIndent
-                              lineHeadIndent:lineHeadIndent
-                             linetTailIndent:linetTailIndent];
-}
-
-- (CTParagraphStyleRef) _blockquoteParagraphStyle
-{
-    CTTextAlignment aligment = kCTCenterTextAlignment;
-    
-    CGFloat minMineHeight = 10;
-    CGFloat leading = 2;
-    CGFloat space = 10;
-    CGFloat firstLineHeadIndent = 30;
-    CGFloat lineHeadIndent = 30;
-    CGFloat linetTailIndent = -30;
-    
-    return [self _paragraphStyleWithAligment:aligment
-                               minMineHeight:minMineHeight
-                                     leading:leading
-                                       space:space
-                         firstLineHeadIndent:firstLineHeadIndent
-                              lineHeadIndent:lineHeadIndent
-                             linetTailIndent:linetTailIndent];
-}
-
-- (CTParagraphStyleRef) _baseParagraphStyle
-{
-    CTTextAlignment aligment = kCTJustifiedTextAlignment;
-    
-    CGFloat minMineHeight = 10;
-    CGFloat leading = 2;
-    CGFloat space = 10;
-    CGFloat firstLineHeadIndent = 20;
-    CGFloat lineHeadIndent = 8;
-    CGFloat linetTailIndent = -8;
-    
-    return [self _paragraphStyleWithAligment:aligment 
-                               minMineHeight:minMineHeight 
-                                     leading:leading 
-                                       space:space
-                         firstLineHeadIndent:firstLineHeadIndent
-                              lineHeadIndent:lineHeadIndent
-                             linetTailIndent:linetTailIndent];
-}
-
-
-- (CTParagraphStyleRef) _epigraphStyle
-{
-    CTTextAlignment aligment = kCTJustifiedTextAlignment;
-    
-    CGFloat minMineHeight = 10;
-    CGFloat leading = 2;
-    CGFloat space = 10;
-    CGFloat firstLineHeadIndent = 100;
-    CGFloat lineHeadIndent = 100;
-    CGFloat linetTailIndent = -8;
-    
-    return [self _paragraphStyleWithAligment:aligment
-                               minMineHeight:minMineHeight
-                                     leading:leading
-                                       space:space
-                         firstLineHeadIndent:firstLineHeadIndent
-                              lineHeadIndent:lineHeadIndent
-                             linetTailIndent:linetTailIndent];
-}
-
-- (CTParagraphStyleRef) _epigraphAuthorStyle
-{
-    CTTextAlignment aligment = kCTRightTextAlignment;
-    
-    CGFloat minMineHeight = 10;
-    CGFloat leading = 2;
-    CGFloat space = 10;
-    CGFloat firstLineHeadIndent = 100;
-    CGFloat lineHeadIndent = 100;
-    CGFloat linetTailIndent = -8;
-    
-    return [self _paragraphStyleWithAligment:aligment
-                               minMineHeight:minMineHeight
-                                     leading:leading
-                                       space:space
-                         firstLineHeadIndent:firstLineHeadIndent
-                              lineHeadIndent:lineHeadIndent
-                             linetTailIndent:linetTailIndent];
-}
-
-- (CTParagraphStyleRef) _paragraphStyleWithAligment:(CTTextAlignment)aligment 
-                                      minMineHeight:(CGFloat)minMineHeight 
-                                            leading:(CGFloat)leading 
-                                              space:(CGFloat)space 
-                                firstLineHeadIndent:(CGFloat)firstLineHeadIndent 
-                                     lineHeadIndent:(CGFloat)lineHeadIndent 
-                                    linetTailIndent:(CGFloat)linetTailIndent
-{
-    CTParagraphStyleSetting styleSettings[] = 
-    {
-        {kCTParagraphStyleSpecifierMinimumLineSpacing, sizeof(CGFloat), &minMineHeight},
-        {kCTParagraphStyleSpecifierMinimumLineHeight, sizeof(CGFloat), &minMineHeight},
-        {kCTParagraphStyleSpecifierLineSpacing, sizeof(CGFloat), &leading},
-        {kCTParagraphStyleSpecifierParagraphSpacing, sizeof(CGFloat), &leading},
-        {kCTParagraphStyleSpecifierAlignment, sizeof(CTTextAlignment), &aligment},
-        {kCTParagraphStyleSpecifierParagraphSpacing,  sizeof(CGFloat), &space},
-        {kCTParagraphStyleSpecifierFirstLineHeadIndent,  sizeof(CGFloat), &firstLineHeadIndent},
-        {kCTParagraphStyleSpecifierHeadIndent,  sizeof(CGFloat), &lineHeadIndent},
-        {kCTParagraphStyleSpecifierTailIndent,  sizeof(CGFloat), &linetTailIndent}
-    };
-    
-    CTParagraphStyleRef paragraphStyle = CTParagraphStyleCreate(styleSettings, sizeof(styleSettings) / sizeof(styleSettings[0]));
-    
-    return paragraphStyle;
 }
 
 @end

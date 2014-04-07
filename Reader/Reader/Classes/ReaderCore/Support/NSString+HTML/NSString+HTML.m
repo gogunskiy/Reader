@@ -14,13 +14,6 @@ static NSDictionary *entityLookup = nil;
 
 @implementation NSString (HTML)
 
-- (NSUInteger)integerValueFromHex 
-{
-	NSUInteger result = 0;
-	sscanf([self UTF8String], "%x", &result);
-	return result;
-}
-
 - (BOOL)isInlineTag
 {
 	static dispatch_once_t predicate;

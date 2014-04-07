@@ -12,7 +12,6 @@
 
 @interface NSString (HTML)
 
-- (NSUInteger)integerValueFromHex;
 - (BOOL)isInlineTag;
 - (BOOL)isMetaTag;
 - (BOOL)isNumeric;

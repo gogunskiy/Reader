@@ -88,6 +88,8 @@
 		79E7827118F2D853002B121B /* Foto_40_fmt.png in Resources */ = {isa = PBXBuildFile; fileRef = 79E7824618F2D853002B121B /* Foto_40_fmt.png */; };
 		79E7827218F2D853002B121B /* Nastoyaschij_Nikolaj_fmt.png in Resources */ = {isa = PBXBuildFile; fileRef = 79E7824718F2D853002B121B /* Nastoyaschij_Nikolaj_fmt.png */; };
 		79E7827318F2D853002B121B /* Zaichnevskij_fmt.png in Resources */ = {isa = PBXBuildFile; fileRef = 79E7824818F2D853002B121B /* Zaichnevskij_fmt.png */; };
+		79E7827718F2DE02002B121B /* RESettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E7827618F2DE02002B121B /* RESettings.m */; };
+		79E7827A18F2E34A002B121B /* Settings.plist in Resources */ = {isa = PBXBuildFile; fileRef = 79E7827918F2E34A002B121B /* Settings.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -205,6 +207,10 @@
 		79E7824618F2D853002B121B /* Foto_40_fmt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Foto_40_fmt.png; sourceTree = "<group>"; };
 		79E7824718F2D853002B121B /* Nastoyaschij_Nikolaj_fmt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Nastoyaschij_Nikolaj_fmt.png; sourceTree = "<group>"; };
 		79E7824818F2D853002B121B /* Zaichnevskij_fmt.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Zaichnevskij_fmt.png; sourceTree = "<group>"; };
+		79E7827518F2DE02002B121B /* RESettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RESettings.h; sourceTree = "<group>"; };
+		79E7827618F2DE02002B121B /* RESettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RESettings.m; sourceTree = "<group>"; };
+		79E7827918F2E34A002B121B /* Settings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Settings.plist; sourceTree = "<group>"; };
+		79E7827B18F2E516002B121B /* REDefines.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REDefines.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -263,6 +269,7 @@
 		63D4695C18EF3EFB00E5E6E7 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				79E7827418F2DDED002B121B /* Settings */,
 				63E12CA718F173FD005032EA /* NSString+HTML */,
 				63D4696918F0813000E5E6E7 /* PathManager */,
 			);
@@ -429,6 +436,7 @@
 		797EBC7018EC4B3C0049C061 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				79E7827818F2E2F7002B121B /* Settings */,
 				79E7821D18F2D853002B121B /* Images */,
 				63D4696018EF409A00E5E6E7 /* Epub */,
 				79E4ABA118ED9D76000003C7 /* chapter-001.xml */,
@@ -476,6 +484,7 @@
 				797EBC8A18EC4CDE0049C061 /* Controllers */,
 				797EBC8B18EC4CDE0049C061 /* DataModel */,
 				797EBC8D18EC4CDE0049C061 /* UI */,
+				79E7827B18F2E516002B121B /* REDefines.h */,
 			);
 			path = ReaderCore;
 			sourceTree = "<group>";
@@ -632,6 +641,23 @@
 			path = Images;
 			sourceTree = "<group>";
 		};
+		79E7827418F2DDED002B121B /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				79E7827518F2DE02002B121B /* RESettings.h */,
+				79E7827618F2DE02002B121B /* RESettings.m */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		79E7827818F2E2F7002B121B /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				79E7827918F2E34A002B121B /* Settings.plist */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -734,6 +760,7 @@
 				79E7826418F2D853002B121B /* Foto_27_fmt.png in Resources */,
 				79E7824918F2D853002B121B /* 31643.png in Resources */,
 				79E7826118F2D853002B121B /* Foto_24_fmt.png in Resources */,
+				79E7827A18F2E34A002B121B /* Settings.plist in Resources */,
 				63D4696418EF409A00E5E6E7 /* 000000000001.epub in Resources */,
 				79E7825A18F2D853002B121B /* Foto_17_fmt.png in Resources */,
 				79E7826918F2D853002B121B /* Foto_32_fmt.png in Resources */,
@@ -793,6 +820,7 @@
 				79E4AB9218ED8779000003C7 /* REDocument.m in Sources */,
 				797EBC7E18EC4B3C0049C061 /* main.m in Sources */,
 				79E4ABA618EDB41A000003C7 /* REChapter.m in Sources */,
+				79E7827718F2DE02002B121B /* RESettings.m in Sources */,
 				797EBC7D18EC4B3C0049C061 /* REAppDelegate.m in Sources */,
 				797EBC9118EC4CFC0049C061 /* REMainReaderView.m in Sources */,
 				79A4FF2D18EEA82500F79347 /* REPageView.m in Sources */,

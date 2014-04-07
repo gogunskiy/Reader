@@ -42,7 +42,7 @@
 
 - (void) updateUI
 {
-    [[self pageCountLabel] setText:[NSString stringWithFormat:@"%d / %d", self.readerView.currentPage, self.readerView.pageCount]];
+    [[self pageCountLabel] setText:[NSString stringWithFormat:@"%lu / %lu", (unsigned long)self.readerView.currentPage, (unsigned long)self.readerView.pageCount]];
 }
 
 #pragma mark - Actions -

@@ -94,7 +94,6 @@
     
     CTFrameDraw(_frameRef, context);
     
-    
     [self insertAttachments:_attachments];
 }
 
