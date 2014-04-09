@@ -18,8 +18,8 @@
 
 - (NSArray *) documents;
 
-- (void) loadFile:(NSString *)filePath                        
-  completionBlock:(void(^)(REDocument *document))completionBlock 
-       errorBlock:(void(^)(NSError * error))errorBlock;
+- (void) loadDocumentWithPath:(NSString *)filePath
+              completionBlock:(void(^)(REDocument *document))completionBlock
+                   errorBlock:(void(^)(NSError * error))errorBlock;
 
 @end

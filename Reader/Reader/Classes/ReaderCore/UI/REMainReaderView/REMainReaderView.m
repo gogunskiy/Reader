@@ -84,6 +84,11 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
 
 - (void) showPageAtIndex:(NSUInteger)index
 {
+    if ([_frames count] <= index)
+    {
+        return;
+    }
+    
     CTFrameRef ctFrame = (__bridge CTFrameRef)_frames[index];
     
     [[self pageView] setCTFrame:ctFrame

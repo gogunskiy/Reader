@@ -52,9 +52,9 @@ static REReaderController *shared = nil;
 }
 
 
-- (void) loadFile:(NSString *)filePath                        
-  completionBlock:(void(^)(REDocument *document))completionBlock 
-       errorBlock:(void(^)(NSError * error))errorBlock
+- (void) loadDocumentWithPath:(NSString *)filePath
+              completionBlock:(void(^)(REDocument *document))completionBlock
+                   errorBlock:(void(^)(NSError * error))errorBlock
 {    
     NSString *string = [[NSString alloc] initWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
     

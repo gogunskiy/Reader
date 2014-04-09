@@ -22,16 +22,15 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-	// Do any additional setup after loading the view, typically from a nib.
-    
-    NSString *filePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"section1.xhtml"];
-    [READER loadFile:filePath completionBlock:^(REDocument *document)
+
+    [READER loadDocumentWithPath:[self documentPath]
+                 completionBlock:^(REDocument *document)
     {
         [[self readerView] setDocument:document];
         [[self readerView] needsUpdatePages];
         [self updateUI];
     } 
-                  errorBlock:^(NSError *error) 
+                      errorBlock:^(NSError *error)
     {
         
     }];

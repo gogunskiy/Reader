@@ -9,6 +9,7 @@
 #import "REContentViewController.h"
 #import "REReaderController.h"
 #import "REMainViewController.h"
+#import "REPathManager.h"
 
 @interface REContentViewController ()
 
@@ -52,7 +53,13 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [self pushViewControllerWithIdentifier:[REMainViewController class]];
+    NSString *bookPath = [[NSBundle mainBundle] resourcePath];
+    bookPath = [bookPath stringByAppendingPathComponent:_items[indexPath.row][@"file"]];
+    
+    REMainViewController *viewController = [[self storyboard] instantiateViewControllerWithIdentifier:NSStringFromClass([REMainViewController class])];
+    [viewController setDocumentPath:bookPath];
+    
+    [[self navigationController] pushViewController:viewController animated:TRUE];
 }
 
 

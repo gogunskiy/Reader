@@ -11,4 +11,6 @@
 
 @interface REMainViewController : REBaseViewController
 
+@property (nonatomic) NSString *documentPath;
+
 @end
