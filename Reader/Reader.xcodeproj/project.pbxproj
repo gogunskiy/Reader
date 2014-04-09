@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		63A406D118F436AF00021EAB /* Moskva - Petushki.epub in Resources */ = {isa = PBXBuildFile; fileRef = 63A406D018F436AF00021EAB /* Moskva - Petushki.epub */; };
+		63A406D318F4379600021EAB /* section1.xhtml in Resources */ = {isa = PBXBuildFile; fileRef = 63A406D218F4379600021EAB /* section1.xhtml */; };
 		63D4695718EF3AE600E5E6E7 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 63D4694D18EF3AE600E5E6E7 /* ioapi.c */; };
 		63D4695818EF3AE600E5E6E7 /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 63D4694F18EF3AE600E5E6E7 /* mztools.c */; };
 		63D4695918EF3AE600E5E6E7 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 63D4695118EF3AE600E5E6E7 /* unzip.c */; };
@@ -103,6 +105,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		63A406D018F436AF00021EAB /* Moskva - Petushki.epub */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Moskva - Petushki.epub"; sourceTree = "<group>"; };
+		63A406D218F4379600021EAB /* section1.xhtml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = section1.xhtml; path = Reader/Resources/Data/section1.xhtml; sourceTree = SOURCE_ROOT; };
 		63D4694C18EF3AE600E5E6E7 /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
 		63D4694D18EF3AE600E5E6E7 /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
 		63D4694E18EF3AE600E5E6E7 /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
@@ -279,6 +283,8 @@
 		63D4696018EF409A00E5E6E7 /* Epub */ = {
 			isa = PBXGroup;
 			children = (
+				63A406D218F4379600021EAB /* section1.xhtml */,
+				63A406D018F436AF00021EAB /* Moskva - Petushki.epub */,
 				63D4696118EF409A00E5E6E7 /* 000000000001.epub */,
 				63D4696218EF409A00E5E6E7 /* 000000000002.epub */,
 				63D4696318EF409A00E5E6E7 /* 000000000003.epub */,
@@ -773,6 +779,7 @@
 				79E7826218F2D853002B121B /* Foto_25_fmt.png in Resources */,
 				79E7826D18F2D853002B121B /* Foto_36_fmt.png in Resources */,
 				79E7825B18F2D853002B121B /* Foto_18_fmt.png in Resources */,
+				63A406D118F436AF00021EAB /* Moskva - Petushki.epub in Resources */,
 				79E7826C18F2D853002B121B /* Foto_35_fmt.png in Resources */,
 				79E7826618F2D853002B121B /* Foto_29_fmt.png in Resources */,
 				79E7825418F2D853002B121B /* Foto_10_fmt.png in Resources */,
@@ -787,6 +794,7 @@
 				79E7825D18F2D853002B121B /* Foto_20_fmt.png in Resources */,
 				797EBC8118EC4B3C0049C061 /* Images.xcassets in Resources */,
 				79E7825F18F2D853002B121B /* Foto_22_fmt.png in Resources */,
+				63A406D318F4379600021EAB /* section1.xhtml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,9 +10,16 @@
 
 @implementation REPathManager
 
-+ (NSString *)documentsDirectory
++ (NSString *) documentsDirectory
 {
     return (NSString *)[[[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject] path];
+}
+
++ (NSString *) tempDirectory
+{
+    NSURL *tmpDirURL = [NSURL fileURLWithPath:NSTemporaryDirectory() isDirectory:YES];
+
+    return [tmpDirURL absoluteString];
 }
 
 + (NSString *) booksDirectory

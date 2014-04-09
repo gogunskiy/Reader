@@ -26,7 +26,7 @@
     
     REReaderController *viewController = [[REReaderController alloc] init];
     
-    NSString *filePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"chapter-001.xml"];
+    NSString *filePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"section1.xhtml"];
     [viewController loadFile:filePath completionBlock:^(REDocument *document) 
     {
         [[self readerView] setDocument:document];
