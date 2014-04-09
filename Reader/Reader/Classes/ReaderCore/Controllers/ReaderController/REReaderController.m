@@ -56,31 +56,29 @@ static REReaderController *shared = nil;
               completionBlock:(void(^)(REDocument *document))completionBlock
                    errorBlock:(void(^)(NSError * error))errorBlock
 {    
-    NSString *string = [[NSString alloc] initWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
-    
     REBaseParser * parser = [REBaseParser parserForType:REParserTypeEpub];
     
-    NSString *bookFilePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"Moskva - Petushki.epub"];
- 
-    [parser parseBookAtPath:bookFilePath
+    [parser parseBookAtPath:filePath
             completionBlock:^(REDocument *document)
      {
+         NSString *chapterPath = document.info[@"chapters"][3][@"hrefFull"];
          
+         [parser parseDataToAttributedString:[NSString stringWithContentsOfFile:chapterPath encoding:NSUTF8StringEncoding error:nil]
+                             completionBlock:^(REChapter *chapter)
+          {
+              [[document chapters] addObject:chapter];
+              
+              completionBlock(document);
+          }
+                                  errorBlock:^(NSError *error)
+          {
+              
+          }];
      }
                  errorBlock:^(NSError *error)
      {
          
      }];
-    
-    [parser parseDataToAttributedString:string
-                        completionBlock:^(REChapter *chapter)
-     {
-         REDocument *document = [REDocument new];
-         [[document chapters] addObject:chapter];
-         
-         completionBlock(document);
-     }
-                             errorBlock:errorBlock];
 }
 
 @end

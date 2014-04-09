@@ -14,6 +14,30 @@
 #import "RXMLElement.h"
 #import "REPathManager.h"
 
+static NSString * const MANIFEST_PATH                   =  @"META-INF/container.xml";
+static NSString * const CONTAINER_ROOTFILE_XPATH_KEY    =  @"//rootfile";
+
+static NSString * const NAV_LABELS_XPATH_KEY            =  @"//ncx:content[@src='%@']/../ncx:navLabel/ncx:text";
+static NSString * const ITEM_REF_XPATH_KEY              =  @"//opf:itemref";
+
+static NSString * const META_TYPE_XML_KEY               = @"media-type";
+static NSString * const META_TYPE_PACKAGE_XML_KEY       = @"application/oebps-package+xml";
+static NSString * const META_TYPE_DTBNCX_XML_KEY        = @"application/x-dtbncx+xml";
+static NSString * const META_TYPE_XHTML_XML_KEY         = @"application/xhtml+xml";
+static NSString * const META_TYPE_IMAGE_KEY             = @"image/png";
+static NSString * const META_TYPE_CSS_KEY               = @"text/css";
+
+
+static NSString * const FULL_PATH_XML_KEY               = @"full-path";
+static NSString * const ID_XML_KEY                      = @"id";
+static NSString * const TEXT_XML_KEY                    = @"text";
+static NSString * const MARKER_XML_KEY                  = @"marker";
+static NSString * const HREF_XML_KEY                    = @"href";
+static NSString * const HREF_FULL_XML_KEY               = @"hrefFull";
+static NSString * const ID_REF_XML_KEY                  = @"idref";
+static NSString * const ID_REF_XML_BOOK_INFO_KEY        = @"epubbooksinfo";
+
+
 @implementation REEpubParser
 
 #pragma mark - Chapter Parsing -
@@ -30,7 +54,18 @@
               directory:booksDirectory
              completion:^(BOOL saved)
         {
-                            
+            [self parseManifestAndGetOpfPath:booksDirectory
+                                  completion:^(NSString *path)
+             {
+                 [self bookFromOPFFilePath:[booksDirectory stringByAppendingPathComponent:path]
+                                completion:^(NSDictionary *bookInfo)
+                  {
+                      REDocument *document = [[REDocument alloc] init];
+                      [document setInfo:bookInfo];
+                      
+                      completionBlock(document);
+                  }];
+             }];
         }];
     });
 }
@@ -123,5 +158,102 @@
     
     completion(retVal);
 }
+
+- (void) parseManifestAndGetOpfPath:(NSString *)pathToSavedEpub completion:(void (^)(NSString *path))completion
+{
+    NSString *manifestFile = [pathToSavedEpub stringByAppendingPathComponent:MANIFEST_PATH];
+    if (![REPathManager fileExists:manifestFile])
+    {
+        completion(nil);
+    }
+
+    RXMLElement *manifestDoc = [[RXMLElement alloc] initFromXMLFilePath:manifestFile];
+    
+    [manifestDoc iterate:@"rootfiles.rootfile"
+              usingBlock:^(RXMLElement *element)
+    {
+        if ([[element attribute:META_TYPE_XML_KEY] isEqualToString:META_TYPE_PACKAGE_XML_KEY])
+        {
+            completion([element attribute:FULL_PATH_XML_KEY]);
+        }
+    }];
+}
+
+
+- (void) bookFromOPFFilePath:(NSString *)opfFilePath completion:(void (^)(NSDictionary *bookInfo))completion
+{
+    if (![REPathManager fileExists:opfFilePath])
+    {
+        completion(nil);
+    }
+    
+    NSMutableArray *chapters    = [NSMutableArray new];
+    NSMutableArray *styles      = [NSMutableArray new];
+    NSMutableArray *images      = [NSMutableArray new];
+    NSMutableArray *content     = [NSMutableArray new];
+    
+    __block NSString *ncxFileName = @"";
+    
+    
+    RXMLElement *opfFile = [[RXMLElement alloc] initFromXMLFilePath:opfFilePath];
+
+    [opfFile iterate:@"manifest.item"
+          usingBlock:^(RXMLElement *element)
+     {
+         NSString *urlPrefix = [opfFilePath stringByDeletingLastPathComponent];
+         
+         NSDictionary *elementInfo = @{ID_XML_KEY : [element attribute:ID_XML_KEY], HREF_XML_KEY : [element attribute:HREF_XML_KEY], HREF_FULL_XML_KEY : [urlPrefix stringByAppendingPathComponent:[element attribute:HREF_XML_KEY]]};
+         
+         if ([[element attribute:META_TYPE_XML_KEY] isEqualToString:META_TYPE_XHTML_XML_KEY])
+         {
+             [chapters addObject:elementInfo];
+         }
+         
+         if ([[element attribute:META_TYPE_XML_KEY] isEqualToString:META_TYPE_CSS_KEY])
+         {
+             [styles addObject:elementInfo];
+         }
+         
+         if ([[element attribute:META_TYPE_XML_KEY] isEqualToString:META_TYPE_IMAGE_KEY])
+         {
+             [images addObject:elementInfo];
+         }
+         
+         if ([[element attribute:META_TYPE_XML_KEY] isEqualToString:META_TYPE_DTBNCX_XML_KEY])
+         {
+             ncxFileName = elementInfo[HREF_FULL_XML_KEY];
+         }
+     }];
+
+    RXMLElement *ncxFile = [[RXMLElement alloc] initFromXMLFilePath:ncxFileName];
+    
+    [ncxFile iterate:@"navMap.navPoint"
+          usingBlock:^(RXMLElement *element)
+     {
+         RXMLElement *contentElement = [element child:@"content"];
+         NSString * contentSrc = [contentElement attribute:@"src"];
+         NSString * text = [[[element child:@"navLabel"] child:@"text"] text];
+         
+         NSArray *markerArray = [contentSrc componentsSeparatedByString:@"#"];
+         NSString *marker = @"";
+         
+         if ([markerArray count] > 1)
+         {
+             marker = markerArray[1];
+         }
+         
+         for (NSDictionary *dict in chapters)
+         {
+             if ([contentSrc rangeOfString:dict[HREF_XML_KEY]].length > 0)
+             {
+                 [content addObject:@{TEXT_XML_KEY : text, HREF_FULL_XML_KEY : dict[HREF_FULL_XML_KEY], MARKER_XML_KEY : marker}];
+                 break;
+             }
+         }
+     }];
+    
+    completion(@{@"chapters" : chapters, @"content" : content, @"images" : images, @"css" : styles});
+}
+
 
 @end
