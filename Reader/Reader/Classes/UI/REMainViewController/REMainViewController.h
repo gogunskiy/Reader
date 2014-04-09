@@ -7,7 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "REBaseViewController.h"
 
-@interface REMainViewController : UIViewController
+@interface REMainViewController : REBaseViewController
 
 @end

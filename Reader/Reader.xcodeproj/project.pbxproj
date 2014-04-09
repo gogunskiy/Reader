@@ -18,6 +18,9 @@
 		63D4696518EF409A00E5E6E7 /* 000000000002.epub in Resources */ = {isa = PBXBuildFile; fileRef = 63D4696218EF409A00E5E6E7 /* 000000000002.epub */; };
 		63D4696618EF409A00E5E6E7 /* 000000000003.epub in Resources */ = {isa = PBXBuildFile; fileRef = 63D4696318EF409A00E5E6E7 /* 000000000003.epub */; };
 		63D4696C18F0813000E5E6E7 /* REPathManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D4696B18F0813000E5E6E7 /* REPathManager.m */; };
+		63D7A17618F5BCE7002769E5 /* Content.plist in Resources */ = {isa = PBXBuildFile; fileRef = 63D7A17518F5BCE7002769E5 /* Content.plist */; };
+		63D7A17A18F5BF65002769E5 /* REContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D7A17918F5BF65002769E5 /* REContentViewController.m */; };
+		63D7A17E18F5C3AA002769E5 /* REBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D7A17D18F5C3AA002769E5 /* REBaseViewController.m */; };
 		63E12CAA18F173FD005032EA /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E12CA918F173FD005032EA /* NSString+HTML.m */; };
 		797EBC2B18EC4A830049C061 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 797EBC2A18EC4A830049C061 /* Foundation.framework */; };
 		797EBC2D18EC4A830049C061 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 797EBC2C18EC4A830049C061 /* CoreGraphics.framework */; };
@@ -123,6 +126,11 @@
 		63D4696318EF409A00E5E6E7 /* 000000000003.epub */ = {isa = PBXFileReference; lastKnownFileType = file; path = 000000000003.epub; sourceTree = "<group>"; };
 		63D4696A18F0813000E5E6E7 /* REPathManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REPathManager.h; sourceTree = "<group>"; };
 		63D4696B18F0813000E5E6E7 /* REPathManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REPathManager.m; sourceTree = "<group>"; };
+		63D7A17518F5BCE7002769E5 /* Content.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Content.plist; sourceTree = "<group>"; };
+		63D7A17818F5BF65002769E5 /* REContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REContentViewController.h; sourceTree = "<group>"; };
+		63D7A17918F5BF65002769E5 /* REContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REContentViewController.m; sourceTree = "<group>"; };
+		63D7A17C18F5C3AA002769E5 /* REBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REBaseViewController.h; sourceTree = "<group>"; };
+		63D7A17D18F5C3AA002769E5 /* REBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REBaseViewController.m; sourceTree = "<group>"; };
 		63E12CA818F173FD005032EA /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTML.h"; sourceTree = "<group>"; };
 		63E12CA918F173FD005032EA /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HTML.m"; sourceTree = "<group>"; };
 		797EBC2718EC4A830049C061 /* Reader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reader.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -301,6 +309,32 @@
 			path = PathManager;
 			sourceTree = "<group>";
 		};
+		63D7A17418F5BCBE002769E5 /* Content */ = {
+			isa = PBXGroup;
+			children = (
+				63D7A17518F5BCE7002769E5 /* Content.plist */,
+			);
+			path = Content;
+			sourceTree = "<group>";
+		};
+		63D7A17718F5BF4E002769E5 /* REContentViewController */ = {
+			isa = PBXGroup;
+			children = (
+				63D7A17818F5BF65002769E5 /* REContentViewController.h */,
+				63D7A17918F5BF65002769E5 /* REContentViewController.m */,
+			);
+			path = REContentViewController;
+			sourceTree = "<group>";
+		};
+		63D7A17B18F5C39C002769E5 /* REBaseViewController */ = {
+			isa = PBXGroup;
+			children = (
+				63D7A17C18F5C3AA002769E5 /* REBaseViewController.h */,
+				63D7A17D18F5C3AA002769E5 /* REBaseViewController.m */,
+			);
+			path = REBaseViewController;
+			sourceTree = "<group>";
+		};
 		63E12CA718F173FD005032EA /* NSString+HTML */ = {
 			isa = PBXGroup;
 			children = (
@@ -404,6 +438,8 @@
 		797EBC6A18EC4B3C0049C061 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				63D7A17B18F5C39C002769E5 /* REBaseViewController */,
+				63D7A17718F5BF4E002769E5 /* REContentViewController */,
 				797EBC6B18EC4B3C0049C061 /* REMainViewController */,
 			);
 			path = UI;
@@ -442,6 +478,7 @@
 		797EBC7018EC4B3C0049C061 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				63D7A17418F5BCBE002769E5 /* Content */,
 				79E7827818F2E2F7002B121B /* Settings */,
 				79E7821D18F2D853002B121B /* Images */,
 				63D4696018EF409A00E5E6E7 /* Epub */,
@@ -779,6 +816,7 @@
 				79E7826218F2D853002B121B /* Foto_25_fmt.png in Resources */,
 				79E7826D18F2D853002B121B /* Foto_36_fmt.png in Resources */,
 				79E7825B18F2D853002B121B /* Foto_18_fmt.png in Resources */,
+				63D7A17618F5BCE7002769E5 /* Content.plist in Resources */,
 				63A406D118F436AF00021EAB /* Moskva - Petushki.epub in Resources */,
 				79E7826C18F2D853002B121B /* Foto_35_fmt.png in Resources */,
 				79E7826618F2D853002B121B /* Foto_29_fmt.png in Resources */,
@@ -821,8 +859,10 @@
 				63D4695818EF3AE600E5E6E7 /* mztools.c in Sources */,
 				63D4695B18EF3AE600E5E6E7 /* ZipArchive.m in Sources */,
 				797EBC7F18EC4B3C0049C061 /* REMainViewController.m in Sources */,
+				63D7A17E18F5C3AA002769E5 /* REBaseViewController.m in Sources */,
 				63D4695918EF3AE600E5E6E7 /* unzip.c in Sources */,
 				79E4AB9618ED9927000003C7 /* RXMLElement.m in Sources */,
+				63D7A17A18F5BF65002769E5 /* REContentViewController.m in Sources */,
 				79E4AB8B18ED8110000003C7 /* REBaseParser.m in Sources */,
 				63D4695A18EF3AE600E5E6E7 /* zip.c in Sources */,
 				79E4AB9218ED8779000003C7 /* REDocument.m in Sources */,

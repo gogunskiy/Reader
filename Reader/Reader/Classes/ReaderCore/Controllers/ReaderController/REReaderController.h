@@ -8,9 +8,15 @@
 
 #import <Foundation/Foundation.h>
 
+#define READER [REReaderController shared]
+
 @class REDocument;
 
 @interface REReaderController : NSObject
+
++ (instancetype) shared;
+
+- (NSArray *) documents;
 
 - (void) loadFile:(NSString *)filePath                        
   completionBlock:(void(^)(REDocument *document))completionBlock 

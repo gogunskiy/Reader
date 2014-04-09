@@ -24,10 +24,8 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    REReaderController *viewController = [[REReaderController alloc] init];
-    
     NSString *filePath = [[[NSBundle mainBundle] resourcePath] stringByAppendingPathComponent:@"section1.xhtml"];
-    [viewController loadFile:filePath completionBlock:^(REDocument *document) 
+    [READER loadFile:filePath completionBlock:^(REDocument *document)
     {
         [[self readerView] setDocument:document];
         [[self readerView] needsUpdatePages];

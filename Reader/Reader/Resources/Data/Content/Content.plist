@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>id</key>
+		<string>1</string>
+		<key>title</key>
+		<string>Moskva - Petushki</string>
+		<key>description</key>
+		<string>Moskva - Petushki DESCRIPTION</string>
+		<key>file</key>
+		<string>Moskva - Petushki.epub</string>
+	</dict>
+	<dict>
+		<key>id</key>
+		<string>2</string>
+		<key>title</key>
+		<string>BOOK 2</string>
+		<key>description</key>
+		<string>BOOK 2 DESCRIPTION</string>
+		<key>file</key>
+		<string>000000000002.epub</string>
+	</dict>
+</array>
+</plist>

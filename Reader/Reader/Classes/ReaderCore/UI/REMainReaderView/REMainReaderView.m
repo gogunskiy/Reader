@@ -136,8 +136,6 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
             pointer += frameRange.length;
             
             [[self frames] addObject:(__bridge id)frame];
-            
-            CFRelease(frame);
         }
     }
     

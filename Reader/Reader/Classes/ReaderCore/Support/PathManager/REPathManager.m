@@ -1,10 +1,4 @@
-//
-//  PathManager.m
-//  EpubReader
-//
-//  Created by word on 09.05.13.
-//  Copyright (c) 2013 SealPoint. All rights reserved.
-//
+
 
 #import "REPathManager.h"
 
@@ -22,14 +16,20 @@
     return [tmpDirURL absoluteString];
 }
 
++ (NSString *) libraryDirectory
+{
+    return (NSString *)[[[[NSFileManager defaultManager] URLsForDirectory:NSLibraryDirectory inDomains:NSUserDomainMask] lastObject] path];
+}
+
 + (NSString *) booksDirectory
 {
-    NSString *dir = [self.documentsDirectory stringByAppendingPathComponent:@"Books"];
+    NSString *dir = [self.libraryDirectory stringByAppendingPathComponent:@"Books"];
     NSFileManager *fm = [NSFileManager defaultManager];
     if (![fm fileExistsAtPath:dir])
     {
         [fm createDirectoryAtPath:dir withIntermediateDirectories:NO attributes:nil error:nil];
     }
+    
     return dir;
 }
 

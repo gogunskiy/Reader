@@ -8,8 +8,49 @@
 
 #import "REReaderController.h"
 #import "REBaseParser.h"
+#import "REPathManager.h"
+
+
+@interface REReaderController()
+
+@property (nonatomic) NSMutableArray *content;
+
+@end
+
+
+static REReaderController *shared = nil;
 
 @implementation REReaderController
+
++ (instancetype) shared
+{
+    static dispatch_once_t once;
+    
+    dispatch_once(&once, ^
+                  {
+                      shared = [[REReaderController alloc] init];
+                  });
+    
+    return shared;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    
+    if (self)
+    {
+        [self setContent:[[NSMutableArray alloc] initWithContentsOfFile:[REPathManager checkAndCreateFile:@"Content.plist"]]];
+    }
+    
+    return self;
+}
+
+- (NSArray *) documents
+{
+    return [self content];
+}
+
 
 - (void) loadFile:(NSString *)filePath                        
   completionBlock:(void(^)(REDocument *document))completionBlock 

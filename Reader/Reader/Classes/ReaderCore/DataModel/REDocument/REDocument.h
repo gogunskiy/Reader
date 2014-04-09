@@ -10,7 +10,10 @@
 
 @interface REDocument : NSObject
 
-@property (nonatomic) NSMutableArray *chapters;
+@property (nonatomic) NSMutableArray    *chapters;
+@property (nonatomic) NSString          *path;
+
+
 
 - (NSAttributedString *) attributedString;
 
