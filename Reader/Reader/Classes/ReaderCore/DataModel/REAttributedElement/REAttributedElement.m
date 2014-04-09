@@ -249,12 +249,14 @@ CGFloat MyGetWidthCallback( void* refCon)
 {
     CTFontRef italicFont = CTFontCreateCopyWithSymbolicTraits([self _font], [self _fontSizeWithElementName:[self name]], NULL, kCTFontItalicTrait, kCTFontItalicTrait);
     [[self attributedString] addAttribute:(id)kCTFontAttributeName value: (__bridge id)italicFont range:range];
+    CFRelease(italicFont);
 }
 
 - (void) applyBoldFontInRange:(NSRange)range
 {
     CTFontRef boldFont = CTFontCreateCopyWithSymbolicTraits([self _font], [self _fontSizeWithElementName:[self name]], NULL, kCTFontBoldTrait, kCTFontBoldTrait);
     [[self attributedString] addAttribute:(id)kCTFontAttributeName value: (__bridge id)boldFont range:range];
+    CFRelease(boldFont);
 }
 
 - (void) applyUnderlinedFontInRange:(NSRange)range

@@ -15,7 +15,7 @@
 
 @property (nonatomic) REAttributedElement *parent;
 
-@property (nonatomic) CTParagraphStyleRef paragraphStyle;
+@property (nonatomic, assign) CTParagraphStyleRef paragraphStyle;
 @property (nonatomic) NSString * fontName;
 
 @property (nonatomic, assign) CGFloat fontSize;
