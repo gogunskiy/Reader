@@ -40,7 +40,24 @@ static NSString * const ID_REF_XML_BOOK_INFO_KEY        = @"epubbooksinfo";
 
 @implementation REEpubParser
 
+static dispatch_queue_t parseQueue;
+
 #pragma mark - Chapter Parsing -
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self)
+    {
+        static dispatch_once_t onceToken;
+        dispatch_once(&onceToken, ^
+        {
+            parseQueue = dispatch_queue_create("parse", NULL);
+        });
+    }
+    
+    return self;
+}
 
 - (void) parseBookAtPath:(NSString *)path
          completionBlock:(void(^)(REDocument *document))completionBlock
@@ -74,13 +91,14 @@ static NSString * const ID_REF_XML_BOOK_INFO_KEY        = @"epubbooksinfo";
                      completionBlock:(void(^)(REChapter *chapter))completionBlock
                           errorBlock:(void(^)(NSError * error))errorBlock
 {
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^
+    dispatch_async(parseQueue, ^
     {
         NSMutableAttributedString *result = [[NSMutableAttributedString alloc] initWithString:@""];
         
         RXMLElement *htmlTree = [[RXMLElement alloc] initFromHTMLString:data encoding:NSUTF8StringEncoding];
         
         REChapter *chapter = [[REChapter alloc] init];
+        [chapter setTitle:data];
         
         NSArray *elements = [self childAttributedElementsFor:htmlTree];
         

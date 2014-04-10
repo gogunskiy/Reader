@@ -61,20 +61,30 @@ static REReaderController *shared = nil;
     [parser parseBookAtPath:filePath
             completionBlock:^(REDocument *document)
      {
-         NSString *chapterPath = document.info[@"chapters"][3][@"hrefFull"];
+         NSArray *chaptersInfo = document.info[@"chapters"];
          
-         [parser parseDataToAttributedString:[NSString stringWithContentsOfFile:chapterPath encoding:NSUTF8StringEncoding error:nil]
-                             completionBlock:^(REChapter *chapter)
-          {
-              [[document chapters] addObject:chapter];
-              
-              completionBlock(document);
-          }
-                                  errorBlock:^(NSError *error)
-          {
-              
-          }];
-     }
+         for (NSDictionary *chapterInfo in chaptersInfo)
+         {
+             NSString *chapterPath = chapterInfo[@"hrefFull"];
+             
+             [parser parseDataToAttributedString:[NSString stringWithContentsOfFile:chapterPath encoding:NSUTF8StringEncoding error:nil]
+                                 completionBlock:^(REChapter *chapter)
+              {
+                  [[document chapters] addObject:chapter];
+                  
+                  if ([[document chapters] count] == [chaptersInfo count])
+                  {
+                      completionBlock(document);
+                  }
+              }
+                                      errorBlock:^(NSError *error)
+              {
+                  
+              }];
+
+         }
+         
+           }
                  errorBlock:^(NSError *error)
      {
          

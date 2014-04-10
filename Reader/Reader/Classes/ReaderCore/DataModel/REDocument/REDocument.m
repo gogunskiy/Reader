@@ -7,6 +7,7 @@
 //
 
 #import "REDocument.h"
+#import "REChapter.h"
 
 @implementation REDocument
 
@@ -24,7 +25,15 @@
 
 - (NSAttributedString *) attributedString
 {
-    return nil;
+    NSMutableAttributedString *result = [[NSMutableAttributedString alloc] init];
+    
+    for (REChapter *chapter in [self chapters])
+    {
+        [result appendAttributedString: [chapter attributedString]];
+        [result addAttribute:@"END_OF_CHAPTER" value:@1 range:NSMakeRange(result.length - 1, 1)];
+    }
+    
+    return result;
 }
 
 @end
