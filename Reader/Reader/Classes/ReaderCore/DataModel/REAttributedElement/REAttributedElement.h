@@ -28,7 +28,6 @@
 @property (nonatomic) UIColor *color;
 
 @property (nonatomic) NSMutableAttributedString *attributedString;
-@property (nonatomic) NSMutableArray *attachments;
 
 - (void) apply;
 

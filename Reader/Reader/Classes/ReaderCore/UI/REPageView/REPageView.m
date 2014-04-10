@@ -69,7 +69,7 @@
                         runBounds.origin.y = self.frame.size.height - CGRectGetMaxY(runBounds);
                         
                         UIImageView *view = [[UIImageView alloc] initWithFrame:runBounds];
-                        UIImage *image = [UIImage imageNamed:attachment[@"fileName"]];
+                        UIImage *image = [[UIImage alloc] initWithContentsOfFile:attachment[@"attachmentPath"]];
                         [view setContentMode:UIViewContentModeScaleAspectFit];
                         [view setImage:image];
                         [view setBackgroundColor:[UIColor clearColor]];

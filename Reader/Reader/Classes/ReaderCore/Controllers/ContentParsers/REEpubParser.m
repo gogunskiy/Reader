@@ -106,8 +106,6 @@ static dispatch_queue_t parseQueue;
         {
             [result appendAttributedString:[element attributedString]];
             [result appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
-            
-            [[chapter attachments] addObjectsFromArray:[element attachments]];
         }
         
        [chapter setAttributedString:result];
@@ -270,7 +268,14 @@ static dispatch_queue_t parseQueue;
          }
      }];
     
-    completion(@{@"chapters" : chapters, @"content" : content, @"images" : images, @"css" : styles});
+    NSString *imagesPath = @"";
+    
+    if ([images count])
+    {
+        imagesPath = [images[0][HREF_FULL_XML_KEY] stringByDeletingLastPathComponent];
+    }
+    
+    completion(@{@"chapters" : chapters, @"content" : content, @"images" : images, @"css" : styles, @"imagesPath" : imagesPath});
 }
 
 

@@ -16,7 +16,7 @@
     
     if (self) 
     {
-        [self setAttachments:[NSMutableArray new]];
+        
     }
     
     return self;

@@ -60,7 +60,6 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
     
     if (self) 
     {
-        [self setAttachments:[NSMutableArray new]];
         [self setChildren:[NSMutableArray new]];
         
         [self setColor:[UIColor blackColor]];
@@ -165,7 +164,7 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
                 NSString *fileName = [[self text] substringFromIndex:range.location + range.length];
                 fileName = [fileName substringToIndex:[fileName rangeOfString:@"\""].location];
                 
-                NSDictionary *attachment = @{@"fileName" : [fileName lastPathComponent], @"attachmenTtype" : @"image"};
+                NSDictionary *attachment = @{@"fileName" : [fileName lastPathComponent], @"attachmentType" : @"image"};
                 
                 REInnerTagAttribute *attribute = [[REInnerTagAttribute alloc] init];
                 attribute.type = REInnerTagAttachment;
@@ -175,7 +174,6 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
                 attribute.end = resultString.length;
                 
                 [attributes addObject:attribute];
-                [[self attachments] addObject:attachment];
             }
             
             tag = [NSMutableString stringWithFormat:@""];
@@ -186,7 +184,7 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
     
     [elementString setAttributes:@{(id)kCTForegroundColorAttributeName : [self color],
                                    (id)kCTParagraphStyleAttributeName : (__bridge id)[self paragraphStyle],
-                                   (id)kCTKernAttributeName : @-.1}
+                                   (id)kCTKernAttributeName : @0}
                            range:NSMakeRange(0, elementString.length)];
     
     
@@ -214,7 +212,7 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
             callbacks.getAscent = MyGetAscentCallback;
             callbacks.getDescent = MyGetDescentCallback;
             callbacks.getWidth = MyGetWidthCallback;
-            CTRunDelegateRef delegate = CTRunDelegateCreate(&callbacks, (void *)@{@"key" : @"value"});
+            CTRunDelegateRef delegate = CTRunDelegateCreate(&callbacks, (void *)attribute.info);
             
             [elementString addAttribute:(id)kCTRunDelegateAttributeName value:(__bridge id)delegate range:NSMakeRange(attribute.start, 1)];
         }

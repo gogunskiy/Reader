@@ -102,33 +102,38 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
 - (void) createPages
 {
     NSInteger pointer = 0;
-  
+    
     CGMutablePathRef path = CGPathCreateMutable();
     CGPathAddRect(path, NULL, self.bounds);
     
-
-        NSAttributedString *attString = [self.document attributedString];
     
-        __block NSInteger index = 0;
-        [attString enumerateAttribute:(id)kCTRunDelegateAttributeName
-                              inRange:NSMakeRange(0, attString.length)
-                              options:0
-                           usingBlock:^(id value, NSRange range, BOOL *stop)
+    NSAttributedString *attString = [self.document attributedString];
+    
+    
+    [attString enumerateAttribute:(id)kCTRunDelegateAttributeName
+                          inRange:NSMakeRange(0, attString.length)
+                          options:0
+                       usingBlock:^(id value, NSRange range, BOOL *stop)
+     {
+         if (range.length == 1)
          {
-             if (range.length == 1)
+             if (0)
              {
-              //   NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:[chapter attachments][index]];
-            //  [dict setObject:@(range.location) forKey:@"location"];
+                 CTRunDelegateRef delegate = (__bridge CTRunDelegateRef)(value);
                  
-                // [[self attachments] addObject:dict];
+                 NSDictionary *info = (NSDictionary *)CTRunDelegateGetRefCon(delegate);
                  
-                 index ++;
+                 NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:info];
+                 [dict setObject:[[[self document] info][@"imagesPath"] stringByAppendingPathComponent:dict[@"fileName"]] forKey:@"attachmentPath"];
+                 [dict setObject:@(range.location) forKey:@"location"];
+                 
+                 [[self attachments] addObject:dict];
              }
-     
-         }];
-        
+         }
+     }];
     
-        NSMutableArray *endOfChapters = [[NSMutableArray alloc] init];
+    
+    NSMutableArray *endOfChapters = [[NSMutableArray alloc] init];
     
     [attString enumerateAttribute:@"END_OF_CHAPTER"
                           inRange:NSMakeRange(0, attString.length)
@@ -141,31 +146,31 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
          }
      }];
     
-        [self createFrameSetterWithString:attString];
+    [self createFrameSetterWithString:attString];
+    
+    while (pointer < attString.length)
+    {
+        CGFloat length = attString.length - pointer;
         
-        while (pointer < attString.length)
+        CTFrameRef frame = CTFramesetterCreateFrame(_framesetter, CFRangeMake(pointer, length), path, NULL);
+        
+        CFRange frameRange = CTFrameGetVisibleStringRange(frame);
+        
+        for (NSNumber *endOfChapter in endOfChapters)
         {
-            CGFloat length = attString.length - pointer;
-            
-            CTFrameRef frame = CTFramesetterCreateFrame(_framesetter, CFRangeMake(pointer, length), path, NULL);
-            
-            CFRange frameRange = CTFrameGetVisibleStringRange(frame);
-          
-            for (NSNumber *endOfChapter in endOfChapters)
+            if (frameRange.location <= [endOfChapter integerValue] && frameRange.location + frameRange.length >= [endOfChapter integerValue])
             {
-                if (frameRange.location <= [endOfChapter integerValue] && frameRange.location + frameRange.length >= [endOfChapter integerValue])
-                {
-                    length = [endOfChapter integerValue] - pointer;
-                    
-                    frame = CTFramesetterCreateFrame(_framesetter, CFRangeMake(pointer, length), path, NULL);
-                    frameRange = CTFrameGetVisibleStringRange(frame);
-                }
+                length = [endOfChapter integerValue] - pointer;
+                
+                frame = CTFramesetterCreateFrame(_framesetter, CFRangeMake(pointer, length), path, NULL);
+                frameRange = CTFrameGetVisibleStringRange(frame);
             }
-            
-            pointer += frameRange.length;
-            
-            
-            [[self frames] addObject:(__bridge id)frame];
+        }
+        
+        pointer += frameRange.length;
+        
+        
+        [[self frames] addObject:(__bridge id)frame];
     }
     
     CFRelease(path);
