@@ -117,7 +117,7 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
      {
          if (range.length == 1)
          {
-             if (0)
+             if (value)
              {
                  CTRunDelegateRef delegate = (__bridge CTRunDelegateRef)(value);
                  
