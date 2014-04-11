@@ -14,6 +14,7 @@
 
 @property (nonatomic, weak) IBOutlet REMainReaderView *readerView;
 @property (nonatomic, weak) IBOutlet UILabel *pageCountLabel;
+@property (nonatomic, weak) IBOutlet UISlider *pageSlider;
 
 @end
 
@@ -39,10 +40,21 @@
 
 - (void) updateUI
 {
+    [[self pageSlider] setMaximumValue:self.readerView.pageCount];
+    [[self pageSlider] setValue:self.readerView.currentPage animated:TRUE];
+    
     [[self pageCountLabel] setText:[NSString stringWithFormat:@"%lu / %lu", (unsigned long)self.readerView.currentPage, (unsigned long)self.readerView.pageCount]];
 }
 
 #pragma mark - Actions -
+
+- (IBAction) sliderValueDidChanged:(UISlider *)sender
+{
+    NSUInteger frameIndex = (int)sender.value;
+    
+    [[self readerView] showPageAtIndex:frameIndex];
+    [self updateUI];
+}
 
 - (IBAction) leftSwipe:(UIGestureRecognizer *)sender
 {
