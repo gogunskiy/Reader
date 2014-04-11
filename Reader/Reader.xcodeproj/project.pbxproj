@@ -19,8 +19,6 @@
 		63D4696618EF409A00E5E6E7 /* 000000000003.epub in Resources */ = {isa = PBXBuildFile; fileRef = 63D4696318EF409A00E5E6E7 /* 000000000003.epub */; };
 		63D4696C18F0813000E5E6E7 /* REPathManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D4696B18F0813000E5E6E7 /* REPathManager.m */; };
 		63D7A17618F5BCE7002769E5 /* Content.plist in Resources */ = {isa = PBXBuildFile; fileRef = 63D7A17518F5BCE7002769E5 /* Content.plist */; };
-		63D7A17A18F5BF65002769E5 /* REContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D7A17918F5BF65002769E5 /* REContentViewController.m */; };
-		63D7A17E18F5C3AA002769E5 /* REBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D7A17D18F5C3AA002769E5 /* REBaseViewController.m */; };
 		63E12CAA18F173FD005032EA /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E12CA918F173FD005032EA /* NSString+HTML.m */; };
 		797EBC2B18EC4A830049C061 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 797EBC2A18EC4A830049C061 /* Foundation.framework */; };
 		797EBC2D18EC4A830049C061 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 797EBC2C18EC4A830049C061 /* CoreGraphics.framework */; };
@@ -32,7 +30,6 @@
 		797EBC5918EC4A830049C061 /* ReaderTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 797EBC5818EC4A830049C061 /* ReaderTests.m */; };
 		797EBC7D18EC4B3C0049C061 /* REAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 797EBC6618EC4B3C0049C061 /* REAppDelegate.m */; };
 		797EBC7E18EC4B3C0049C061 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 797EBC6818EC4B3C0049C061 /* main.m */; };
-		797EBC7F18EC4B3C0049C061 /* REMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 797EBC6D18EC4B3C0049C061 /* REMainViewController.m */; };
 		797EBC8018EC4B3C0049C061 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 797EBC7318EC4B3C0049C061 /* InfoPlist.strings */; };
 		797EBC8118EC4B3C0049C061 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 797EBC7518EC4B3C0049C061 /* Images.xcassets */; };
 		797EBC8318EC4B3C0049C061 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 797EBC7918EC4B3C0049C061 /* Main_iPad.storyboard */; };
@@ -41,6 +38,11 @@
 		797EBC9318EC4DC40049C061 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 797EBC9218EC4DC40049C061 /* CoreText.framework */; };
 		797EBC9718EC51C40049C061 /* REAttributedElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 797EBC9618EC51C40049C061 /* REAttributedElement.m */; };
 		79A4FF2D18EEA82500F79347 /* REPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A4FF2C18EEA82500F79347 /* REPageView.m */; };
+		79A9C39318F81B2400AC36DE /* dot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79A9C39218F81B2400AC36DE /* dot@2x.png */; };
+		79A9C39F18F820EB00AC36DE /* REBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A9C39818F820EB00AC36DE /* REBaseViewController.m */; };
+		79A9C3A018F820EB00AC36DE /* REContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A9C39B18F820EB00AC36DE /* REContentViewController.m */; };
+		79A9C3A118F820EB00AC36DE /* REMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A9C39E18F820EB00AC36DE /* REMainViewController.m */; };
+		79A9C3A418F8210000AC36DE /* REGUIHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A9C3A318F8210000AC36DE /* REGUIHelper.m */; };
 		79E4AB8B18ED8110000003C7 /* REBaseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E4AB8A18ED8110000003C7 /* REBaseParser.m */; };
 		79E4AB8E18ED811D000003C7 /* REEpubParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E4AB8D18ED811D000003C7 /* REEpubParser.m */; };
 		79E4AB9218ED8779000003C7 /* REDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E4AB9118ED8779000003C7 /* REDocument.m */; };
@@ -84,10 +86,6 @@
 		63D4696A18F0813000E5E6E7 /* REPathManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REPathManager.h; sourceTree = "<group>"; };
 		63D4696B18F0813000E5E6E7 /* REPathManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REPathManager.m; sourceTree = "<group>"; };
 		63D7A17518F5BCE7002769E5 /* Content.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Content.plist; sourceTree = "<group>"; };
-		63D7A17818F5BF65002769E5 /* REContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REContentViewController.h; sourceTree = "<group>"; };
-		63D7A17918F5BF65002769E5 /* REContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REContentViewController.m; sourceTree = "<group>"; };
-		63D7A17C18F5C3AA002769E5 /* REBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REBaseViewController.h; sourceTree = "<group>"; };
-		63D7A17D18F5C3AA002769E5 /* REBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REBaseViewController.m; sourceTree = "<group>"; };
 		63E12CA818F173FD005032EA /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTML.h"; sourceTree = "<group>"; };
 		63E12CA918F173FD005032EA /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HTML.m"; sourceTree = "<group>"; };
 		797EBC2718EC4A830049C061 /* Reader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reader.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -103,8 +101,6 @@
 		797EBC6618EC4B3C0049C061 /* REAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REAppDelegate.m; sourceTree = "<group>"; };
 		797EBC6818EC4B3C0049C061 /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		797EBC6918EC4B3C0049C061 /* Reader-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Reader-Prefix.pch"; sourceTree = "<group>"; };
-		797EBC6C18EC4B3C0049C061 /* REMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REMainViewController.h; sourceTree = "<group>"; };
-		797EBC6D18EC4B3C0049C061 /* REMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REMainViewController.m; sourceTree = "<group>"; };
 		797EBC7418EC4B3C0049C061 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		797EBC7518EC4B3C0049C061 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		797EBC7718EC4B3C0049C061 /* Reader-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Reader-Info.plist"; sourceTree = "<group>"; };
@@ -117,6 +113,15 @@
 		797EBC9618EC51C40049C061 /* REAttributedElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REAttributedElement.m; sourceTree = "<group>"; };
 		79A4FF2B18EEA82500F79347 /* REPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REPageView.h; sourceTree = "<group>"; };
 		79A4FF2C18EEA82500F79347 /* REPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REPageView.m; sourceTree = "<group>"; };
+		79A9C39218F81B2400AC36DE /* dot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dot@2x.png"; sourceTree = "<group>"; };
+		79A9C39718F820EB00AC36DE /* REBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REBaseViewController.h; sourceTree = "<group>"; };
+		79A9C39818F820EB00AC36DE /* REBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REBaseViewController.m; sourceTree = "<group>"; };
+		79A9C39A18F820EB00AC36DE /* REContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REContentViewController.h; sourceTree = "<group>"; };
+		79A9C39B18F820EB00AC36DE /* REContentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REContentViewController.m; sourceTree = "<group>"; };
+		79A9C39D18F820EB00AC36DE /* REMainViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REMainViewController.h; sourceTree = "<group>"; };
+		79A9C39E18F820EB00AC36DE /* REMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REMainViewController.m; sourceTree = "<group>"; };
+		79A9C3A218F8210000AC36DE /* REGUIHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REGUIHelper.h; sourceTree = "<group>"; };
+		79A9C3A318F8210000AC36DE /* REGUIHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REGUIHelper.m; sourceTree = "<group>"; };
 		79E4AB8918ED8110000003C7 /* REBaseParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REBaseParser.h; sourceTree = "<group>"; };
 		79E4AB8A18ED8110000003C7 /* REBaseParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REBaseParser.m; sourceTree = "<group>"; };
 		79E4AB8C18ED811D000003C7 /* REEpubParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REEpubParser.h; sourceTree = "<group>"; };
@@ -231,24 +236,6 @@
 			path = Content;
 			sourceTree = "<group>";
 		};
-		63D7A17718F5BF4E002769E5 /* REContentViewController */ = {
-			isa = PBXGroup;
-			children = (
-				63D7A17818F5BF65002769E5 /* REContentViewController.h */,
-				63D7A17918F5BF65002769E5 /* REContentViewController.m */,
-			);
-			path = REContentViewController;
-			sourceTree = "<group>";
-		};
-		63D7A17B18F5C39C002769E5 /* REBaseViewController */ = {
-			isa = PBXGroup;
-			children = (
-				63D7A17C18F5C3AA002769E5 /* REBaseViewController.h */,
-				63D7A17D18F5C3AA002769E5 /* REBaseViewController.m */,
-			);
-			path = REBaseViewController;
-			sourceTree = "<group>";
-		};
 		63E12CA718F173FD005032EA /* NSString+HTML */ = {
 			isa = PBXGroup;
 			children = (
@@ -352,20 +339,10 @@
 		797EBC6A18EC4B3C0049C061 /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				63D7A17B18F5C39C002769E5 /* REBaseViewController */,
-				63D7A17718F5BF4E002769E5 /* REContentViewController */,
-				797EBC6B18EC4B3C0049C061 /* REMainViewController */,
+				79A9C39418F820EB00AC36DE /* GUIHelper */,
+				79A9C39518F820EB00AC36DE /* ViewControllers */,
 			);
 			path = UI;
-			sourceTree = "<group>";
-		};
-		797EBC6B18EC4B3C0049C061 /* REMainViewController */ = {
-			isa = PBXGroup;
-			children = (
-				797EBC6C18EC4B3C0049C061 /* REMainViewController.h */,
-				797EBC6D18EC4B3C0049C061 /* REMainViewController.m */,
-			);
-			path = REMainViewController;
 			sourceTree = "<group>";
 		};
 		797EBC6E18EC4B3C0049C061 /* Libraries */ = {
@@ -391,6 +368,7 @@
 		797EBC7018EC4B3C0049C061 /* Data */ = {
 			isa = PBXGroup;
 			children = (
+				79A9C39118F81B2400AC36DE /* Images */,
 				63D7A17418F5BCBE002769E5 /* Content */,
 				79E7827818F2E2F7002B121B /* Settings */,
 				63D4696018EF409A00E5E6E7 /* Epub */,
@@ -490,6 +468,60 @@
 				79A4FF2C18EEA82500F79347 /* REPageView.m */,
 			);
 			path = REPageView;
+			sourceTree = "<group>";
+		};
+		79A9C39118F81B2400AC36DE /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				79A9C39218F81B2400AC36DE /* dot@2x.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		79A9C39418F820EB00AC36DE /* GUIHelper */ = {
+			isa = PBXGroup;
+			children = (
+				79A9C3A218F8210000AC36DE /* REGUIHelper.h */,
+				79A9C3A318F8210000AC36DE /* REGUIHelper.m */,
+			);
+			path = GUIHelper;
+			sourceTree = "<group>";
+		};
+		79A9C39518F820EB00AC36DE /* ViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				79A9C39618F820EB00AC36DE /* REBaseViewController */,
+				79A9C39918F820EB00AC36DE /* REContentViewController */,
+				79A9C39C18F820EB00AC36DE /* REMainViewController */,
+			);
+			path = ViewControllers;
+			sourceTree = "<group>";
+		};
+		79A9C39618F820EB00AC36DE /* REBaseViewController */ = {
+			isa = PBXGroup;
+			children = (
+				79A9C39718F820EB00AC36DE /* REBaseViewController.h */,
+				79A9C39818F820EB00AC36DE /* REBaseViewController.m */,
+			);
+			path = REBaseViewController;
+			sourceTree = "<group>";
+		};
+		79A9C39918F820EB00AC36DE /* REContentViewController */ = {
+			isa = PBXGroup;
+			children = (
+				79A9C39A18F820EB00AC36DE /* REContentViewController.h */,
+				79A9C39B18F820EB00AC36DE /* REContentViewController.m */,
+			);
+			path = REContentViewController;
+			sourceTree = "<group>";
+		};
+		79A9C39C18F820EB00AC36DE /* REMainViewController */ = {
+			isa = PBXGroup;
+			children = (
+				79A9C39D18F820EB00AC36DE /* REMainViewController.h */,
+				79A9C39E18F820EB00AC36DE /* REMainViewController.m */,
+			);
+			path = REMainViewController;
 			sourceTree = "<group>";
 		};
 		79E4AB8818ED8101000003C7 /* ContentParsers */ = {
@@ -638,6 +670,7 @@
 				79E7827A18F2E34A002B121B /* Settings.plist in Resources */,
 				63D4696418EF409A00E5E6E7 /* 000000000001.epub in Resources */,
 				79E4ABA218ED9D76000003C7 /* chapter-001.xml in Resources */,
+				79A9C39318F81B2400AC36DE /* dot@2x.png in Resources */,
 				63D4696518EF409A00E5E6E7 /* 000000000002.epub in Resources */,
 				63D7A17618F5BCE7002769E5 /* Content.plist in Resources */,
 				63A406D118F436AF00021EAB /* Moskva - Petushki.epub in Resources */,
@@ -670,21 +703,22 @@
 				79E4ABA018ED9AC4000003C7 /* REReaderController.m in Sources */,
 				63D4695818EF3AE600E5E6E7 /* mztools.c in Sources */,
 				63D4695B18EF3AE600E5E6E7 /* ZipArchive.m in Sources */,
-				797EBC7F18EC4B3C0049C061 /* REMainViewController.m in Sources */,
-				63D7A17E18F5C3AA002769E5 /* REBaseViewController.m in Sources */,
 				63D4695918EF3AE600E5E6E7 /* unzip.c in Sources */,
 				79E4AB9618ED9927000003C7 /* RXMLElement.m in Sources */,
-				63D7A17A18F5BF65002769E5 /* REContentViewController.m in Sources */,
 				79E4AB8B18ED8110000003C7 /* REBaseParser.m in Sources */,
+				79A9C3A018F820EB00AC36DE /* REContentViewController.m in Sources */,
 				63D4695A18EF3AE600E5E6E7 /* zip.c in Sources */,
 				79E4AB9218ED8779000003C7 /* REDocument.m in Sources */,
 				797EBC7E18EC4B3C0049C061 /* main.m in Sources */,
 				79E4ABA618EDB41A000003C7 /* REChapter.m in Sources */,
+				79A9C39F18F820EB00AC36DE /* REBaseViewController.m in Sources */,
 				79E7827718F2DE02002B121B /* RESettings.m in Sources */,
 				797EBC7D18EC4B3C0049C061 /* REAppDelegate.m in Sources */,
 				797EBC9118EC4CFC0049C061 /* REMainReaderView.m in Sources */,
 				79A4FF2D18EEA82500F79347 /* REPageView.m in Sources */,
+				79A9C3A118F820EB00AC36DE /* REMainViewController.m in Sources */,
 				63D4696C18F0813000E5E6E7 /* REPathManager.m in Sources */,
+				79A9C3A418F8210000AC36DE /* REGUIHelper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

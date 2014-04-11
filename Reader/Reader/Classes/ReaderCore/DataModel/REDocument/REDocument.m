@@ -30,7 +30,11 @@
     for (REChapter *chapter in [self chapters])
     {
         [result appendAttributedString: [chapter attributedString]];
-        [result addAttribute:@"END_OF_CHAPTER" value:@1 range:NSMakeRange(result.length - 1, 1)];
+        
+        if ([[self chapters] indexOfObject:chapter] < [[self chapters] count] - 1) 
+        {
+            [result addAttribute:@"END_OF_CHAPTER" value:@1 range:NSMakeRange(result.length - 1, 1)];
+        }
     }
     
     return result;

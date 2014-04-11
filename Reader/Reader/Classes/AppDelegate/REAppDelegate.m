@@ -7,13 +7,13 @@
 //
 
 #import "REAppDelegate.h"
+#import "REGUIHelper.h"
 
 @implementation REAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-  
-    [[UISlider appearance] setThumbImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+    [REGUIHelper customize];
     
     return YES;
 }

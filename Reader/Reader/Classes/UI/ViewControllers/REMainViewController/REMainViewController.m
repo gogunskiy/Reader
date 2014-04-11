@@ -15,6 +15,13 @@
 @property (nonatomic, weak) IBOutlet REMainReaderView *readerView;
 @property (nonatomic, weak) IBOutlet UILabel *pageCountLabel;
 @property (nonatomic, weak) IBOutlet UISlider *pageSlider;
+@property (nonatomic, weak) IBOutlet UILabel *bookTitleLabel;
+@property (nonatomic, weak) IBOutlet UILabel *chapterTitleLabel;
+
+@property (nonatomic, weak) IBOutlet UIView *topLineDivider;
+
+
+@property (nonatomic, assign) BOOL toolbarModeEnabled;
 
 @end
 
@@ -23,7 +30,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    
     [READER loadDocumentWithPath:[self documentPath]
                  completionBlock:^(REDocument *document)
     {
@@ -44,6 +51,22 @@
     [[self pageSlider] setValue:self.readerView.currentPage animated:TRUE];
     
     [[self pageCountLabel] setText:[NSString stringWithFormat:@"%lu / %lu", (unsigned long)self.readerView.currentPage, (unsigned long)self.readerView.pageCount]];
+    
+    [[self bookTitleLabel] setText:@"Some book title here"];
+    [[self chapterTitleLabel] setText:@"Chapter IX"];
+    
+    [[self pageCountLabel] setAlpha:1.0];
+    
+    [UIView animateWithDuration:.5 
+                     animations:^
+     {
+         self.topLineDivider.alpha =  
+         self.pageSlider.alpha = 
+         self.bookTitleLabel.alpha = 
+         self.chapterTitleLabel.alpha = [self toolbarModeEnabled] ? 1.0 : 0.0;
+     }];
+    
+
 }
 
 #pragma mark - Actions -
@@ -81,7 +104,8 @@
     }
     else  if (point.x < frame.size.width * 0.75)
     {
-        // show toolBar
+        _toolbarModeEnabled = !_toolbarModeEnabled;
+        [self updateUI];
     }
     else
     {

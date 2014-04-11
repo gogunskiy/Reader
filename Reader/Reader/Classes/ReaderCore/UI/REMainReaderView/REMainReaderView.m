@@ -30,6 +30,7 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
 
 @property (nonatomic, strong) REPageView *pageView;
 @property (nonatomic, strong) UIImageView *snapshotView;
+
 @end
 
 @implementation REMainReaderView
