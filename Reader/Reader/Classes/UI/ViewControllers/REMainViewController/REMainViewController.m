@@ -42,7 +42,18 @@
     {
         
     }];
-    
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [[self navigationController] setNavigationBarHidden:TRUE animated:TRUE];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [[self navigationController] setNavigationBarHidden:FALSE animated:TRUE];
+    [super viewWillDisappear:animated];
 }
 
 - (void) updateUI

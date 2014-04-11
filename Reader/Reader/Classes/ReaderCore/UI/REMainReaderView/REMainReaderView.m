@@ -209,6 +209,7 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
 - (void) initializeScrollViewAtPage:(NSUInteger)page
 {
     REPageView *pageView = [[REPageView alloc] initWithFrame:self.bounds];
+    [pageView setAutoresizingMask:UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin];
     [pageView setBackgroundColor:[UIColor whiteColor]];
     [pageView setTag:1];
     
