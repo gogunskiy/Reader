@@ -4,6 +4,13 @@
 <dict>
 	<key>iPad</key>
 	<dict>
+		<key>maxAttachmentSize</key>
+		<dict>
+			<key>height</key>
+			<string>600</string>
+			<key>width</key>
+			<string>600</string>
+		</dict>
 		<key>baseParagraphStyle</key>
 		<dict>
 			<key>minRowHeight</key>
@@ -176,6 +183,13 @@
 			<integer>100</integer>
 			<key>linetTailIndent</key>
 			<integer>-8</integer>
+		</dict>
+		<key>maxAttachmentSize</key>
+		<dict>
+			<key>height</key>
+			<string>360</string>
+			<key>width</key>
+			<string>300</string>
 		</dict>
 	</dict>
 </dict>

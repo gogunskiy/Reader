@@ -233,20 +233,27 @@ CGFloat MyGetAscentCallback( void *refCon )
     NSDictionary *info = (__bridge NSDictionary *)refCon;
     CGSize size = [UIImage sizeOfImageAtURL:[NSURL fileURLWithPath:info[@"fileName"]]];
     
-    return size.height / 2 > 180 ? 180 : size.height / 2;
+    NSDictionary *dict = [SETTINGS attachmentMaxSize];
+    
+    CGFloat maxHeight = [dict[@"height"] floatValue];
+    
+    return size.height / 2 > maxHeight / 2 ? maxHeight / 2 : size.height / 2;
 }
 
 CGFloat MyGetDescentCallback( void *refCon )
 {
-    NSDictionary *info = (__bridge NSDictionary *)refCon;
-    CGSize size = [UIImage sizeOfImageAtURL:[NSURL fileURLWithPath:info[@"fileName"]]];
-    
-    return size.height / 2 > 180 ? 180 : size.height / 2;
+    return MyGetAscentCallback(refCon);
 }
 
 CGFloat MyGetWidthCallback( void* refCon)
 {
-    return 300;
+    NSDictionary *dict = [SETTINGS attachmentMaxSize];
+    NSDictionary *info = (__bridge NSDictionary *)refCon;
+    CGSize size = [UIImage sizeOfImageAtURL:[NSURL fileURLWithPath:info[@"fileName"]]];
+    
+    CGFloat width = size.width > [dict[@"width"] floatValue] ? [dict[@"width"] floatValue] :  size.width;
+    
+    return width;
 }
 
 

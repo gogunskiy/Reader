@@ -14,6 +14,8 @@
 
 + (instancetype) shared;
 
+- (NSDictionary *) attachmentMaxSize;
+
 - (CTParagraphStyleRef) headerParagraphStyle;
 - (CTParagraphStyleRef) blockquoteParagraphStyle;
 - (CTParagraphStyleRef) baseParagraphStyle;

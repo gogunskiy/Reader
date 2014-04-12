@@ -44,6 +44,11 @@ static RESettings *shared = nil;
     return self;
 }
 
+- (NSDictionary *) attachmentMaxSize
+{
+    return _settings[[self deviceId]][ATTACHMENT_MAX_SIZE];
+}
+
 - (CTParagraphStyleRef) headerParagraphStyle
 {
     return [self _paragraphStyleForType:PARAGRAPH_STYLE_HEADER];
@@ -58,7 +63,6 @@ static RESettings *shared = nil;
 {
     return [self _paragraphStyleForType:PARAGRAPH_STYLE_BASE];
 }
-
 
 - (CTParagraphStyleRef) epigraphStyle
 {

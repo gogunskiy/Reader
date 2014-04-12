@@ -25,7 +25,7 @@ static NSString * const lineHeadIndentKey                       = @"lineHeadInde
 static NSString * const linetTailIndentKey                      = @"linetTailIndent";
 
 
-
+static NSString * const ATTACHMENT_MAX_SIZE                     = @"maxAttachmentSize";
 
 
 
