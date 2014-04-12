@@ -8,12 +8,35 @@
 
 #import "REAppDelegate.h"
 #import "REGUIHelper.h"
+#import "REReaderController.h"
 
 @implementation REAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [REGUIHelper customize];
+    
+    NSString *bookPath = [[NSBundle mainBundle] resourcePath];
+    
+    [READER addDocumentToLibraryWithTitle:@"000000000001"
+                              description:@"000000000001"
+                                   author:@"000000000001"
+                               sourcePath:[bookPath stringByAppendingPathComponent:@"000000000001.epub"]];
+    
+    [READER addDocumentToLibraryWithTitle:@"000000000002"
+                              description:@"000000000002"
+                                   author:@"000000000002"
+                               sourcePath:[bookPath stringByAppendingPathComponent:@"000000000002.epub"]];
+    
+    [READER addDocumentToLibraryWithTitle:@"000000000003"
+                              description:@"000000000003"
+                                   author:@"000000000003"
+                               sourcePath:[bookPath stringByAppendingPathComponent:@"000000000003.epub"]];
+    
+    [READER addDocumentToLibraryWithTitle:@"Moskva - Petushki"
+                              description:@"Moskva - Petushki"
+                                   author:@"Moskva - Petushki"
+                               sourcePath:[bookPath stringByAppendingPathComponent:@"Moskva - Petushki.epub"]];
     
     return YES;
 }

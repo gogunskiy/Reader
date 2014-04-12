@@ -102,6 +102,10 @@
                             </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="0a0-rW-0Jb" appends="YES" id="pun-bx-U0q"/>
+                        </connections>
                     </view>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
@@ -129,6 +133,11 @@
                         <action selector="tap:" destination="vXZ-lx-hvc" id="y9o-3G-JhK"/>
                     </connections>
                 </tapGestureRecognizer>
+                <swipeGestureRecognizer direction="right" numberOfTouchesRequired="2" id="0a0-rW-0Jb">
+                    <connections>
+                        <action selector="doubleLeftSwipe:" destination="vXZ-lx-hvc" id="EfL-JH-xIK"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="39" y="-54"/>
         </scene>

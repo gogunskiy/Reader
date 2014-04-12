@@ -63,7 +63,7 @@ static dispatch_queue_t parseQueue;
          completionBlock:(void(^)(REDocument *document))completionBlock
               errorBlock:(void(^)(NSError * error))errorBlock
 {
-    NSString * booksDirectory = [[REPathManager booksDirectory] stringByAppendingPathComponent:[path lastPathComponent]];
+    NSString * booksDirectory = [[REPathManager booksDirectory] stringByAppendingPathComponent:[[path lastPathComponent] stringByDeletingPathExtension]];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^
     {
@@ -161,17 +161,25 @@ static dispatch_queue_t parseQueue;
 
 - (void) unzipEpub:(NSString *)epubPath directory:(NSString *)directory completion:(void(^)(BOOL saved))completion
 {
+    if ([REPathManager fileExists:directory])
+    {
+        completion(1);
+        return;
+    }
+    
     ZipArchive *zip = [ZipArchive new];
     
     if (![REPathManager createDirectory:directory])
     {
         completion(0);
+        return;
     }
     
     
     if (![zip UnzipOpenFile:epubPath])
     {
         completion(0);
+        return;
     }
     
     BOOL retVal = [zip UnzipFileTo:directory overWrite:YES];

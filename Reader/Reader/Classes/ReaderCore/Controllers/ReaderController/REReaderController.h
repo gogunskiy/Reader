@@ -18,6 +18,11 @@
 
 - (NSArray *) documents;
 
+- (void) addDocumentToLibraryWithTitle:(NSString *)title
+                           description:(NSString *)description
+                                author:(NSString *)author
+                            sourcePath:(NSString *)sourcePath;
+
 - (void) loadDocumentWithPath:(NSString *)filePath
               completionBlock:(void(^)(REDocument *document))completionBlock
                    errorBlock:(void(^)(NSError * error))errorBlock;

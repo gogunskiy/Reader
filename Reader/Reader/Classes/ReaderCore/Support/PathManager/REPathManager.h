@@ -11,4 +11,6 @@
 + (NSString *) checkAndCreateFile:(NSString *)fileName;
 + (BOOL) fileExists:(NSString *)filePath;
 
++ (NSString *) copyDocumentToLibrary:(NSString *)fileNam;
+
 @end

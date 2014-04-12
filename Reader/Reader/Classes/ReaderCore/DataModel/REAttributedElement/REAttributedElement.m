@@ -215,7 +215,7 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
             callbacks.getWidth = MyGetWidthCallback;
             CTRunDelegateRef delegate = CTRunDelegateCreate(&callbacks, (__bridge_retained void *)attribute.info);
             
-            [elementString addAttribute:(id)kCTRunDelegateAttributeName value:(__bridge id)delegate range:NSMakeRange(attribute.start, 1)];
+            [elementString addAttribute:(id)kCTRunDelegateAttributeName value:(__bridge id)delegate range:NSMakeRange(attribute.start - 1, 1)];
         }
     }
     

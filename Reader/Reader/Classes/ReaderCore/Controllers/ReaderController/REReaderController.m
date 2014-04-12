@@ -51,6 +51,21 @@ static REReaderController *shared = nil;
     return [self content];
 }
 
+- (void) addDocumentToLibraryWithTitle:(NSString *)title
+                           description:(NSString *)description
+                                author:(NSString *)author
+                            sourcePath:(NSString *)sourcePath
+{
+    NSString *destinationPath = [REPathManager copyDocumentToLibrary:sourcePath];
+    
+    NSArray *result = [[self content] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(file=%@)", destinationPath]];
+    
+    if (result.count == 0)
+    {
+        [[self content] addObject:@{@"title" : title, @"description" : description, @"author" : author, @"file" : destinationPath}];
+    }
+}
+
 
 - (void) loadDocumentWithPath:(NSString *)filePath
               completionBlock:(void(^)(REDocument *document))completionBlock

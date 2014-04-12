@@ -103,6 +103,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="Cr8-Zm-OAM" appends="YES" id="upv-JL-Hz6"/>
+                        </connections>
                     </view>
                     <nil key="simulatedTopBarMetrics"/>
                     <connections>
@@ -128,6 +131,11 @@
                 <swipeGestureRecognizer direction="right" id="Fcy-DE-vbH">
                     <connections>
                         <action selector="rightSwipe:" destination="BYZ-38-t0r" id="Gia-jG-cDi"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer direction="right" numberOfTouchesRequired="2" id="Cr8-Zm-OAM">
+                    <connections>
+                        <action selector="doubleLeftSwipe:" destination="BYZ-38-t0r" id="moo-ie-dEc"/>
                     </connections>
                 </swipeGestureRecognizer>
             </objects>

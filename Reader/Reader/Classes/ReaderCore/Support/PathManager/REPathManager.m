@@ -75,5 +75,27 @@
 	return path;
 }
 
++ (NSString *) copyDocumentToLibrary:(NSString *)filePath
+{
+	BOOL success;
+    
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+    
+	NSString *path = [[NSString alloc] initWithString:[[REPathManager booksDirectory] stringByAppendingPathComponent:[filePath lastPathComponent]]];
+    
+	success = [fileManager fileExistsAtPath:path];
+    
+	if (success)
+    {
+		return path;
+	}
+    
+	[fileManager copyItemAtPath:filePath toPath:path error:nil];
+    
+    
+	return path;
+}
+
+
 
 @end

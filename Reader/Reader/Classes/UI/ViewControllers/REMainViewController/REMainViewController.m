@@ -34,11 +34,7 @@
 {
     [super viewDidLoad];
     
-    NSString *bookPath = [[NSBundle mainBundle] resourcePath];
-    bookPath = [bookPath stringByAppendingPathComponent:[self documentInfo][@"file"]];
-    
-    
-    [READER loadDocumentWithPath:bookPath
+    [READER loadDocumentWithPath:[self documentInfo][@"file"]
                  completionBlock:^(REDocument *document)
     {
         [[self readerView] setDocument:document];
@@ -112,6 +108,11 @@
     
     [[self readerView] showPageAtIndex:frameIndex];
     [self updateProgressLabels];
+}
+
+- (IBAction) doubleLeftSwipe:(UIGestureRecognizer *)sender
+{
+    [[self navigationController] popViewControllerAnimated:TRUE];
 }
 
 - (IBAction) leftSwipe:(UIGestureRecognizer *)sender
