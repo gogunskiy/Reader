@@ -23,7 +23,7 @@
     return self;
 }
 
-- (NSAttributedString *) attributedString
+- (void) compileAttributedString
 {
     NSMutableAttributedString *result = [[NSMutableAttributedString alloc] init];
     
@@ -37,7 +37,7 @@
         }
     }
     
-    return result;
+    [self setAttributedString:result];
 }
 
 @end

@@ -23,6 +23,9 @@
 
 @property (nonatomic, assign) BOOL toolbarModeEnabled;
 
+
+@property (nonatomic, assign) NSTimeInterval lastTimeWhenPageProgressWasUpdated;
+
 @end
 
 @implementation REMainViewController
@@ -31,7 +34,11 @@
 {
     [super viewDidLoad];
     
-    [READER loadDocumentWithPath:[self documentPath]
+    NSString *bookPath = [[NSBundle mainBundle] resourcePath];
+    bookPath = [bookPath stringByAppendingPathComponent:[self documentInfo][@"file"]];
+    
+    
+    [READER loadDocumentWithPath:bookPath
                  completionBlock:^(REDocument *document)
     {
         [[self readerView] setDocument:document];
@@ -58,26 +65,43 @@
 
 - (void) updateUI
 {
+    [self updatePageSlider];
+    [self updateProgressLabels];
+    [self updateElemnentsVisibility];
+}
+
+- (void) updatePageSlider
+{
     [[self pageSlider] setMaximumValue:self.readerView.pageCount];
     [[self pageSlider] setValue:self.readerView.currentPage animated:TRUE];
+}
+
+- (void) updateProgressLabels
+{
+    NSTimeInterval time = CACurrentMediaTime();
     
     [[self pageCountLabel] setText:[NSString stringWithFormat:@"%lu / %lu", (unsigned long)self.readerView.currentPage, (unsigned long)self.readerView.pageCount]];
-    
-    [[self bookTitleLabel] setText:@"Some book title here"];
-    [[self chapterTitleLabel] setText:@"Chapter IX"];
-    
+    [[self bookTitleLabel] setText:[self documentInfo][@"title"]];
+
+    if (time - _lastTimeWhenPageProgressWasUpdated > 0.2)
+    {
+        [[self chapterTitleLabel] setText:self.readerView.currentChapterTitle];
+        [self setLastTimeWhenPageProgressWasUpdated:time];
+    }
+}
+
+- (void) updateElemnentsVisibility
+{
     [[self pageCountLabel] setAlpha:1.0];
     
-    [UIView animateWithDuration:.5 
+    [UIView animateWithDuration:.5
                      animations:^
      {
-         self.topLineDivider.alpha =  
-         self.pageSlider.alpha = 
-         self.bookTitleLabel.alpha = 
+         self.topLineDivider.alpha =
+         self.pageSlider.alpha =
+         self.bookTitleLabel.alpha =
          self.chapterTitleLabel.alpha = [self toolbarModeEnabled] ? 1.0 : 0.0;
      }];
-    
-
 }
 
 #pragma mark - Actions -
@@ -87,21 +111,23 @@
     NSUInteger frameIndex = (int)sender.value;
     
     [[self readerView] showPageAtIndex:frameIndex];
-    [self updateUI];
+    [self updateProgressLabels];
 }
 
 - (IBAction) leftSwipe:(UIGestureRecognizer *)sender
 {
     [[self readerView] showNextPage];
     
-    [self updateUI];
+    [self updateProgressLabels];
+    [self updatePageSlider];
 }
 
 - (IBAction) rightSwipe:(UIGestureRecognizer *)sender
 {
     [[self readerView] showPreviousPage];
     
-    [self updateUI];
+    [self updateProgressLabels];
+    [self updatePageSlider];
 }
 
 - (IBAction) tap:(UIGestureRecognizer *)sender
@@ -116,7 +142,7 @@
     else  if (point.x < frame.size.width * 0.75)
     {
         _toolbarModeEnabled = !_toolbarModeEnabled;
-        [self updateUI];
+        [self updateElemnentsVisibility];
     }
     else
     {
@@ -126,7 +152,7 @@
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
-    
+    // TO DO :
 }
 
 @end

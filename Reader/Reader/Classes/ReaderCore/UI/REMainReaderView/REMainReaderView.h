@@ -25,5 +25,6 @@
 - (void) showPreviousPage;
 - (void) showPageAtIndex:(NSUInteger)index;
 
+- (NSString *) currentChapterTitle;
 
 @end

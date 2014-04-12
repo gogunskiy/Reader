@@ -87,20 +87,25 @@ static dispatch_queue_t parseQueue;
     });
 }
 
-- (void) parseDataToAttributedString:(NSString *)data
-                     completionBlock:(void(^)(REChapter *chapter))completionBlock
-                          errorBlock:(void(^)(NSError * error))errorBlock
+- (void) parseChapterToAttributedStringInDoucment:(REDocument *)document
+                                      chapterInfo:(NSDictionary *)chapterInfo
+                                  completionBlock:(void(^)(REChapter *chapter))completionBlock
+                                       errorBlock:(void(^)(NSError * error))errorBlock
 {
     dispatch_async(parseQueue, ^
     {
         NSMutableAttributedString *result = [[NSMutableAttributedString alloc] initWithString:@""];
         
-        RXMLElement *htmlTree = [[RXMLElement alloc] initFromHTMLString:data encoding:NSUTF8StringEncoding];
+        NSString *chapterPath = chapterInfo[@"hrefFull"];
+        
+        NSString *chapterContent = [NSString stringWithContentsOfFile:chapterPath encoding:NSUTF8StringEncoding error:nil];
+        
+        RXMLElement *htmlTree = [[RXMLElement alloc] initFromHTMLString:chapterContent encoding:NSUTF8StringEncoding];
         
         REChapter *chapter = [[REChapter alloc] init];
-        [chapter setTitle:data];
+        [chapter setTitle:chapterInfo[@"title"]];
         
-        NSArray *elements = [self childAttributedElementsFor:htmlTree];
+        NSArray *elements = [self childAttributedElementsFor:htmlTree document:document];
         
         for (REAttributedElement *element in elements)
         {
@@ -119,7 +124,7 @@ static dispatch_queue_t parseQueue;
 
 }
 
-- (NSArray *) childAttributedElementsFor:(RXMLElement *)element
+- (NSArray *) childAttributedElementsFor:(RXMLElement *)element document:(REDocument *)document
 {
     NSMutableArray *attributedElements = [[NSMutableArray alloc] init];
     
@@ -132,6 +137,7 @@ static dispatch_queue_t parseQueue;
             REAttributedElement *element = [[REAttributedElement alloc] init];
             [element setText:[child xml]];
             [element setName:[child tag]];
+            [element setImagesPath:document.info[@"imagesPath"]];
             
             NSMutableDictionary *attributes = [[NSMutableDictionary alloc] init];
             
@@ -218,7 +224,9 @@ static dispatch_queue_t parseQueue;
      {
          NSString *urlPrefix = [opfFilePath stringByDeletingLastPathComponent];
          
-         NSDictionary *elementInfo = @{ID_XML_KEY : [element attribute:ID_XML_KEY], HREF_XML_KEY : [element attribute:HREF_XML_KEY], HREF_FULL_XML_KEY : [urlPrefix stringByAppendingPathComponent:[element attribute:HREF_XML_KEY]]};
+         NSMutableDictionary *elementInfo = [@{ID_XML_KEY : [element attribute:ID_XML_KEY],
+                                              HREF_XML_KEY : [element attribute:HREF_XML_KEY],
+                                              HREF_FULL_XML_KEY : [urlPrefix stringByAppendingPathComponent:[element attribute:HREF_XML_KEY]]} mutableCopy];
          
          if ([[element attribute:META_TYPE_XML_KEY] isEqualToString:META_TYPE_XHTML_XML_KEY])
          {
@@ -258,11 +266,13 @@ static dispatch_queue_t parseQueue;
              marker = markerArray[1];
          }
          
-         for (NSDictionary *dict in chapters)
+         for (NSMutableDictionary *dict in chapters)
          {
              if ([contentSrc rangeOfString:dict[HREF_XML_KEY]].length > 0)
              {
                  [content addObject:@{TEXT_XML_KEY : text, HREF_FULL_XML_KEY : dict[HREF_FULL_XML_KEY], MARKER_XML_KEY : marker}];
+                 dict[@"title"] = text;
+                 
                  break;
              }
          }

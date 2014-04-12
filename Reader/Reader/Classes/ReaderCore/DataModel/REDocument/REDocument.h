@@ -13,9 +13,9 @@
 @property (nonatomic) NSMutableArray    *chapters;
 @property (nonatomic) NSDictionary      *info;
 
+@property (nonatomic) NSMutableAttributedString *attributedString;
 
 
-
-- (NSAttributedString *) attributedString;
+- (void) compileAttributedString;
 
 @end

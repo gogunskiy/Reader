@@ -53,11 +53,8 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    NSString *bookPath = [[NSBundle mainBundle] resourcePath];
-    bookPath = [bookPath stringByAppendingPathComponent:_items[indexPath.row][@"file"]];
-    
     REMainViewController *viewController = [[self storyboard] instantiateViewControllerWithIdentifier:NSStringFromClass([REMainViewController class])];
-    [viewController setDocumentPath:bookPath];
+    [viewController setDocumentInfo:_items[indexPath.row]];
     
     [[self navigationController] pushViewController:viewController animated:TRUE];
 }

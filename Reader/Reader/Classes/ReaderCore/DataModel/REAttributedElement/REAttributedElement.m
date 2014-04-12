@@ -7,6 +7,7 @@
 //
 
 #import "REAttributedElement.h"
+#import "UIImage+Sizes.h"
 
 typedef NS_OPTIONS(NSInteger, REInnerTagType)
 {
@@ -164,7 +165,7 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
                 NSString *fileName = [[self text] substringFromIndex:range.location + range.length];
                 fileName = [fileName substringToIndex:[fileName rangeOfString:@"\""].location];
                 
-                NSDictionary *attachment = @{@"fileName" : [fileName lastPathComponent], @"attachmentType" : @"image"};
+                NSDictionary *attachment = @{@"fileName" : [_imagesPath stringByAppendingPathComponent:[fileName lastPathComponent]], @"attachmentType" : @"image"};
                 
                 REInnerTagAttribute *attribute = [[REInnerTagAttribute alloc] init];
                 attribute.type = REInnerTagAttachment;
@@ -229,17 +230,23 @@ void MyDeallocationCallback( void* refCon )
 
 CGFloat MyGetAscentCallback( void *refCon )
 {
-    return 100.0;
+    NSDictionary *info = (__bridge NSDictionary *)refCon;
+    CGSize size = [UIImage sizeOfImageAtURL:[NSURL fileURLWithPath:info[@"fileName"]]];
+    
+    return size.height / 2 > 180 ? 180 : size.height / 2;
 }
 
 CGFloat MyGetDescentCallback( void *refCon )
 {
-    return 100;
+    NSDictionary *info = (__bridge NSDictionary *)refCon;
+    CGSize size = [UIImage sizeOfImageAtURL:[NSURL fileURLWithPath:info[@"fileName"]]];
+    
+    return size.height / 2 > 180 ? 180 : size.height / 2;
 }
 
 CGFloat MyGetWidthCallback( void* refCon)
 {
-    return 200;
+    return 300;
 }
 
 

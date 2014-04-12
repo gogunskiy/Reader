@@ -103,13 +103,11 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
 - (void) createPages
 {
     NSInteger pointer = 0;
-    
+  
     CGMutablePathRef path = CGPathCreateMutable();
     CGPathAddRect(path, NULL, self.bounds);
     
-    
     NSAttributedString *attString = [self.document attributedString];
-    
     
     [attString enumerateAttribute:(id)kCTRunDelegateAttributeName
                           inRange:NSMakeRange(0, attString.length)
@@ -125,7 +123,7 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
                  NSDictionary *info = (NSDictionary *)CTRunDelegateGetRefCon(delegate);
                  
                  NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:info];
-                 [dict setObject:[[[self document] info][@"imagesPath"] stringByAppendingPathComponent:dict[@"fileName"]] forKey:@"attachmentPath"];
+                 [dict setObject:dict[@"fileName"] forKey:@"attachmentPath"];
                  [dict setObject:@(range.location) forKey:@"location"];
                  
                  [[self attachments] addObject:dict];
@@ -208,6 +206,8 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
 
 - (void) initializeScrollViewAtPage:(NSUInteger)page
 {
+    [[self pageView] removeFromSuperview];
+    
     REPageView *pageView = [[REPageView alloc] initWithFrame:self.bounds];
     [pageView setAutoresizingMask:UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin];
     [pageView setBackgroundColor:[UIColor whiteColor]];
@@ -218,6 +218,34 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
     [self setPageView:pageView];
     
     [self showPageAtIndex:page - 1];
+}
+
+- (NSString *) currentChapterTitle
+{
+    CTFrameRef currentFrame = (__bridge CTFrameRef)_frames[_currentFrame];
+    
+    CFRange range = CTFrameGetStringRange(currentFrame);
+    
+    NSRange pageRange = NSMakeRange(range.location, range.length);
+    
+    if (range.length > 40)
+    {
+        pageRange = NSMakeRange(range.location, 40);
+    }
+    
+    NSString * pageString = [[[self.document.attributedString string] substringWithRange:pageRange] stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    
+    for (REChapter *chapter in self.document.chapters)
+    {
+        NSString *chapterText = [[[chapter attributedString] string] stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+        
+        if ([chapterText rangeOfString:pageString].length > 0)
+        {
+            return [chapter title];
+        }
+    }
+    
+    return @"";
 }
 
 - (NSArray *) attachmentsForFrame:(CTFrameRef)frame

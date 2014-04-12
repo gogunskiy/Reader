@@ -23,6 +23,7 @@
 @property (nonatomic) NSMutableArray *children;
 
 @property (nonatomic) NSString * name;
+@property (nonatomic) NSString * imagesPath;
 @property (nonatomic) NSDictionary * attributes;
 @property (nonatomic) NSString * text;
 @property (nonatomic) UIColor *color;

@@ -45,9 +45,10 @@
     
 }
 
-- (void) parseDataToAttributedString:(NSString *)data
-                     completionBlock:(void(^)(REChapter *chapter))completionBlock
-                          errorBlock:(void(^)(NSError * error))errorBlock
+- (void) parseChapterToAttributedStringInDoucment:(REDocument *)document
+                                      chapterInfo:(NSDictionary *)chapterInfo
+                                  completionBlock:(void(^)(REChapter *chapter))completionBlock
+                                       errorBlock:(void(^)(NSError * error))errorBlock
 {
 
 }
