@@ -9,8 +9,11 @@
 #import <UIKit/UIKit.h>
 #import "REDocument.h"
 
+@protocol REMainReaderViewDelegate;
 
 @interface REMainReaderView : UIView
+
+@property (nonatomic, weak) IBOutlet NSObject <REMainReaderViewDelegate> *delegate;
 
 @property (nonatomic) REDocument *document;
 
@@ -26,5 +29,15 @@
 - (void) showPageAtIndex:(NSUInteger)index;
 
 - (NSString *) currentChapterTitle;
+
+- (NSArray *) runs;
+
+@end
+
+
+@protocol REMainReaderViewDelegate
+
+- (void) readerView:(REMainReaderView *) readerView pageWillChanged:(NSUInteger)pageIndex;
+- (void) readerView:(REMainReaderView *) readerView pageDidChanged:(NSUInteger)pageIndex;
 
 @end

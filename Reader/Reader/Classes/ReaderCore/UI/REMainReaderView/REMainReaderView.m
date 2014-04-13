@@ -12,6 +12,7 @@
 #import "REAttributedElement.h"
 #import "REPageView.h"
 
+
 typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
 {
     RESnapshotViewAnimationLeft = -1,
@@ -48,6 +49,12 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
     [self createPages];
     [self initializeSnapshotView];
     [self initializeScrollViewAtPage:1];
+}
+
+
+- (NSArray *) runs
+{
+    return self.pageView.runs;
 }
 
 - (NSUInteger) pageCount
@@ -183,6 +190,8 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
 
 - (void) addSnapshotViewWithHideAnimation:(RESnapshotViewAnimationType)type
 {
+    [[self delegate] readerView:self pageWillChanged:self.currentPage];
+    
     [[self snapshotView] setFrame:[[self pageView] frame]];
     [[self snapshotView] setImage:[[self pageView] snapshot]];
     [self addSubview:[self snapshotView]];
@@ -200,6 +209,9 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
                      completion:^(BOOL finished)
      {
          [[self snapshotView] removeFromSuperview];
+         
+         [[self delegate] readerView:self pageDidChanged:self.currentPage];
+         
          [[UIApplication sharedApplication] endIgnoringInteractionEvents];
      }];
 }

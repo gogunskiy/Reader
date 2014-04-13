@@ -9,6 +9,7 @@
 #import "REMainViewController.h"
 #import "REReaderController.h"
 #import "REMainReaderView.h"
+#import "RESelectionTool.h"
 
 @interface REMainViewController ()
 
@@ -20,6 +21,7 @@
 
 @property (nonatomic, weak) IBOutlet UIView *topLineDivider;
 
+@property (nonatomic, strong) IBOutlet RESelectionTool *selectionView;
 
 @property (nonatomic, assign) BOOL toolbarModeEnabled;
 
@@ -39,6 +41,9 @@
     {
         [[self readerView] setDocument:document];
         [[self readerView] needsUpdatePages];
+        
+        [[self selectionView] setAttributedString:[document attributedString]];
+        
         [self updateUI];
     } 
                       errorBlock:^(NSError *error)
@@ -100,6 +105,27 @@
      }];
 }
 
+- (void) updateSelectionView
+{
+    [self clearSelectionView];
+    
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    [self performSelector:@selector(buildSelectionViewLines)
+               withObject:nil
+               afterDelay:0.5];
+}
+
+- (void) buildSelectionViewLines
+{
+    [[self selectionView] setRuns:[_readerView runs]];
+    [[self selectionView] buildLines];
+}
+
+- (void) clearSelectionView
+{
+    [[self selectionView] clear];
+}
+
 #pragma mark - Actions -
 
 - (IBAction) sliderValueDidChanged:(UISlider *)sender
@@ -107,7 +133,13 @@
     NSUInteger frameIndex = (int)sender.value;
     
     [[self readerView] showPageAtIndex:frameIndex];
+    [self updateSelectionView];
     [self updateProgressLabels];
+}
+
+- (IBAction) longPress:(UILongPressGestureRecognizer *)gesture
+{
+    [[self selectionView] longPress:gesture];
 }
 
 - (IBAction) doubleLeftSwipe:(UIGestureRecognizer *)sender
@@ -119,7 +151,6 @@
 {
     [[self readerView] showNextPage];
     
-    [self updateProgressLabels];
     [self updatePageSlider];
 }
 
@@ -127,7 +158,6 @@
 {
     [[self readerView] showPreviousPage];
     
-    [self updateProgressLabels];
     [self updatePageSlider];
 }
 
@@ -154,6 +184,19 @@
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     // TO DO :
+}
+
+#pragma mark - REMainReaderViewDelegate - 
+
+- (void) readerView:(REMainReaderView *) readerView pageWillChanged:(NSUInteger)pageIndex
+{
+    [self clearSelectionView];
+}
+
+- (void) readerView:(REMainReaderView *) readerView pageDidChanged:(NSUInteger)pageIndex
+{
+    [self updateSelectionView];
+    [self updateProgressLabels];
 }
 
 @end

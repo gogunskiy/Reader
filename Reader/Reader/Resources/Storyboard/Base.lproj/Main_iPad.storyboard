@@ -76,6 +76,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <connections>
+                                    <outlet property="delegate" destination="BYZ-38-t0r" id="mxS-1c-gqX"/>
                                     <outletCollection property="gestureRecognizers" destination="wA8-18-gQh" appends="YES" id="yAD-Td-Wto"/>
                                     <outletCollection property="gestureRecognizers" destination="TeY-uh-3m6" appends="YES" id="klc-kT-lrL"/>
                                     <outletCollection property="gestureRecognizers" destination="Fcy-DE-vbH" appends="YES" id="343-Ie-jWT"/>
@@ -100,11 +101,17 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" id="2Z7-JS-WUx" customClass="RESelectionTool">
+                                <rect key="frame" x="0.0" y="61" width="768" height="899"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="Cr8-Zm-OAM" appends="YES" id="upv-JL-Hz6"/>
+                            <outletCollection property="gestureRecognizers" destination="9aR-Zo-B0L" appends="YES" id="j7c-Ce-UnY"/>
                         </connections>
                     </view>
                     <nil key="simulatedTopBarMetrics"/>
@@ -114,6 +121,7 @@
                         <outlet property="pageCountLabel" destination="Kkr-qm-Vpp" id="ahj-2A-q3a"/>
                         <outlet property="pageSlider" destination="33C-kI-Lv9" id="hyx-En-c71"/>
                         <outlet property="readerView" destination="A2L-Bf-Dmk" id="Hc8-tR-o0T"/>
+                        <outlet property="selectionView" destination="2Z7-JS-WUx" id="KUC-kb-Nm7"/>
                         <outlet property="topLineDivider" destination="T6v-GU-TWE" id="56K-dg-fif"/>
                     </connections>
                 </viewController>
@@ -123,21 +131,26 @@
                         <action selector="tap:" destination="BYZ-38-t0r" id="ZCT-ug-56a"/>
                     </connections>
                 </tapGestureRecognizer>
-                <swipeGestureRecognizer direction="left" id="TeY-uh-3m6">
+                <swipeGestureRecognizer delaysTouchesBegan="YES" direction="left" id="TeY-uh-3m6">
                     <connections>
                         <action selector="leftSwipe:" destination="BYZ-38-t0r" id="hBh-IP-aQW"/>
                     </connections>
                 </swipeGestureRecognizer>
-                <swipeGestureRecognizer direction="right" id="Fcy-DE-vbH">
+                <swipeGestureRecognizer delaysTouchesBegan="YES" direction="right" id="Fcy-DE-vbH">
                     <connections>
                         <action selector="rightSwipe:" destination="BYZ-38-t0r" id="Gia-jG-cDi"/>
                     </connections>
                 </swipeGestureRecognizer>
-                <swipeGestureRecognizer direction="right" numberOfTouchesRequired="2" id="Cr8-Zm-OAM">
+                <swipeGestureRecognizer delaysTouchesBegan="YES" direction="right" numberOfTouchesRequired="2" id="Cr8-Zm-OAM">
                     <connections>
                         <action selector="doubleLeftSwipe:" destination="BYZ-38-t0r" id="moo-ie-dEc"/>
                     </connections>
                 </swipeGestureRecognizer>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="9aR-Zo-B0L">
+                    <connections>
+                        <action selector="longPress:" destination="BYZ-38-t0r" id="um6-5n-uLR"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="718" y="-271"/>
         </scene>

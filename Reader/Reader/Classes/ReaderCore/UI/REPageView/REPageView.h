@@ -15,4 +15,6 @@
 
 - (UIImage *) snapshot;
 
+- (NSArray *) runs;
+
 @end

@@ -25,7 +25,52 @@
     _attachments = attachments;
     
     [self setNeedsDisplay];
+}
 
+- (NSArray *) runs
+{
+    NSMutableArray *runs = [NSMutableArray new];
+    
+    NSArray *lines = (NSArray *)CTFrameGetLines(_frameRef);
+    CGPoint origins[[lines count]];
+    CTFrameGetLineOrigins(_frameRef, CFRangeMake(0, 0), origins);
+    
+    NSInteger index = 0;
+    
+    
+    for (id lineObj in lines)
+    {
+        CTLineRef line = (__bridge CTLineRef)lineObj;
+        CFRange lineRange = CTLineGetStringRange(line);
+        
+        CGRect lineBounds;
+        CGFloat ascent;
+        CGFloat descent;
+        lineBounds.size.width = CTLineGetTypographicBounds(line, &ascent, &descent, NULL);
+        lineBounds.size.height = ascent + descent;
+        
+        lineBounds.origin.x = origins[index].x;
+        lineBounds.origin.y = origins[index].y;
+        lineBounds.origin.y -= descent;
+        lineBounds.origin.y = self.frame.size.height - CGRectGetMaxY(lineBounds);
+        
+        for (long i = lineRange.location; i < (lineRange.location + lineRange.length) - 1; i++)
+        {
+            CGFloat startOffset = CTLineGetOffsetForStringIndex(line, i, NULL);
+            CGFloat endOffset = CTLineGetOffsetForStringIndex(line, i + 1, NULL);
+            
+            CGRect characterBounds = lineBounds;
+            
+            characterBounds.origin.x += startOffset;
+            characterBounds.size.width = endOffset - startOffset;
+            
+            [runs addObject:@{@"frame" : [NSValue valueWithCGRect:characterBounds], @"range" : [NSValue valueWithRange:NSMakeRange(i, 1)]}];
+        }
+        
+        index ++;
+    }
+    
+    return runs;
 }
 
 - (void) insertAttachments:(NSArray *)array

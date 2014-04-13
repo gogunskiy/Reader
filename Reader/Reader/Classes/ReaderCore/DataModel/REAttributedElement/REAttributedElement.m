@@ -158,7 +158,7 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
             }
             else if ([tag rangeOfString:@"<img"].length)
             {
-                [resultString appendString:@" "];
+                [resultString appendString:@"  "];
                 
                 NSRange range= [[self text] rangeOfString:@"src=\""];
                 

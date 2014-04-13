@@ -10,6 +10,8 @@
 		63356EFB18F9AF2C0079DDF7 /* UIImage+Sizes.m in Sources */ = {isa = PBXBuildFile; fileRef = 63356EFA18F9AF2C0079DDF7 /* UIImage+Sizes.m */; };
 		63A406D118F436AF00021EAB /* Moskva - Petushki.epub in Resources */ = {isa = PBXBuildFile; fileRef = 63A406D018F436AF00021EAB /* Moskva - Petushki.epub */; };
 		63A406D318F4379600021EAB /* section1.xhtml in Resources */ = {isa = PBXBuildFile; fileRef = 63A406D218F4379600021EAB /* section1.xhtml */; };
+		63A76A6A18FAA78800069B8A /* dot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63A76A6918FAA78800069B8A /* dot@2x.png */; };
+		63A76A6F18FAE1A100069B8A /* RESelectionTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A76A6E18FAE1A100069B8A /* RESelectionTool.m */; };
 		63D4695718EF3AE600E5E6E7 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 63D4694D18EF3AE600E5E6E7 /* ioapi.c */; };
 		63D4695818EF3AE600E5E6E7 /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 63D4694F18EF3AE600E5E6E7 /* mztools.c */; };
 		63D4695918EF3AE600E5E6E7 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 63D4695118EF3AE600E5E6E7 /* unzip.c */; };
@@ -39,7 +41,6 @@
 		797EBC9318EC4DC40049C061 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 797EBC9218EC4DC40049C061 /* CoreText.framework */; };
 		797EBC9718EC51C40049C061 /* REAttributedElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 797EBC9618EC51C40049C061 /* REAttributedElement.m */; };
 		79A4FF2D18EEA82500F79347 /* REPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A4FF2C18EEA82500F79347 /* REPageView.m */; };
-		79A9C39318F81B2400AC36DE /* dot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 79A9C39218F81B2400AC36DE /* dot@2x.png */; };
 		79A9C39F18F820EB00AC36DE /* REBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A9C39818F820EB00AC36DE /* REBaseViewController.m */; };
 		79A9C3A018F820EB00AC36DE /* REContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A9C39B18F820EB00AC36DE /* REContentViewController.m */; };
 		79A9C3A118F820EB00AC36DE /* REMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A9C39E18F820EB00AC36DE /* REMainViewController.m */; };
@@ -72,6 +73,9 @@
 		63356EFA18F9AF2C0079DDF7 /* UIImage+Sizes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Sizes.m"; sourceTree = "<group>"; };
 		63A406D018F436AF00021EAB /* Moskva - Petushki.epub */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Moskva - Petushki.epub"; sourceTree = "<group>"; };
 		63A406D218F4379600021EAB /* section1.xhtml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = section1.xhtml; path = Reader/Resources/Data/section1.xhtml; sourceTree = SOURCE_ROOT; };
+		63A76A6918FAA78800069B8A /* dot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dot@2x.png"; sourceTree = "<group>"; };
+		63A76A6D18FAE1A100069B8A /* RESelectionTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RESelectionTool.h; sourceTree = "<group>"; };
+		63A76A6E18FAE1A100069B8A /* RESelectionTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RESelectionTool.m; sourceTree = "<group>"; };
 		63D4694C18EF3AE600E5E6E7 /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
 		63D4694D18EF3AE600E5E6E7 /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
 		63D4694E18EF3AE600E5E6E7 /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
@@ -116,7 +120,6 @@
 		797EBC9618EC51C40049C061 /* REAttributedElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REAttributedElement.m; sourceTree = "<group>"; };
 		79A4FF2B18EEA82500F79347 /* REPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REPageView.h; sourceTree = "<group>"; };
 		79A4FF2C18EEA82500F79347 /* REPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REPageView.m; sourceTree = "<group>"; };
-		79A9C39218F81B2400AC36DE /* dot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dot@2x.png"; sourceTree = "<group>"; };
 		79A9C39718F820EB00AC36DE /* REBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REBaseViewController.h; sourceTree = "<group>"; };
 		79A9C39818F820EB00AC36DE /* REBaseViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REBaseViewController.m; sourceTree = "<group>"; };
 		79A9C39A18F820EB00AC36DE /* REContentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REContentViewController.h; sourceTree = "<group>"; };
@@ -181,6 +184,23 @@
 				63356EFA18F9AF2C0079DDF7 /* UIImage+Sizes.m */,
 			);
 			path = "UIImage+Sizes";
+			sourceTree = "<group>";
+		};
+		63A76A6818FAA78800069B8A /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				63A76A6918FAA78800069B8A /* dot@2x.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		63A76A6C18FAE18400069B8A /* RESelectionTool */ = {
+			isa = PBXGroup;
+			children = (
+				63A76A6D18FAE1A100069B8A /* RESelectionTool.h */,
+				63A76A6E18FAE1A100069B8A /* RESelectionTool.m */,
+			);
+			path = RESelectionTool;
 			sourceTree = "<group>";
 		};
 		63D4694A18EF3AE600E5E6E7 /* ZipArchive */ = {
@@ -370,6 +390,7 @@
 		797EBC6F18EC4B3C0049C061 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				63A76A6818FAA78800069B8A /* Images */,
 				797EBC7018EC4B3C0049C061 /* Data */,
 				797EBC7218EC4B3C0049C061 /* Other */,
 				797EBC7618EC4B3C0049C061 /* Plist */,
@@ -381,7 +402,6 @@
 		797EBC7018EC4B3C0049C061 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				79A9C39118F81B2400AC36DE /* Images */,
 				63D7A17418F5BCBE002769E5 /* Content */,
 				79E7827818F2E2F7002B121B /* Settings */,
 				63D4696018EF409A00E5E6E7 /* Epub */,
@@ -450,6 +470,7 @@
 		797EBC8D18EC4CDE0049C061 /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				63A76A6C18FAE18400069B8A /* RESelectionTool */,
 				79A4FF2A18EEA81500F79347 /* REPageView */,
 				797EBC8E18EC4CDE0049C061 /* REMainReaderView */,
 			);
@@ -481,14 +502,6 @@
 				79A4FF2C18EEA82500F79347 /* REPageView.m */,
 			);
 			path = REPageView;
-			sourceTree = "<group>";
-		};
-		79A9C39118F81B2400AC36DE /* Images */ = {
-			isa = PBXGroup;
-			children = (
-				79A9C39218F81B2400AC36DE /* dot@2x.png */,
-			);
-			path = Images;
 			sourceTree = "<group>";
 		};
 		79A9C39418F820EB00AC36DE /* GUIHelper */ = {
@@ -683,7 +696,7 @@
 				79E7827A18F2E34A002B121B /* Settings.plist in Resources */,
 				63D4696418EF409A00E5E6E7 /* 000000000001.epub in Resources */,
 				79E4ABA218ED9D76000003C7 /* chapter-001.xml in Resources */,
-				79A9C39318F81B2400AC36DE /* dot@2x.png in Resources */,
+				63A76A6A18FAA78800069B8A /* dot@2x.png in Resources */,
 				63D4696518EF409A00E5E6E7 /* 000000000002.epub in Resources */,
 				63D7A17618F5BCE7002769E5 /* Content.plist in Resources */,
 				63A406D118F436AF00021EAB /* Moskva - Petushki.epub in Resources */,
@@ -710,6 +723,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				797EBC9718EC51C40049C061 /* REAttributedElement.m in Sources */,
+				63A76A6F18FAE1A100069B8A /* RESelectionTool.m in Sources */,
 				63D4695718EF3AE600E5E6E7 /* ioapi.c in Sources */,
 				63E12CAA18F173FD005032EA /* NSString+HTML.m in Sources */,
 				79E4AB8E18ED811D000003C7 /* REEpubParser.m in Sources */,
