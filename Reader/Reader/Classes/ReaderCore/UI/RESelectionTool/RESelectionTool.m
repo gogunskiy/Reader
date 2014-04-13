@@ -75,14 +75,20 @@
             {
                 if (CGRectContainsPoint([view frame], location))
                 {
-                    NSLog(@"%@", _runs[[view tag]][@"range"]);
-                
+                    NSInteger currentIndex = [view tag];
+                    NSRange range = [_runs[currentIndex][@"range"] rangeValue];
+                    NSString * character = [[_attributedString string] substringWithRange:range];
+                    
+                    if ([character isEqualToString:@" "])
+                    {
+                        return;
+                    }
+                    
                     [view setAlpha: 1.0];
                     
                     BOOL leftSpaceFound = FALSE;
                     BOOL rightSpaceFound = FALSE;
                     
-                    NSInteger currentIndex = [view tag];
                     NSInteger delta = 0;
                     
                     while (!(leftSpaceFound && rightSpaceFound))
@@ -94,9 +100,7 @@
                         {
                             NSRange range = [_runs[prevValue][@"range"] rangeValue];
                             NSString * character = [[_attributedString string] substringWithRange:range];
-                            
-                            NSLog(@"%@", character);
-                            
+
                             if ([character isEqualToString:@" "])
                             {
                                 leftSpaceFound = TRUE;
