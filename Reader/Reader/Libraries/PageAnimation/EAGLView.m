@@ -69,8 +69,8 @@
     rightPage_ = [[CCPage alloc] init];
     rightPage_.currentFrame = 0;
     rightPage_.framesPerCycle = 120;
-    rightPage_.width = 0.8f;
-    rightPage_.height = 1.0f;
+    rightPage_.width = 1;
+    rightPage_.height = 1;
     rightPage_.columns = PAGE_COLUMNS;
     rightPage_.rows = PAGE_ROWS;
     [rightPage_ createMesh];

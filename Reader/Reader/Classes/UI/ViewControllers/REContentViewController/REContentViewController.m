@@ -32,7 +32,7 @@
     [self setItems:[READER documents]];
     [[self tableView] reloadData];
     
-    EAGLView *view = [[EAGLView alloc] initWithFrame:CGRectMake(100,100, 600, 600)];
+    EAGLView *view = [[EAGLView alloc] initWithFrame:CGRectMake(0,84, 768, 900)];
     [[self view] addSubview:view];
     
     [self setGlView:view];
