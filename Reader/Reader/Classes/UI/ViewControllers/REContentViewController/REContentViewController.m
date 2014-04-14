@@ -12,14 +12,10 @@
 #import "REPathManager.h"
 
 
-#import "EAGLView.h"
-
 @interface REContentViewController ()
 
 @property (nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic) NSArray *items;
-
-@property (nonatomic)  EAGLView *glView;
 
 @end
 
@@ -31,13 +27,6 @@
     
     [self setItems:[READER documents]];
     [[self tableView] reloadData];
-    
-    EAGLView *view = [[EAGLView alloc] initWithFrame:CGRectMake(0,84, 768, 900)];
-    [[self view] addSubview:view];
-    
-    [self setGlView:view];
-    
-     [_glView startAnimation];
 }
 
 

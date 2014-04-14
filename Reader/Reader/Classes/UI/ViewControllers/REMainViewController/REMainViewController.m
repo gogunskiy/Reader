@@ -25,8 +25,9 @@
 
 @property (nonatomic, assign) BOOL toolbarModeEnabled;
 
-
 @property (nonatomic, assign) NSTimeInterval lastTimeWhenPageProgressWasUpdated;
+
+@property (nonatomic, assign) UIPageViewController *pageController;
 
 @end
 
@@ -124,6 +125,12 @@
 - (void) clearSelectionView
 {
     [[self selectionView] clear];
+}
+
+- (void) initialiazePageViewController
+{
+    self.pageController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
+    
 }
 
 #pragma mark - Actions -

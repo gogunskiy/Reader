@@ -23,11 +23,8 @@
 		63D4696C18F0813000E5E6E7 /* REPathManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D4696B18F0813000E5E6E7 /* REPathManager.m */; };
 		63D7A17618F5BCE7002769E5 /* Content.plist in Resources */ = {isa = PBXBuildFile; fileRef = 63D7A17518F5BCE7002769E5 /* Content.plist */; };
 		63E12CAA18F173FD005032EA /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E12CA918F173FD005032EA /* NSString+HTML.m */; };
-		7968DC6518FC391700BFD5B1 /* CCPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 7968DC5F18FC391700BFD5B1 /* CCPage.m */; };
-		7968DC6618FC391700BFD5B1 /* EAGLView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7968DC6118FC391700BFD5B1 /* EAGLView.m */; };
-		7968DC6718FC391700BFD5B1 /* ES1Renderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 7968DC6318FC391700BFD5B1 /* ES1Renderer.m */; };
-		7968DC6A18FC39FE00BFD5B1 /* back512.png in Resources */ = {isa = PBXBuildFile; fileRef = 7968DC6818FC39FE00BFD5B1 /* back512.png */; };
-		7968DC6B18FC39FE00BFD5B1 /* front512.png in Resources */ = {isa = PBXBuildFile; fileRef = 7968DC6918FC39FE00BFD5B1 /* front512.png */; };
+		63FEDC4F18FC5E8A007928D4 /* back512@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63FEDC4D18FC5E8A007928D4 /* back512@2x.png */; };
+		63FEDC5018FC5E8A007928D4 /* front512@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63FEDC4E18FC5E8A007928D4 /* front512@2x.png */; };
 		797EBC2B18EC4A830049C061 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 797EBC2A18EC4A830049C061 /* Foundation.framework */; };
 		797EBC2D18EC4A830049C061 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 797EBC2C18EC4A830049C061 /* CoreGraphics.framework */; };
 		797EBC2F18EC4A830049C061 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 797EBC2E18EC4A830049C061 /* UIKit.framework */; };
@@ -100,16 +97,8 @@
 		63D7A17518F5BCE7002769E5 /* Content.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Content.plist; sourceTree = "<group>"; };
 		63E12CA818F173FD005032EA /* NSString+HTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+HTML.h"; sourceTree = "<group>"; };
 		63E12CA918F173FD005032EA /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HTML.m"; sourceTree = "<group>"; };
-		7968DC5D18FC391700BFD5B1 /* CCCommon.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCCommon.h; sourceTree = "<group>"; };
-		7968DC5E18FC391700BFD5B1 /* CCPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CCPage.h; sourceTree = "<group>"; };
-		7968DC5F18FC391700BFD5B1 /* CCPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CCPage.m; sourceTree = "<group>"; };
-		7968DC6018FC391700BFD5B1 /* EAGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EAGLView.h; sourceTree = "<group>"; };
-		7968DC6118FC391700BFD5B1 /* EAGLView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EAGLView.m; sourceTree = "<group>"; };
-		7968DC6218FC391700BFD5B1 /* ES1Renderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ES1Renderer.h; sourceTree = "<group>"; };
-		7968DC6318FC391700BFD5B1 /* ES1Renderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ES1Renderer.m; sourceTree = "<group>"; };
-		7968DC6418FC391700BFD5B1 /* ESRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESRenderer.h; sourceTree = "<group>"; };
-		7968DC6818FC39FE00BFD5B1 /* back512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = back512.png; sourceTree = "<group>"; };
-		7968DC6918FC39FE00BFD5B1 /* front512.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = front512.png; sourceTree = "<group>"; };
+		63FEDC4D18FC5E8A007928D4 /* back512@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back512@2x.png"; sourceTree = "<group>"; };
+		63FEDC4E18FC5E8A007928D4 /* front512@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "front512@2x.png"; sourceTree = "<group>"; };
 		797EBC2718EC4A830049C061 /* Reader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		797EBC2A18EC4A830049C061 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		797EBC2C18EC4A830049C061 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -204,8 +193,8 @@
 		63A76A6818FAA78800069B8A /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				7968DC6818FC39FE00BFD5B1 /* back512.png */,
-				7968DC6918FC39FE00BFD5B1 /* front512.png */,
+				63FEDC4D18FC5E8A007928D4 /* back512@2x.png */,
+				63FEDC4E18FC5E8A007928D4 /* front512@2x.png */,
 				63A76A6918FAA78800069B8A /* dot@2x.png */,
 			);
 			path = Images;
@@ -293,21 +282,6 @@
 				63E12CA918F173FD005032EA /* NSString+HTML.m */,
 			);
 			path = "NSString+HTML";
-			sourceTree = "<group>";
-		};
-		7968DC5C18FC391700BFD5B1 /* PageAnimation */ = {
-			isa = PBXGroup;
-			children = (
-				7968DC5D18FC391700BFD5B1 /* CCCommon.h */,
-				7968DC5E18FC391700BFD5B1 /* CCPage.h */,
-				7968DC5F18FC391700BFD5B1 /* CCPage.m */,
-				7968DC6018FC391700BFD5B1 /* EAGLView.h */,
-				7968DC6118FC391700BFD5B1 /* EAGLView.m */,
-				7968DC6218FC391700BFD5B1 /* ES1Renderer.h */,
-				7968DC6318FC391700BFD5B1 /* ES1Renderer.m */,
-				7968DC6418FC391700BFD5B1 /* ESRenderer.h */,
-			);
-			path = PageAnimation;
 			sourceTree = "<group>";
 		};
 		797EBC1E18EC4A830049C061 = {
@@ -413,7 +387,6 @@
 		797EBC6E18EC4B3C0049C061 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
-				7968DC5C18FC391700BFD5B1 /* PageAnimation */,
 				63D4694A18EF3AE600E5E6E7 /* ZipArchive */,
 				79E4AB9318ED9927000003C7 /* RaptureXML */,
 			);
@@ -726,11 +699,10 @@
 			files = (
 				797EBC8018EC4B3C0049C061 /* InfoPlist.strings in Resources */,
 				797EBC8318EC4B3C0049C061 /* Main_iPad.storyboard in Resources */,
+				63FEDC4F18FC5E8A007928D4 /* back512@2x.png in Resources */,
 				79E7827A18F2E34A002B121B /* Settings.plist in Resources */,
-				7968DC6A18FC39FE00BFD5B1 /* back512.png in Resources */,
 				63D4696418EF409A00E5E6E7 /* 000000000001.epub in Resources */,
 				79E4ABA218ED9D76000003C7 /* chapter-001.xml in Resources */,
-				7968DC6B18FC39FE00BFD5B1 /* front512.png in Resources */,
 				63A76A6A18FAA78800069B8A /* dot@2x.png in Resources */,
 				63D4696518EF409A00E5E6E7 /* 000000000002.epub in Resources */,
 				63D7A17618F5BCE7002769E5 /* Content.plist in Resources */,
@@ -738,6 +710,7 @@
 				797EBC8418EC4B3C0049C061 /* Main_iPhone.storyboard in Resources */,
 				63D4696618EF409A00E5E6E7 /* 000000000003.epub in Resources */,
 				797EBC8118EC4B3C0049C061 /* Images.xcassets in Resources */,
+				63FEDC5018FC5E8A007928D4 /* front512@2x.png in Resources */,
 				63A406D318F4379600021EAB /* section1.xhtml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -759,17 +732,14 @@
 			files = (
 				797EBC9718EC51C40049C061 /* REAttributedElement.m in Sources */,
 				63A76A6F18FAE1A100069B8A /* RESelectionTool.m in Sources */,
-				7968DC6518FC391700BFD5B1 /* CCPage.m in Sources */,
 				63D4695718EF3AE600E5E6E7 /* ioapi.c in Sources */,
 				63E12CAA18F173FD005032EA /* NSString+HTML.m in Sources */,
 				79E4AB8E18ED811D000003C7 /* REEpubParser.m in Sources */,
-				7968DC6618FC391700BFD5B1 /* EAGLView.m in Sources */,
 				63356EFB18F9AF2C0079DDF7 /* UIImage+Sizes.m in Sources */,
 				79E4ABA018ED9AC4000003C7 /* REReaderController.m in Sources */,
 				63D4695818EF3AE600E5E6E7 /* mztools.c in Sources */,
 				63D4695B18EF3AE600E5E6E7 /* ZipArchive.m in Sources */,
 				63D4695918EF3AE600E5E6E7 /* unzip.c in Sources */,
-				7968DC6718FC391700BFD5B1 /* ES1Renderer.m in Sources */,
 				79E4AB9618ED9927000003C7 /* RXMLElement.m in Sources */,
 				79E4AB8B18ED8110000003C7 /* REBaseParser.m in Sources */,
 				79A9C3A018F820EB00AC36DE /* REContentViewController.m in Sources */,
