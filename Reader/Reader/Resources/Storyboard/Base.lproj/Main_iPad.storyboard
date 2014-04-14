@@ -68,6 +68,8 @@
                                 <rect key="frame" x="38" y="960" width="692" height="31"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
                                 <connections>
+                                    <action selector="sliderDidToucheUp:" destination="BYZ-38-t0r" eventType="touchUpInside" id="BlY-qD-Dpq"/>
+                                    <action selector="sliderDidTouchedDown:" destination="BYZ-38-t0r" eventType="touchDown" id="OZq-T4-2wT"/>
                                     <action selector="sliderValueDidChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="IX3-8d-n0S"/>
                                 </connections>
                             </slider>

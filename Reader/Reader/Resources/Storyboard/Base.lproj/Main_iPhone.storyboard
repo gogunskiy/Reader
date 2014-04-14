@@ -69,6 +69,7 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                                 <connections>
+                                    <outlet property="delegate" destination="vXZ-lx-hvc" id="g84-xs-yD8"/>
                                     <outletCollection property="gestureRecognizers" destination="eUV-vh-xeX" appends="YES" id="kMe-wz-P9B"/>
                                     <outletCollection property="gestureRecognizers" destination="kOH-nO-Ut9" appends="YES" id="6VR-CI-bIX"/>
                                     <outletCollection property="gestureRecognizers" destination="qiz-Tk-eTF" appends="YES" id="rSm-HR-icE"/>
@@ -78,6 +79,8 @@
                                 <rect key="frame" x="10" y="522" width="300" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                 <connections>
+                                    <action selector="sliderDidToucheUp:" destination="vXZ-lx-hvc" eventType="touchUpInside" id="O0U-du-kDz"/>
+                                    <action selector="sliderDidTouchedDown:" destination="vXZ-lx-hvc" eventType="touchDown" id="9la-uu-RAz"/>
                                     <action selector="sliderValueDidChanged:" destination="vXZ-lx-hvc" eventType="valueChanged" id="bpf-6r-c7G"/>
                                 </connections>
                             </slider>
@@ -100,11 +103,17 @@
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <view userInteractionEnabled="NO" contentMode="scaleToFill" id="7Fm-Vr-i6E" customClass="RESelectionTool">
+                                <rect key="frame" x="0.0" y="60" width="320" height="470"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="0a0-rW-0Jb" appends="YES" id="pun-bx-U0q"/>
+                            <outletCollection property="gestureRecognizers" destination="eJ3-Nz-6V6" appends="YES" id="COT-Y9-nfD"/>
                         </connections>
                     </view>
                     <nil key="simulatedTopBarMetrics"/>
@@ -114,6 +123,7 @@
                         <outlet property="pageCountLabel" destination="oIO-aV-n4e" id="6Vs-wB-63M"/>
                         <outlet property="pageSlider" destination="yz5-9u-hQc" id="VQc-Lc-ReY"/>
                         <outlet property="readerView" destination="3UK-LD-hND" id="vWP-EB-UQX"/>
+                        <outlet property="selectionView" destination="7Fm-Vr-i6E" id="ZVH-r5-6iQ"/>
                         <outlet property="topLineDivider" destination="PpT-eW-b2t" id="LFT-ct-xkk"/>
                     </connections>
                 </viewController>
@@ -138,6 +148,11 @@
                         <action selector="doubleLeftSwipe:" destination="vXZ-lx-hvc" id="EfL-JH-xIK"/>
                     </connections>
                 </swipeGestureRecognizer>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="eJ3-Nz-6V6">
+                    <connections>
+                        <action selector="longPress:" destination="vXZ-lx-hvc" id="0lc-z0-xFY"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="39" y="-54"/>
         </scene>

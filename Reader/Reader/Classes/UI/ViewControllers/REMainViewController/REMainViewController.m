@@ -132,7 +132,21 @@
 {
     NSUInteger frameIndex = (int)sender.value;
     
+    [[self pageCountLabel] setText:[NSString stringWithFormat:@"%lu / %lu", (unsigned long)frameIndex, (unsigned long)self.readerView.pageCount]];
+    
+}
+
+- (IBAction) sliderDidTouchedDown:(UISlider *)sender
+{
+    [self clearSelectionView];
+}
+
+- (IBAction) sliderDidToucheUp:(UISlider *)sender
+{
+    NSUInteger frameIndex = (int)sender.value;
+    
     [[self readerView] showPageAtIndex:frameIndex];
+    
     [self updateSelectionView];
     [self updateProgressLabels];
 }
