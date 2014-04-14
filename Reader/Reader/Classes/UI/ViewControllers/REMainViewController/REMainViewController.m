@@ -27,7 +27,7 @@
 
 @property (nonatomic, assign) NSTimeInterval lastTimeWhenPageProgressWasUpdated;
 
-@property (nonatomic, assign) UIPageViewController *pageController;
+@property (nonatomic) UIPageViewController *pageController;
 
 @end
 
@@ -36,6 +36,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    [self initializePageViewController];
     
     [READER loadDocumentWithPath:[self documentInfo][@"file"]
                  completionBlock:^(REDocument *document)
@@ -127,10 +129,43 @@
     [[self selectionView] clear];
 }
 
-- (void) initialiazePageViewController
+- (void) initializePageViewController
 {
-    self.pageController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal options:nil];
+    self.pageController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl
+                                                          navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
+                                                                        options:nil];
+    [self.pageController setDelegate:self];
+    [self.pageController setDataSource:self];
     
+    [self.pageController.view setFrame:[self readerView].frame];
+    [self.pageController.view setBackgroundColor:[UIColor redColor]];
+    
+    [[self view] addSubview:self.pageController.view];
+    
+    UIViewController *viewController = [[UIViewController alloc] init];
+    [viewController setView:_readerView];
+    [self.pageController setViewControllers:@[viewController]
+                                  direction:UIPageViewControllerNavigationDirectionForward
+                                   animated:NO
+                                 completion:nil];
+    
+    [self.pageController didMoveToParentViewController:self];
+}
+
+#pragma mark - UIPageViewControllerDataSource  -
+
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
+{
+    UIViewController *prevViewController = [[UIViewController alloc] init];
+    [prevViewController setView:_readerView];
+    return prevViewController;
+}
+
+- (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
+{
+    UIViewController *nextViewController = [[UIViewController alloc] init];
+    [nextViewController setView:_readerView];
+    return nextViewController;
 }
 
 #pragma mark - Actions -

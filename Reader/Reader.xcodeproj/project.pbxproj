@@ -25,6 +25,7 @@
 		63E12CAA18F173FD005032EA /* NSString+HTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 63E12CA918F173FD005032EA /* NSString+HTML.m */; };
 		63FEDC4F18FC5E8A007928D4 /* back512@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63FEDC4D18FC5E8A007928D4 /* back512@2x.png */; };
 		63FEDC5018FC5E8A007928D4 /* front512@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63FEDC4E18FC5E8A007928D4 /* front512@2x.png */; };
+		63FEDC5418FC68E7007928D4 /* REPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FEDC5318FC68E7007928D4 /* REPageViewController.m */; };
 		797EBC2B18EC4A830049C061 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 797EBC2A18EC4A830049C061 /* Foundation.framework */; };
 		797EBC2D18EC4A830049C061 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 797EBC2C18EC4A830049C061 /* CoreGraphics.framework */; };
 		797EBC2F18EC4A830049C061 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 797EBC2E18EC4A830049C061 /* UIKit.framework */; };
@@ -99,6 +100,8 @@
 		63E12CA918F173FD005032EA /* NSString+HTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+HTML.m"; sourceTree = "<group>"; };
 		63FEDC4D18FC5E8A007928D4 /* back512@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "back512@2x.png"; sourceTree = "<group>"; };
 		63FEDC4E18FC5E8A007928D4 /* front512@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "front512@2x.png"; sourceTree = "<group>"; };
+		63FEDC5218FC68E7007928D4 /* REPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REPageViewController.h; sourceTree = "<group>"; };
+		63FEDC5318FC68E7007928D4 /* REPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REPageViewController.m; sourceTree = "<group>"; };
 		797EBC2718EC4A830049C061 /* Reader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		797EBC2A18EC4A830049C061 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		797EBC2C18EC4A830049C061 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -282,6 +285,16 @@
 				63E12CA918F173FD005032EA /* NSString+HTML.m */,
 			);
 			path = "NSString+HTML";
+			sourceTree = "<group>";
+		};
+		63FEDC5118FC68D6007928D4 /* REPageViewController */ = {
+			isa = PBXGroup;
+			children = (
+				63FEDC5218FC68E7007928D4 /* REPageViewController.h */,
+				63FEDC5318FC68E7007928D4 /* REPageViewController.m */,
+			);
+			name = REPageViewController;
+			path = RERootViewController;
 			sourceTree = "<group>";
 		};
 		797EBC1E18EC4A830049C061 = {
@@ -522,6 +535,7 @@
 		79A9C39518F820EB00AC36DE /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				63FEDC5118FC68D6007928D4 /* REPageViewController */,
 				79A9C39618F820EB00AC36DE /* REBaseViewController */,
 				79A9C39918F820EB00AC36DE /* REContentViewController */,
 				79A9C39C18F820EB00AC36DE /* REMainViewController */,
@@ -731,6 +745,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				797EBC9718EC51C40049C061 /* REAttributedElement.m in Sources */,
+				63FEDC5418FC68E7007928D4 /* REPageViewController.m in Sources */,
 				63A76A6F18FAE1A100069B8A /* RESelectionTool.m in Sources */,
 				63D4695718EF3AE600E5E6E7 /* ioapi.c in Sources */,
 				63E12CAA18F173FD005032EA /* NSString+HTML.m in Sources */,

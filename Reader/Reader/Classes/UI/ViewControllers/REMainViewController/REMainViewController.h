@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "REBaseViewController.h"
 
-@interface REMainViewController : REBaseViewController
+@interface REMainViewController : REBaseViewController <UIPageViewControllerDataSource, UIPageViewControllerDelegate>
 
 @property (nonatomic) NSDictionary *documentInfo;
 
