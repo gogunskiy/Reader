@@ -100,6 +100,7 @@
                 for (NSDictionary *attachment in  array)
                 {
                     NSInteger location = [attachment[@"location"] integerValue];
+                
                     if ( runRange.location <= location && runRange.location+runRange.length > location)
                     {
                         CGRect runBounds;
@@ -108,10 +109,39 @@
                         runBounds.size.width = CTRunGetTypographicBounds(run, CFRangeMake(0, 0), &ascent, &descent, NULL);
                         runBounds.size.height = ascent + descent;
                         
-                        runBounds.origin.x = self.frame.size.width / 2 - runBounds.size.width / 2;
+                        CGFloat xOffset = CTLineGetOffsetForStringIndex(line, CTRunGetStringRange(run).location, NULL); //9
+                        runBounds.origin.x = origins[index].x + xOffset; //self.frame.size.width / 2 - runBounds.size.width / 2;
                         runBounds.origin.y = origins[index].y;
                         runBounds.origin.y -= descent;
                         runBounds.origin.y = self.frame.size.height - CGRectGetMaxY(runBounds);
+                        
+                        
+                        CTTextAlignment aligment = (CTTextAlignment)[attachment[@"aligment"] integerValue];
+                        
+                        switch (aligment)
+                        {
+                            case kCTTextAlignmentLeft:
+                            {
+                                runBounds.origin.x = origins[index].x;
+                                break;
+                            }
+                            case kCTTextAlignmentCenter:
+                            {
+                                runBounds.origin.x = self.frame.size.width / 2 - runBounds.size.width / 2;
+                                break;
+                            }
+                            case kCTTextAlignmentRight:
+                            {
+                                runBounds.origin.x = self.frame.size.width - runBounds.size.width / 2 - origins[index].x;
+                                break;
+                            }
+                                
+                            default:
+                            {
+                                runBounds.origin.x = origins[index].x + xOffset;
+                                break;
+                            }
+                        }
                         
                         UIImageView *view = [[UIImageView alloc] initWithFrame:runBounds];
                         UIImage *image = [[UIImage alloc] initWithContentsOfFile:attachment[@"attachmentPath"]];

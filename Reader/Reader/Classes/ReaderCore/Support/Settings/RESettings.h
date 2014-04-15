@@ -19,7 +19,6 @@
 - (CTParagraphStyleRef) headerParagraphStyle;
 - (CTParagraphStyleRef) blockquoteParagraphStyle;
 - (CTParagraphStyleRef) baseParagraphStyle;
-- (CTParagraphStyleRef) epigraphStyle;
-- (CTParagraphStyleRef) epigraphAuthorStyle;
+- (CTParagraphStyleRef) baseParagraphStyleWithAligment:(CTTextAlignment)aligment;
 
 @end

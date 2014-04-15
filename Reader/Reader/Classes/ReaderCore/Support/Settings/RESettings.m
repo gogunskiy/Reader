@@ -64,14 +64,9 @@ static RESettings *shared = nil;
     return [self _paragraphStyleForType:PARAGRAPH_STYLE_BASE];
 }
 
-- (CTParagraphStyleRef) epigraphStyle
+- (CTParagraphStyleRef) baseParagraphStyleWithAligment:(CTTextAlignment)aligment
 {
-    return [self _paragraphStyleForType:PARAGRAPH_STYLE_EPIGRAPH];
-}
-
-- (CTParagraphStyleRef) epigraphAuthorStyle
-{
-    return [self _paragraphStyleForType:PARAGRAPH_STYLE_EPIGRAPH_AUTHOR];
+    return [self _paragraphStyleForType:PARAGRAPH_STYLE_BASE aligment:aligment];
 }
 
 #pragma mark - Private - 
@@ -80,6 +75,13 @@ static RESettings *shared = nil;
 {
     CTTextAlignment aligment = [_settings[[self deviceId]][type][aligmentKey] intValue];
     
+    return [self _paragraphStyleForType:type
+                               aligment:aligment];
+}
+
+- (CTParagraphStyleRef) _paragraphStyleForType:(NSString *)type aligment:(CTTextAlignment)aligment
+{
+ 
     CGFloat minMineHeight = [_settings[[self deviceId]][type][minRowHeightKey] floatValue];
     CGFloat leading =  [_settings[[self deviceId]][type][leadingKey] floatValue];
     CGFloat space = [_settings[[self deviceId]][type][spaceKey] floatValue];
@@ -87,14 +89,14 @@ static RESettings *shared = nil;
     CGFloat lineHeadIndent =  [_settings[[self deviceId]][type][lineHeadIndentKey] floatValue];
     CGFloat linetTailIndent = [_settings[[self deviceId]][type][linetTailIndentKey] floatValue];
     
-    return [self _paragraphStyleWithAligment:aligment 
-                               minMineHeight:minMineHeight 
-                                     leading:leading 
+    return [self _paragraphStyleWithAligment:aligment
+                               minMineHeight:minMineHeight
+                                     leading:leading
                                        space:space
                          firstLineHeadIndent:firstLineHeadIndent
                               lineHeadIndent:lineHeadIndent
                              linetTailIndent:linetTailIndent];
-
+    
 }
 
 

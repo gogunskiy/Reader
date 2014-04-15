@@ -28,6 +28,7 @@
 @property (nonatomic) NSDictionary * attributes;
 @property (nonatomic) NSString * text;
 @property (nonatomic) UIColor *color;
+@property (nonatomic, assign) CTTextAlignment aligment;
 
 @property (nonatomic) NSMutableAttributedString *attributedString;
 

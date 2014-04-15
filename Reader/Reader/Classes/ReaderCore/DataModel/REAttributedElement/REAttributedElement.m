@@ -165,7 +165,7 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
                 NSString *fileName = [[self text] substringFromIndex:range.location + range.length];
                 fileName = [fileName substringToIndex:[fileName rangeOfString:@"\""].location];
                 
-                NSDictionary *attachment = @{@"fileName" : [_imagesPath stringByAppendingPathComponent:[fileName lastPathComponent]], @"attachmentType" : @"image"};
+                NSDictionary *attachment = @{@"aligment" : @(_aligment),  @"fileName" : [_imagesPath stringByAppendingPathComponent:[fileName lastPathComponent]], @"attachmentType" : @"image"};
                 
                 REInnerTagAttribute *attribute = [[REInnerTagAttribute alloc] init];
                 attribute.type = REInnerTagAttachment;
@@ -288,37 +288,44 @@ CGFloat MyGetWidthCallback( void* refCon)
 {
     NSDictionary *cssAttributes = [self _cssAttributes];
     
+    [self setParagraphStyle:[SETTINGS baseParagraphStyle]];
+    
     if (cssAttributes) 
     {
-        NSLog(@"%@", cssAttributes);
+        NSString *value = cssAttributes[@"text-align"];
+        
+        if (value)
+        {
+            CTTextAlignment aligment = kCTTextAlignmentNatural;
+        
+            if ([value isEqualToString:@"left"])
+            {
+                aligment = kCTTextAlignmentLeft;
+            }
+            else if ([value isEqualToString:@"right"])
+            {
+                 aligment = kCTTextAlignmentRight;
+            }
+            else if ([value isEqualToString:@"center"])
+            {
+                aligment = kCTTextAlignmentCenter;
+            }
+            else if ([value isEqualToString:@"justify"])
+            {
+                aligment = kCTTextAlignmentJustified;
+            }
+            
+            [self setAligment:aligment];
+        
+            [self setParagraphStyle:[SETTINGS baseParagraphStyleWithAligment:aligment]];
+        }
     }
-    
-    [self setParagraphStyle:[SETTINGS baseParagraphStyle]];
-     
-    if ([[self name] rangeOfString:@"h"].length)
-    {
-        [self setParagraphStyle:[SETTINGS headerParagraphStyle]];
-    }
-    
+
     if ([[self name] rangeOfString:@"blockquote"].length)
     {
         [self setParagraphStyle:[SETTINGS blockquoteParagraphStyle]];
     }
     
-    if ([[[self attributes] allValues] containsObject:@"epigraph"])
-    {
-        [self setParagraphStyle:[SETTINGS epigraphStyle]];
-    }
-    
-    if ([[[self attributes] allValues] containsObject:@"epigraph-avtor"])
-    {
-        [self setParagraphStyle:[SETTINGS epigraphAuthorStyle]];
-    }
-    
-    if ([[[self attributes] allValues] containsObject:@"pic-nazv"])
-    {
-        [self setParagraphStyle:[SETTINGS headerParagraphStyle]];
-    }
 }
 
 - (NSDictionary *) _cssAttributes
@@ -353,14 +360,29 @@ CGFloat MyGetWidthCallback( void* refCon)
 {
     [[self attributedString] addAttribute:(id)kCTFontAttributeName value:(__bridge id)[self _font] range:NSMakeRange(0, self.attributedString.length)];
 
-    if ([[[self attributes] allValues] containsObject:@"epigraph"])
+    NSDictionary *cssAttributes = [self _cssAttributes];
+
+    if (cssAttributes)
     {
-        [self applyItalicFontInRange:NSMakeRange(0, self.attributedString.length)];
-    }
-    
-    if ([[[self attributes] allValues] containsObject:@"epigraph-avtor"])
-    {
-        [self applyBoldFontInRange:NSMakeRange(0, self.attributedString.length)];
+        NSString *value = cssAttributes[@"font-style"];
+        
+        if (value)
+        {
+            if ([value isEqualToString:@"italic"])
+            {
+                [self applyItalicFontInRange:NSMakeRange(0, self.attributedString.length)];
+            }
+        }
+        
+        value = cssAttributes[@"font-weight"];
+        
+        if (value)
+        {
+            if ([value isEqualToString:@"bold"])
+            {
+                [self applyBoldFontInRange:NSMakeRange(0, self.attributedString.length)];
+            }
+        }
     }
 }
 

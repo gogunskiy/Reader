@@ -78,6 +78,8 @@
 /* Begin PBXFileReference section */
 		63356EF918F9AF2C0079DDF7 /* UIImage+Sizes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Sizes.h"; sourceTree = "<group>"; };
 		63356EFA18F9AF2C0079DDF7 /* UIImage+Sizes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Sizes.m"; sourceTree = "<group>"; };
+		637A907D18FDC663001A1341 /* NSAttributedString+Encoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+Encoding.h"; sourceTree = "<group>"; };
+		637A907E18FDC663001A1341 /* NSAttributedString+Encoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+Encoding.m"; sourceTree = "<group>"; };
 		63A406D018F436AF00021EAB /* Moskva - Petushki.epub */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Moskva - Petushki.epub"; sourceTree = "<group>"; };
 		63A406D218F4379600021EAB /* section1.xhtml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = section1.xhtml; path = Reader/Resources/Data/section1.xhtml; sourceTree = SOURCE_ROOT; };
 		63A76A6918FAA78800069B8A /* dot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dot@2x.png"; sourceTree = "<group>"; };
@@ -201,6 +203,15 @@
 			path = "UIImage+Sizes";
 			sourceTree = "<group>";
 		};
+		637A907C18FDC663001A1341 /* NSAttributedString+encoding */ = {
+			isa = PBXGroup;
+			children = (
+				637A907D18FDC663001A1341 /* NSAttributedString+Encoding.h */,
+				637A907E18FDC663001A1341 /* NSAttributedString+Encoding.m */,
+			);
+			path = "NSAttributedString+encoding";
+			sourceTree = "<group>";
+		};
 		63A76A6818FAA78800069B8A /* Images */ = {
 			isa = PBXGroup;
 			children = (
@@ -249,6 +260,7 @@
 		63D4695C18EF3EFB00E5E6E7 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				637A907C18FDC663001A1341 /* NSAttributedString+encoding */,
 				63356EF818F9AF120079DDF7 /* UIImage+Sizes */,
 				79E7827418F2DDED002B121B /* Settings */,
 				63E12CA718F173FD005032EA /* NSString+HTML */,
