@@ -330,6 +330,8 @@ CGFloat MyGetWidthCallback( void* refCon)
 
 - (NSDictionary *) _cssAttributes
 {
+    NSMutableDictionary *attributes = [[NSMutableDictionary alloc] init];
+    
     NSString *classAttribute = [self attributes][@"class"];
     
     if (classAttribute) 
@@ -342,13 +344,17 @@ CGFloat MyGetWidthCallback( void* refCon)
                 NSDictionary *value = self.csss[i][key];
                 if ([[key lowercaseString] rangeOfString:[classAttribute lowercaseString]].length) 
                 {
-                    return value;
+                    [attributes addEntriesFromDictionary:value];
+                }
+                if ([[key lowercaseString] rangeOfString:[[self name] lowercaseString]].length && [[key lowercaseString] rangeOfString:@"."].length == 0)
+                {
+                    [attributes addEntriesFromDictionary:value];
                 }
             }
         }
     }
     
-    return nil;
+    return attributes;
 }
 
 - (CTFontRef) _font

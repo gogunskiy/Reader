@@ -34,7 +34,7 @@
 @property (nonatomic) REDocumentReader *reader;
 
 @property (nonatomic, assign) NSUInteger potentialIndex;
-
+@property (nonatomic, assign) BOOL pageIsAnimating;
 
 @end
 
@@ -161,7 +161,8 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
-    if (self.reader.currentFrame - 1 >= 0) 
+    
+    if (self.reader.currentFrame - 1 >= 0 && !_pageIsAnimating)
     {
         _potentialIndex = self.reader.currentFrame - 1;
         
@@ -175,7 +176,7 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
-    if (self.reader.currentFrame + 1 < self.reader.framesCount) 
+    if (self.reader.currentFrame + 1 < self.reader.framesCount && !_pageIsAnimating) 
     {
         _potentialIndex = self.reader.currentFrame + 1;
         
@@ -200,6 +201,7 @@
 
 - (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers
 {
+    [self setPageIsAnimating:TRUE];
     [self clearSelectionView];
 }
 
@@ -219,6 +221,7 @@
                withObject:[viewController pageView] 
                afterDelay:0.5];
     
+    [self setPageIsAnimating:FALSE];
 }
 
 #pragma mark - Actions -
