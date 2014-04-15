@@ -286,8 +286,15 @@ CGFloat MyGetWidthCallback( void* refCon)
 
 - (void) applyParagraphStyle
 {
-    [self setParagraphStyle:[SETTINGS baseParagraphStyle]];
+    NSDictionary *cssAttributes = [self _cssAttributes];
     
+    if (cssAttributes) 
+    {
+        NSLog(@"%@", cssAttributes);
+    }
+    
+    [self setParagraphStyle:[SETTINGS baseParagraphStyle]];
+     
     if ([[self name] rangeOfString:@"h"].length)
     {
         [self setParagraphStyle:[SETTINGS headerParagraphStyle]];
@@ -312,6 +319,29 @@ CGFloat MyGetWidthCallback( void* refCon)
     {
         [self setParagraphStyle:[SETTINGS headerParagraphStyle]];
     }
+}
+
+- (NSDictionary *) _cssAttributes
+{
+    NSString *classAttribute = [self attributes][@"class"];
+    
+    if (classAttribute) 
+    {
+        for (int i = 0; i < self.csss.count; i++) 
+        {
+            for (int j = 0; j < [self.csss[i] count]; j++) 
+            {
+                NSString *key = [self.csss[i] allKeys][j];
+                NSDictionary *value = self.csss[i][key];
+                if ([[key lowercaseString] rangeOfString:[classAttribute lowercaseString]].length) 
+                {
+                    return value;
+                }
+            }
+        }
+    }
+    
+    return nil;
 }
 
 - (CTFontRef) _font

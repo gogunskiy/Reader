@@ -15,7 +15,6 @@
 
 @property (nonatomic) NSMutableAttributedString *attributedString;
 
-
 - (void) compileAttributedString;
 
 @end

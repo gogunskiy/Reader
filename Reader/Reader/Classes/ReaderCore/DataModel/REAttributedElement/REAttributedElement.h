@@ -24,6 +24,7 @@
 
 @property (nonatomic) NSString * name;
 @property (nonatomic) NSString * imagesPath;
+@property (nonatomic) NSArray * csss;
 @property (nonatomic) NSDictionary * attributes;
 @property (nonatomic) NSString * text;
 @property (nonatomic) UIColor *color;

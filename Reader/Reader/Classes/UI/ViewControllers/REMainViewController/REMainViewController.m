@@ -118,8 +118,8 @@
 
 - (void) buildSelectionViewLinesWithPageView:(REPageView *)pageView
 {
-    [[self selectionView] setRuns:[pageView runs]];
-    [[self selectionView] buildLines];
+ //   [[self selectionView] setRuns:[pageView runs]];
+  //  [[self selectionView] buildLines];
 }
 
 - (void) clearSelectionView

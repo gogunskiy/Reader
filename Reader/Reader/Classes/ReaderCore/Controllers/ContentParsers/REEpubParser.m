@@ -138,6 +138,7 @@ static dispatch_queue_t parseQueue;
             [element setText:[child xml]];
             [element setName:[child tag]];
             [element setImagesPath:document.info[@"imagesPath"]];
+            [element setCsss:document.info[@"css"]];
             
             NSMutableDictionary *attributes = [[NSMutableDictionary alloc] init];
             
@@ -243,7 +244,47 @@ static dispatch_queue_t parseQueue;
          
          if ([[element attribute:META_TYPE_XML_KEY] isEqualToString:META_TYPE_CSS_KEY])
          {
-             [styles addObject:elementInfo];
+             NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
+             
+             NSString *cssString = [NSString stringWithContentsOfFile:elementInfo[HREF_FULL_XML_KEY] 
+                                                             encoding:NSUTF8StringEncoding 
+                                                                error:nil];
+             
+             cssString = [cssString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+             cssString = [cssString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+             cssString = [cssString stringByReplacingOccurrencesOfString:@" " withString:@""];
+             cssString = [cssString stringByReplacingOccurrencesOfString:@"\"" withString:@""];
+             cssString = [cssString stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+             
+             NSArray *elements = [cssString componentsSeparatedByString:@"}"];
+             
+             for (NSString *chunk in elements) 
+             {
+                 NSArray *parts = [chunk componentsSeparatedByString:@"{"];
+                 
+                 if (parts.count > 1) 
+                 {
+                     NSArray *attributes = [parts[1] componentsSeparatedByString:@";"];
+                     
+                     NSMutableDictionary *attrs = [[NSMutableDictionary alloc] init];
+                     
+                     for (NSString *attr in attributes) 
+                     {
+                         NSArray *parts = [attr componentsSeparatedByString:@":"];
+                         if (parts.count > 1) 
+                         {
+                             NSString *key = parts[0];
+                             NSString *value = parts[1];
+
+                             attrs[key] = value;
+                         }
+
+                     }
+                     dict[parts[0]] = attrs;
+                 }
+             }
+             
+             [styles addObject:dict];
          }
          
          if ([[element attribute:META_TYPE_XML_KEY] isEqualToString:META_TYPE_IMAGE_KEY])
