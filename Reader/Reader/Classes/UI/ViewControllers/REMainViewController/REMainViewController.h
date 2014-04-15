@@ -8,8 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "REBaseViewController.h"
+#import "REMainReader.h"
 
-@interface REMainViewController : REBaseViewController <UIPageViewControllerDataSource, UIPageViewControllerDelegate>
+@interface REMainViewController : REBaseViewController <UIPageViewControllerDataSource, UIPageViewControllerDelegate, REMainReaderDelegate>
 
 @property (nonatomic) NSDictionary *documentInfo;
 

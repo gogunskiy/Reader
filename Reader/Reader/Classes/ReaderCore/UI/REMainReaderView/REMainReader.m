@@ -6,8 +6,7 @@
 //  Copyright (c) 2014 Vladimir Gogunsky. All rights reserved.
 //
 
-#import "REMainReaderView.h"
-#import <CoreText/CoreText.h>
+#import "REMainReader.h"
 #import "REChapter.h"
 #import "REAttributedElement.h"
 #import "REPageView.h"
@@ -21,7 +20,7 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
 };
 
 
-@interface REMainReaderView()
+@interface REMainReader()
 
 @property (nonatomic, assign) NSUInteger currentFrame;
 
@@ -34,19 +33,23 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
 
 @end
 
-@implementation REMainReaderView
+@implementation REMainReader
 
-- (void)awakeFromNib
+- (instancetype)init
 {
-    [super awakeFromNib];
+    self = [super init];
+    if (self) 
+    {
+        [self setFrames:[NSMutableArray array]];
+        [self setAttachments:[NSMutableArray new]];
+    }
     
-    [self setFrames:[NSMutableArray array]];
-    [self setAttachments:[NSMutableArray new]];
+    return self;
 }
 
-- (void) needsUpdatePages
+- (void) needsUpdatePagesWithFrame:(CGRect)frame
 {
-    [self createPages];
+    [self createPagesWithFrame:frame];
     [self initializeSnapshotView];
     [self initializeScrollViewAtPage:1];
 }
@@ -67,12 +70,17 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
     return self.currentFrame + 1;
 }
 
+- (CTFrameRef) currentCTFrame
+{
+    CTFrameRef ctFrame = (__bridge CTFrameRef)_frames[_currentFrame];
+    
+    return ctFrame;
+}
+
 - (void) showNextPage
 {
     if (_currentFrame < self.frames.count - 1 )
     {
-        [self addSnapshotViewWithHideAnimation:RESnapshotViewAnimationLeft];
-        
         NSInteger frameIndex  = _currentFrame + 1;
         [self showPageAtIndex:frameIndex];
     }
@@ -83,8 +91,6 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
 {
     if (_currentFrame > 0)
     {
-        [self addSnapshotViewWithHideAnimation:RESnapshotViewAnimationRight];
-        
         NSInteger frameIndex = _currentFrame - 1;
         [self showPageAtIndex:frameIndex];
     }
@@ -97,7 +103,7 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
         return;
     }
     
-    CTFrameRef ctFrame = (__bridge CTFrameRef)_frames[index];
+    CTFrameRef ctFrame = (__bridge_retained CTFrameRef)_frames[index];
     
     [[self pageView] setCTFrame:ctFrame
                     attachments:[self attachmentsForFrame:ctFrame]];
@@ -107,12 +113,12 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
 
 #pragma mark - Private -
 
-- (void) createPages
+- (void) createPagesWithFrame:(CGRect)frame
 {
     NSInteger pointer = 0;
   
     CGMutablePathRef path = CGPathCreateMutable();
-    CGPathAddRect(path, NULL, self.bounds);
+    CGPathAddRect(path, NULL, frame);
     
     NSAttributedString *attString = [self.document attributedString];
     
@@ -188,47 +194,8 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
     [self setSnapshotView:view];
 }
 
-- (void) addSnapshotViewWithHideAnimation:(RESnapshotViewAnimationType)type
-{
-    [[self delegate] readerView:self pageWillChanged:self.currentPage];
-    
-    [[self snapshotView] setFrame:[[self pageView] frame]];
-    [[self snapshotView] setImage:[[self pageView] snapshot]];
-    [self addSubview:[self snapshotView]];
-    
-    CGRect frame = [[self snapshotView] frame];
-    frame.origin.x += type * frame.size.width;
-    
-    [[UIApplication sharedApplication] beginIgnoringInteractionEvents];
-    
-    [UIView animateWithDuration:0.5
-                     animations:^
-     {
-         [[self snapshotView] setFrame:frame];
-     }
-                     completion:^(BOOL finished)
-     {
-         [[self snapshotView] removeFromSuperview];
-         
-         [[self delegate] readerView:self pageDidChanged:self.currentPage];
-         
-         [[UIApplication sharedApplication] endIgnoringInteractionEvents];
-     }];
-}
-
 - (void) initializeScrollViewAtPage:(NSUInteger)page
-{
-    [[self pageView] removeFromSuperview];
-    
-    REPageView *pageView = [[REPageView alloc] initWithFrame:self.bounds];
-    [pageView setAutoresizingMask:UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin];
-    [pageView setBackgroundColor:[UIColor whiteColor]];
-    [pageView setTag:1];
-    
-    [self addSubview:pageView];
-    
-    [self setPageView:pageView];
-    
+{    
     [self showPageAtIndex:page - 1];
 }
 

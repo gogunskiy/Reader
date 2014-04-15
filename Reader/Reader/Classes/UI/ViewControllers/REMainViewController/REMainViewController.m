@@ -8,12 +8,12 @@
 
 #import "REMainViewController.h"
 #import "REReaderController.h"
-#import "REMainReaderView.h"
 #import "RESelectionTool.h"
+#import "REPageViewController.h"
 
 @interface REMainViewController ()
 
-@property (nonatomic, weak) IBOutlet REMainReaderView *readerView;
+@property (nonatomic, weak) IBOutlet UIView *readerViewPlaceHolder;
 @property (nonatomic, weak) IBOutlet UILabel *pageCountLabel;
 @property (nonatomic, weak) IBOutlet UISlider *pageSlider;
 @property (nonatomic, weak) IBOutlet UILabel *bookTitleLabel;
@@ -29,6 +29,8 @@
 
 @property (nonatomic) UIPageViewController *pageController;
 
+@property (nonatomic) REMainReader *reader;
+
 @end
 
 @implementation REMainViewController
@@ -37,13 +39,14 @@
 {
     [super viewDidLoad];
     
-    [self initializePageViewController];
+    [self initializeReader];
     
     [READER loadDocumentWithPath:[self documentInfo][@"file"]
                  completionBlock:^(REDocument *document)
     {
-        [[self readerView] setDocument:document];
-        [[self readerView] needsUpdatePages];
+        [[self reader] setDocument:document];
+        [[self reader] needsUpdatePagesWithFrame:self.readerViewPlaceHolder.bounds];
+        [self initializePageViewController];
         
         [[self selectionView] setAttributedString:[document attributedString]];
         
@@ -76,20 +79,20 @@
 
 - (void) updatePageSlider
 {
-    [[self pageSlider] setMaximumValue:self.readerView.pageCount];
-    [[self pageSlider] setValue:self.readerView.currentPage animated:TRUE];
+    [[self pageSlider] setMaximumValue:self.reader.pageCount];
+    [[self pageSlider] setValue:self.reader.currentPage animated:TRUE];
 }
 
 - (void) updateProgressLabels
 {
     NSTimeInterval time = CACurrentMediaTime();
     
-    [[self pageCountLabel] setText:[NSString stringWithFormat:@"%lu / %lu", (unsigned long)self.readerView.currentPage, (unsigned long)self.readerView.pageCount]];
+    [[self pageCountLabel] setText:[NSString stringWithFormat:@"%lu / %lu", (unsigned long)self.reader.currentPage, (unsigned long)self.reader.pageCount]];
     [[self bookTitleLabel] setText:[self documentInfo][@"title"]];
 
     if (time - _lastTimeWhenPageProgressWasUpdated > 0.2)
     {
-        [[self chapterTitleLabel] setText:self.readerView.currentChapterTitle];
+        [[self chapterTitleLabel] setText:self.reader.currentChapterTitle];
         [self setLastTimeWhenPageProgressWasUpdated:time];
     }
 }
@@ -120,13 +123,20 @@
 
 - (void) buildSelectionViewLines
 {
-    [[self selectionView] setRuns:[_readerView runs]];
+    [[self selectionView] setRuns:[_reader runs]];
     [[self selectionView] buildLines];
 }
 
 - (void) clearSelectionView
 {
     [[self selectionView] clear];
+}
+
+- (void) initializeReader
+{
+    REMainReader *reader = [[REMainReader alloc] init];
+    [reader setDelegate:self];
+    [self setReader:reader];
 }
 
 - (void) initializePageViewController
@@ -137,13 +147,13 @@
     [self.pageController setDelegate:self];
     [self.pageController setDataSource:self];
     
-    [self.pageController.view setFrame:[self readerView].frame];
-    [self.pageController.view setBackgroundColor:[UIColor redColor]];
+    [self.pageController.view setFrame:[self readerViewPlaceHolder].bounds];
+    [self.pageController.view setBackgroundColor:[UIColor clearColor]];
     
-    [[self view] addSubview:self.pageController.view];
+    [[self readerViewPlaceHolder] addSubview:self.pageController.view];
     
-    UIViewController *viewController = [[UIViewController alloc] init];
-    [viewController setView:_readerView];
+    REPageViewController *viewController = [self pageViewControllerForCurrentPage];
+    
     [self.pageController setViewControllers:@[viewController]
                                   direction:UIPageViewControllerNavigationDirectionForward
                                    animated:NO
@@ -156,16 +166,34 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
-    UIViewController *prevViewController = [[UIViewController alloc] init];
-    [prevViewController setView:_readerView];
+    [[self reader] showPreviousPage];
+    
+    REPageViewController *prevViewController = [self pageViewControllerForCurrentPage];
+    
+    [self updatePageSlider];
+    [self updateProgressLabels];
+    
     return prevViewController;
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
-    UIViewController *nextViewController = [[UIViewController alloc] init];
-    [nextViewController setView:_readerView];
+    [[self reader] showNextPage];
+    
+    REPageViewController *nextViewController = [self pageViewControllerForCurrentPage];
+    
+    [self updatePageSlider];
+    [self updateProgressLabels];
+    
     return nextViewController;
+}
+
+- (REPageViewController *) pageViewControllerForCurrentPage
+{
+    REPageViewController *viewController = [[REPageViewController alloc] initWithViewFrame:[self readerViewPlaceHolder].bounds];
+    [viewController setCTFrame:[self.reader currentCTFrame] attachments:[self.reader attachments]];
+    
+    return viewController;
 }
 
 #pragma mark - Actions -
@@ -174,8 +202,7 @@
 {
     NSUInteger frameIndex = (int)sender.value;
     
-    [[self pageCountLabel] setText:[NSString stringWithFormat:@"%lu / %lu", (unsigned long)frameIndex, (unsigned long)self.readerView.pageCount]];
-    
+    [[self pageCountLabel] setText:[NSString stringWithFormat:@"%lu / %lu", (unsigned long)frameIndex, (unsigned long)self.reader.pageCount]];
 }
 
 - (IBAction) sliderDidTouchedDown:(UISlider *)sender
@@ -187,9 +214,17 @@
 {
     NSUInteger frameIndex = (int)sender.value;
     
-    [[self readerView] showPageAtIndex:frameIndex];
+    [[self reader] showPageAtIndex:frameIndex];
+    
+    REPageViewController *viewController = [self pageViewControllerForCurrentPage];
+    
+    [self.pageController setViewControllers:@[viewController]
+                                  direction:UIPageViewControllerNavigationDirectionForward
+                                   animated:TRUE
+                                 completion:nil];
     
     [self updateSelectionView];
+    [self updateProgressLabels];
     [self updateProgressLabels];
 }
 
@@ -203,38 +238,10 @@
     [[self navigationController] popViewControllerAnimated:TRUE];
 }
 
-- (IBAction) leftSwipe:(UIGestureRecognizer *)sender
-{
-    [[self readerView] showNextPage];
-    
-    [self updatePageSlider];
-}
-
-- (IBAction) rightSwipe:(UIGestureRecognizer *)sender
-{
-    [[self readerView] showPreviousPage];
-    
-    [self updatePageSlider];
-}
-
 - (IBAction) tap:(UIGestureRecognizer *)sender
 {
-    CGPoint point = [sender locationInView:[self view]];
-    CGRect frame  = [[self view] frame];
-    
-    if (point.x < frame.size.width * 0.25)
-    {
-        [self rightSwipe:nil];
-    }
-    else  if (point.x < frame.size.width * 0.75)
-    {
-        _toolbarModeEnabled = !_toolbarModeEnabled;
-        [self updateElemnentsVisibility];
-    }
-    else
-    {
-        [self leftSwipe:nil];
-    }
+    _toolbarModeEnabled = !_toolbarModeEnabled;
+    [self updateElemnentsVisibility];
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
@@ -243,13 +250,13 @@
 }
 
 #pragma mark - REMainReaderViewDelegate - 
-
-- (void) readerView:(REMainReaderView *) readerView pageWillChanged:(NSUInteger)pageIndex
+  // TO DO 
+- (void) reader:(REMainReader *) readerView pageWillChanged:(NSUInteger)pageIndex
 {
     [self clearSelectionView];
 }
 
-- (void) readerView:(REMainReaderView *) readerView pageDidChanged:(NSUInteger)pageIndex
+- (void) reader:(REMainReader *) readerView pageDidChanged:(NSUInteger)pageIndex
 {
     [self updateSelectionView];
     [self updateProgressLabels];

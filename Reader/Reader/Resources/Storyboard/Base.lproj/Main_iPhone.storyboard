@@ -64,7 +64,7 @@
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" id="3UK-LD-hND" customClass="REMainReaderView">
+                            <view contentMode="scaleToFill" id="3UK-LD-hND" customClass="REMainReader">
                                 <rect key="frame" x="0.0" y="60" width="320" height="470"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
@@ -122,7 +122,7 @@
                         <outlet property="chapterTitleLabel" destination="4mE-mJ-aHF" id="Q8K-4g-EIB"/>
                         <outlet property="pageCountLabel" destination="oIO-aV-n4e" id="6Vs-wB-63M"/>
                         <outlet property="pageSlider" destination="yz5-9u-hQc" id="VQc-Lc-ReY"/>
-                        <outlet property="readerView" destination="3UK-LD-hND" id="vWP-EB-UQX"/>
+                        <outlet property="reader" destination="3UK-LD-hND" id="KaZ-R8-wki"/>
                         <outlet property="selectionView" destination="7Fm-Vr-i6E" id="ZVH-r5-6iQ"/>
                         <outlet property="topLineDivider" destination="PpT-eW-b2t" id="LFT-ct-xkk"/>
                     </connections>

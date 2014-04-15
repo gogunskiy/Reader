@@ -7,8 +7,12 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <CoreText/CoreText.h>
 
 @interface REPageViewController : UIViewController 
 
+- (id) initWithViewFrame:(CGRect)frame;
+
+- (void) setCTFrame:(CTFrameRef)frame attachments:(NSArray *)attachments;
 
 @end

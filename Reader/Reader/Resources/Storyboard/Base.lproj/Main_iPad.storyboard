@@ -71,6 +71,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" id="A2L-Bf-Dmk" userLabel="ReaderViewPlaceHolder">
+                                <rect key="frame" x="0.0" y="61" width="768" height="899"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                            </view>
                             <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Kkr-qm-Vpp">
                                 <rect key="frame" x="39" y="994" width="691" height="18"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
@@ -87,32 +92,21 @@
                                     <action selector="sliderValueDidChanged:" destination="BYZ-38-t0r" eventType="valueChanged" id="IX3-8d-n0S"/>
                                 </connections>
                             </slider>
-                            <view contentMode="scaleToFill" id="A2L-Bf-Dmk" customClass="REMainReaderView">
-                                <rect key="frame" x="0.0" y="61" width="768" height="899"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
-                                <connections>
-                                    <outlet property="delegate" destination="BYZ-38-t0r" id="mxS-1c-gqX"/>
-                                    <outletCollection property="gestureRecognizers" destination="wA8-18-gQh" appends="YES" id="yAD-Td-Wto"/>
-                                    <outletCollection property="gestureRecognizers" destination="TeY-uh-3m6" appends="YES" id="klc-kT-lrL"/>
-                                    <outletCollection property="gestureRecognizers" destination="Fcy-DE-vbH" appends="YES" id="343-Ie-jWT"/>
-                                </connections>
-                            </view>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wBG-mV-V9b">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="wBG-mV-V9b" userLabel="ChapterTitleLabe">
                                 <rect key="frame" x="381" y="32" width="347" height="15"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="t9D-1X-tOC">
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="t9D-1X-tOC" userLabel="BookTitleLabe">
                                 <rect key="frame" x="40" y="32" width="333" height="15"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view alpha="0.0" contentMode="scaleToFill" id="T6v-GU-TWE">
+                            <view alpha="0.0" contentMode="scaleToFill" id="T6v-GU-TWE" userLabel="TopSeparator">
                                 <rect key="frame" x="40" y="52" width="688" height="1"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
                                 <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
@@ -126,8 +120,8 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <gestureRecognizers/>
                         <connections>
-                            <outletCollection property="gestureRecognizers" destination="Cr8-Zm-OAM" appends="YES" id="upv-JL-Hz6"/>
                             <outletCollection property="gestureRecognizers" destination="9aR-Zo-B0L" appends="YES" id="j7c-Ce-UnY"/>
+                            <outletCollection property="gestureRecognizers" destination="wA8-18-gQh" appends="YES" id="DYQ-xe-XFE"/>
                         </connections>
                     </view>
                     <nil key="simulatedTopBarMetrics"/>
@@ -136,7 +130,7 @@
                         <outlet property="chapterTitleLabel" destination="wBG-mV-V9b" id="uMt-ku-eF8"/>
                         <outlet property="pageCountLabel" destination="Kkr-qm-Vpp" id="ahj-2A-q3a"/>
                         <outlet property="pageSlider" destination="33C-kI-Lv9" id="hyx-En-c71"/>
-                        <outlet property="readerView" destination="A2L-Bf-Dmk" id="Hc8-tR-o0T"/>
+                        <outlet property="readerViewPlaceHolder" destination="A2L-Bf-Dmk" id="s0Z-HR-uWl"/>
                         <outlet property="selectionView" destination="2Z7-JS-WUx" id="KUC-kb-Nm7"/>
                         <outlet property="topLineDivider" destination="T6v-GU-TWE" id="56K-dg-fif"/>
                     </connections>
@@ -147,21 +141,6 @@
                         <action selector="tap:" destination="BYZ-38-t0r" id="ZCT-ug-56a"/>
                     </connections>
                 </tapGestureRecognizer>
-                <swipeGestureRecognizer delaysTouchesBegan="YES" direction="left" id="TeY-uh-3m6">
-                    <connections>
-                        <action selector="leftSwipe:" destination="BYZ-38-t0r" id="hBh-IP-aQW"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <swipeGestureRecognizer delaysTouchesBegan="YES" direction="right" id="Fcy-DE-vbH">
-                    <connections>
-                        <action selector="rightSwipe:" destination="BYZ-38-t0r" id="Gia-jG-cDi"/>
-                    </connections>
-                </swipeGestureRecognizer>
-                <swipeGestureRecognizer delaysTouchesBegan="YES" direction="right" numberOfTouchesRequired="2" id="Cr8-Zm-OAM">
-                    <connections>
-                        <action selector="doubleLeftSwipe:" destination="BYZ-38-t0r" id="moo-ie-dEc"/>
-                    </connections>
-                </swipeGestureRecognizer>
                 <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.5" id="9aR-Zo-B0L">
                     <connections>
                         <action selector="longPress:" destination="BYZ-38-t0r" id="um6-5n-uLR"/>

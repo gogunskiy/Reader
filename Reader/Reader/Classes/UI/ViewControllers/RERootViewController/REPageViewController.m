@@ -8,29 +8,48 @@
 
 #import "REPageViewController.h"
 #import "REMainViewController.h"
+#import "REPageView.h"
 
 @interface REPageViewController ()
+
+@property (nonatomic) REPageView *pageView;
 
 @end
 
 @implementation REPageViewController
 
+- (id) initWithViewFrame:(CGRect)frame
+{
+    self = [super init];
+    if (self) 
+    {
+        [[self view] setFrame:frame];
+        [self initializePageView];
+    }
+    
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
 }
 
-- (void)viewWillAppear:(BOOL)animated
+- (void) setCTFrame:(CTFrameRef)frame attachments:(NSArray *)attachments
 {
-    [super viewWillAppear:animated];
-    [[self navigationController] setNavigationBarHidden:TRUE animated:TRUE];
+    [[self pageView] setCTFrame:frame attachments:attachments];
+    [[self pageView] setNeedsDisplay];
 }
 
-- (void)viewWillDisappear:(BOOL)animated
+- (void) initializePageView
 {
-    [[self navigationController] setNavigationBarHidden:FALSE animated:TRUE];
-    [super viewWillDisappear:animated];
+    REPageView *pageView = [[REPageView alloc] initWithFrame:self.view.bounds];
+    [pageView setAutoresizingMask:UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin];
+    [pageView setBackgroundColor:[UIColor whiteColor]];
+    
+    [[self view] addSubview:pageView];
+    
+    [self setPageView:pageView];
 }
 
 @end

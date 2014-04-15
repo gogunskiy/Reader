@@ -8,21 +8,24 @@
 
 #import <UIKit/UIKit.h>
 #import "REDocument.h"
+#import <CoreText/CoreText.h>
 
-@protocol REMainReaderViewDelegate;
+@protocol REMainReaderDelegate;
 
-@interface REMainReaderView : UIView
+@interface REMainReader : NSObject
 
-@property (nonatomic, weak) IBOutlet NSObject <REMainReaderViewDelegate> *delegate;
+@property (nonatomic, weak) IBOutlet NSObject <REMainReaderDelegate> *delegate;
 
 @property (nonatomic) REDocument *document;
 
 @property (nonatomic) NSMutableArray *attachments;
 
-- (void) needsUpdatePages;
+- (void) needsUpdatePagesWithFrame:(CGRect)frame;
 
 - (NSUInteger) pageCount;
 - (NSUInteger) currentPage;
+
+- (CTFrameRef) currentCTFrame;
 
 - (void) showNextPage;
 - (void) showPreviousPage;
@@ -35,9 +38,9 @@
 @end
 
 
-@protocol REMainReaderViewDelegate
+@protocol REMainReaderDelegate
 
-- (void) readerView:(REMainReaderView *) readerView pageWillChanged:(NSUInteger)pageIndex;
-- (void) readerView:(REMainReaderView *) readerView pageDidChanged:(NSUInteger)pageIndex;
+- (void) reader:(REMainReader *) reader pageWillChanged:(NSUInteger)pageIndex;
+- (void) reader:(REMainReader *) reader pageDidChanged:(NSUInteger)pageIndex;
 
 @end
