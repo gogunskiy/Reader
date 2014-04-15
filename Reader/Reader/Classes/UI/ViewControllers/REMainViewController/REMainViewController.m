@@ -240,7 +240,9 @@
 
 - (IBAction) sliderDidToucheUp:(UISlider *)sender
 {
-    _potentialIndex = (int)sender.value - 1;
+    UIPageViewControllerNavigationDirection direction = _potentialIndex > sender.value + 1 ? UIPageViewControllerNavigationDirectionReverse : UIPageViewControllerNavigationDirectionForward;
+    
+    _potentialIndex = (int)sender.value + 1;
     [[self reader] setCurrentFrame:_potentialIndex];
     
     REPageViewController *viewController = [self pageViewControllerForPage:_potentialIndex];
@@ -250,7 +252,7 @@
                afterDelay:0.5];
     
     [self.pageController setViewControllers:@[viewController]
-                                  direction:UIPageViewControllerNavigationDirectionForward
+                                  direction:direction
                                    animated:TRUE
                                  completion:nil];
 }
@@ -267,8 +269,14 @@
 
 - (IBAction) tap:(UIGestureRecognizer *)sender
 {
-    _toolbarModeEnabled = !_toolbarModeEnabled;
-    [self updateElemnentsVisibility];
+    CGPoint point = [sender locationInView:[self view]];
+    CGRect frame  = [[self view] frame];
+
+    if (point.x > frame.size.width * 0.25 && point.x < frame.size.width * 0.75)
+    {
+        _toolbarModeEnabled = !_toolbarModeEnabled;
+        [self updateElemnentsVisibility];
+    }
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
