@@ -9,7 +9,11 @@
 #import <UIKit/UIKit.h>
 #import <CoreText/CoreText.h>
 
+@class REPageView;
+
 @interface REPageViewController : UIViewController 
+
+@property (nonatomic) REPageView *pageView;
 
 - (id) initWithViewFrame:(CGRect)frame;
 

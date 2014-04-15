@@ -16,6 +16,16 @@
 {
     [REGUIHelper customize];
     
+    for (NSString* family in [UIFont familyNames])
+    {
+        NSLog(@"%@", family);
+        
+        for (NSString* name in [UIFont fontNamesForFamilyName: family])
+        {
+            NSLog(@"  %@", name);
+        }
+    }
+    
     NSString *bookPath = [[NSBundle mainBundle] resourcePath];
     
     [READER addDocumentToLibraryWithTitle:@"000000000001"

@@ -41,7 +41,7 @@
                                                  green:.0
                                                   blue:1.0
                                                  alpha:0.2]];
-        [view setAlpha:0];
+        [view setAlpha:0.0];
         
         [view setTag:i];
         [self addSubview:view];

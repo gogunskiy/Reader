@@ -42,5 +42,9 @@
 		<string>UIInterfaceOrientationPortrait</string>
 		<string>UIInterfaceOrientationPortraitUpsideDown</string>
 	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>IowanOldStyle-Italic.ttf</string>
+	</array>
 </dict>
 </plist>

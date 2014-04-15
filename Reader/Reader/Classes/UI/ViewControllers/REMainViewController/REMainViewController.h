@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "REBaseViewController.h"
-#import "REMainReader.h"
+#import "REDocumentReader.h"
 
 @interface REMainViewController : REBaseViewController <UIPageViewControllerDataSource, UIPageViewControllerDelegate, REMainReaderDelegate>
 

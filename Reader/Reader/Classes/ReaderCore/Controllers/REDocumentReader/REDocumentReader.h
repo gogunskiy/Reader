@@ -12,9 +12,11 @@
 
 @protocol REMainReaderDelegate;
 
-@interface REMainReader : NSObject
+@interface REDocumentReader : NSObject
 
 @property (nonatomic, weak) IBOutlet NSObject <REMainReaderDelegate> *delegate;
+
+@property (nonatomic, assign) NSInteger currentFrame;
 
 @property (nonatomic) REDocument *document;
 
@@ -22,25 +24,18 @@
 
 - (void) needsUpdatePagesWithFrame:(CGRect)frame;
 
-- (NSUInteger) pageCount;
-- (NSUInteger) currentPage;
+- (NSUInteger) framesCount;
 
-- (CTFrameRef) currentCTFrame;
-
-- (void) showNextPage;
-- (void) showPreviousPage;
-- (void) showPageAtIndex:(NSUInteger)index;
+- (CTFrameRef) cTFrameAtIndex:(NSInteger)index;
 
 - (NSString *) currentChapterTitle;
-
-- (NSArray *) runs;
 
 @end
 
 
 @protocol REMainReaderDelegate
 
-- (void) reader:(REMainReader *) reader pageWillChanged:(NSUInteger)pageIndex;
-- (void) reader:(REMainReader *) reader pageDidChanged:(NSUInteger)pageIndex;
+- (void) reader:(REDocumentReader *) reader pageWillChanged:(NSUInteger)pageIndex;
+- (void) reader:(REDocumentReader *) reader pageDidChanged:(NSUInteger)pageIndex;
 
 @end

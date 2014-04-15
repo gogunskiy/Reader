@@ -6,7 +6,7 @@
 //  Copyright (c) 2014 Vladimir Gogunsky. All rights reserved.
 //
 
-#import "REMainReader.h"
+#import "REDocumentReader.h"
 #import "REChapter.h"
 #import "REAttributedElement.h"
 #import "REPageView.h"
@@ -20,20 +20,17 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
 };
 
 
-@interface REMainReader()
-
-@property (nonatomic, assign) NSUInteger currentFrame;
+@interface REDocumentReader()
 
 @property (nonatomic, strong) NSMutableArray *frames;
 
 @property (nonatomic, assign)  CTFramesetterRef framesetter;
 
-@property (nonatomic, strong) REPageView *pageView;
 @property (nonatomic, strong) UIImageView *snapshotView;
 
 @end
 
-@implementation REMainReader
+@implementation REDocumentReader
 
 - (instancetype)init
 {
@@ -54,61 +51,16 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
     [self initializeScrollViewAtPage:1];
 }
 
-
-- (NSArray *) runs
-{
-    return self.pageView.runs;
-}
-
-- (NSUInteger) pageCount
+- (NSUInteger) framesCount
 {
     return self.frames.count;
 }
 
-- (NSUInteger) currentPage
+- (CTFrameRef) cTFrameAtIndex:(NSInteger)index
 {
-    return self.currentFrame + 1;
-}
-
-- (CTFrameRef) currentCTFrame
-{
-    CTFrameRef ctFrame = (__bridge CTFrameRef)_frames[_currentFrame];
-    
-    return ctFrame;
-}
-
-- (void) showNextPage
-{
-    if (_currentFrame < self.frames.count - 1 )
-    {
-        NSInteger frameIndex  = _currentFrame + 1;
-        [self showPageAtIndex:frameIndex];
-    }
-
-}
-
-- (void) showPreviousPage
-{
-    if (_currentFrame > 0)
-    {
-        NSInteger frameIndex = _currentFrame - 1;
-        [self showPageAtIndex:frameIndex];
-    }
-}
-
-- (void) showPageAtIndex:(NSUInteger)index
-{
-    if ([_frames count] <= index)
-    {
-        return;
-    }
-    
     CTFrameRef ctFrame = (__bridge_retained CTFrameRef)_frames[index];
     
-    [[self pageView] setCTFrame:ctFrame
-                    attachments:[self attachmentsForFrame:ctFrame]];
-    
-    [self setCurrentFrame:index];
+    return ctFrame;
 }
 
 #pragma mark - Private -
@@ -196,7 +148,7 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
 
 - (void) initializeScrollViewAtPage:(NSUInteger)page
 {    
-    [self showPageAtIndex:page - 1];
+
 }
 
 - (NSString *) currentChapterTitle

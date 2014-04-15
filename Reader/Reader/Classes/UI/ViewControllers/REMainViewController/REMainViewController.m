@@ -10,9 +10,11 @@
 #import "REReaderController.h"
 #import "RESelectionTool.h"
 #import "REPageViewController.h"
+#import "REPageView.h"
 
 @interface REMainViewController ()
 
+@property (nonatomic, weak) IBOutlet UIView *pageControllerViewPlaceHolder;
 @property (nonatomic, weak) IBOutlet UIView *readerViewPlaceHolder;
 @property (nonatomic, weak) IBOutlet UILabel *pageCountLabel;
 @property (nonatomic, weak) IBOutlet UISlider *pageSlider;
@@ -29,7 +31,12 @@
 
 @property (nonatomic) UIPageViewController *pageController;
 
-@property (nonatomic) REMainReader *reader;
+@property (nonatomic) REDocumentReader *reader;
+
+@property (nonatomic) REPageViewController *pageViewController;
+
+@property (nonatomic, assign) NSUInteger potentialIndex;
+
 
 @end
 
@@ -79,15 +86,15 @@
 
 - (void) updatePageSlider
 {
-    [[self pageSlider] setMaximumValue:self.reader.pageCount];
-    [[self pageSlider] setValue:self.reader.currentPage animated:TRUE];
+    [[self pageSlider] setMaximumValue:self.reader.framesCount];
+    [[self pageSlider] setValue:_potentialIndex animated:TRUE];
 }
 
 - (void) updateProgressLabels
 {
     NSTimeInterval time = CACurrentMediaTime();
     
-    [[self pageCountLabel] setText:[NSString stringWithFormat:@"%lu / %lu", (unsigned long)self.reader.currentPage, (unsigned long)self.reader.pageCount]];
+    [[self pageCountLabel] setText:[NSString stringWithFormat:@"%lu / %lu", (unsigned long)self.reader.currentFrame + 1, (unsigned long)self.reader.framesCount]];
     [[self bookTitleLabel] setText:[self documentInfo][@"title"]];
 
     if (time - _lastTimeWhenPageProgressWasUpdated > 0.2)
@@ -111,19 +118,9 @@
      }];
 }
 
-- (void) updateSelectionView
+- (void) buildSelectionViewLinesWithPageView:(REPageView *)pageView
 {
-    [self clearSelectionView];
-    
-    [NSObject cancelPreviousPerformRequestsWithTarget:self];
-    [self performSelector:@selector(buildSelectionViewLines)
-               withObject:nil
-               afterDelay:0.5];
-}
-
-- (void) buildSelectionViewLines
-{
-    [[self selectionView] setRuns:[_reader runs]];
+    [[self selectionView] setRuns:[pageView runs]];
     [[self selectionView] buildLines];
 }
 
@@ -134,7 +131,7 @@
 
 - (void) initializeReader
 {
-    REMainReader *reader = [[REMainReader alloc] init];
+    REDocumentReader *reader = [[REDocumentReader alloc] init];
     [reader setDelegate:self];
     [self setReader:reader];
 }
@@ -147,12 +144,12 @@
     [self.pageController setDelegate:self];
     [self.pageController setDataSource:self];
     
-    [self.pageController.view setFrame:[self readerViewPlaceHolder].bounds];
-    [self.pageController.view setBackgroundColor:[UIColor clearColor]];
+    [self.pageController.view setFrame:self.view.bounds];
+    [self.pageController.view setBackgroundColor:[UIColor redColor]];
     
-    [[self readerViewPlaceHolder] addSubview:self.pageController.view];
+    [[self pageControllerViewPlaceHolder] addSubview:self.pageController.view];
     
-    REPageViewController *viewController = [self pageViewControllerForCurrentPage];
+    REPageViewController *viewController = [self pageViewControllerForPage:self.reader.currentFrame];
     
     [self.pageController setViewControllers:@[viewController]
                                   direction:UIPageViewControllerNavigationDirectionForward
@@ -166,34 +163,62 @@
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
 {
-    [[self reader] showPreviousPage];
+    if (self.reader.currentFrame - 1 >= 0) 
+    {
+        _potentialIndex = self.reader.currentFrame - 1;
+        
+        REPageViewController *prevViewController = [self pageViewControllerForPage:_potentialIndex];
+                
+        return prevViewController;
+    }
     
-    REPageViewController *prevViewController = [self pageViewControllerForCurrentPage];
-    
-    [self updatePageSlider];
-    [self updateProgressLabels];
-    
-    return prevViewController;
+    return nil;
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
 {
-    [[self reader] showNextPage];
+    if (self.reader.currentFrame + 1 < self.reader.framesCount) 
+    {
+        _potentialIndex = self.reader.currentFrame + 1;
+        
+        REPageViewController *nextViewController = [self pageViewControllerForPage:_potentialIndex];
+
+        return nextViewController;
+    }
     
-    REPageViewController *nextViewController = [self pageViewControllerForCurrentPage];
-    
-    [self updatePageSlider];
-    [self updateProgressLabels];
-    
-    return nextViewController;
+    return nil;
 }
 
-- (REPageViewController *) pageViewControllerForCurrentPage
+- (REPageViewController *) pageViewControllerForPage:(NSUInteger)page
 {
-    REPageViewController *viewController = [[REPageViewController alloc] initWithViewFrame:[self readerViewPlaceHolder].bounds];
-    [viewController setCTFrame:[self.reader currentCTFrame] attachments:[self.reader attachments]];
+    REPageViewController *viewController = [[REPageViewController alloc] initWithViewFrame:[self readerViewPlaceHolder].frame];
+    [[viewController view] setFrame:self.pageController.view.bounds];
+    [viewController setCTFrame:[self.reader cTFrameAtIndex:page] 
+                   attachments:[self.reader attachments]];
+    
+    [self setPageViewController:viewController];
     
     return viewController;
+}
+
+
+- (void)pageViewController:(UIPageViewController *)pageViewController willTransitionToViewControllers:(NSArray *)pendingViewControllers
+{
+    [self clearSelectionView];
+}
+
+- (void)pageViewController:(UIPageViewController *)pageViewController didFinishAnimating:(BOOL)finished previousViewControllers:(NSArray *)previousViewControllers transitionCompleted:(BOOL)completed
+{
+    if (completed) 
+    {
+        [[self reader] setCurrentFrame:_potentialIndex];
+        
+        [self updateProgressLabels];
+        [self updatePageSlider];
+    }
+    
+    REPageViewController *viewController = (REPageViewController *)[[pageViewController viewControllers] lastObject];
+    [self buildSelectionViewLinesWithPageView:[viewController pageView]];
 }
 
 #pragma mark - Actions -
@@ -202,7 +227,7 @@
 {
     NSUInteger frameIndex = (int)sender.value;
     
-    [[self pageCountLabel] setText:[NSString stringWithFormat:@"%lu / %lu", (unsigned long)frameIndex, (unsigned long)self.reader.pageCount]];
+    [[self pageCountLabel] setText:[NSString stringWithFormat:@"%lu / %lu", (unsigned long)frameIndex, (unsigned long)self.reader.framesCount]];
 }
 
 - (IBAction) sliderDidTouchedDown:(UISlider *)sender
@@ -212,20 +237,16 @@
 
 - (IBAction) sliderDidToucheUp:(UISlider *)sender
 {
-    NSUInteger frameIndex = (int)sender.value;
+    _potentialIndex = (int)sender.value - 1;
+    [[self reader] setCurrentFrame:_potentialIndex];
     
-    [[self reader] showPageAtIndex:frameIndex];
-    
-    REPageViewController *viewController = [self pageViewControllerForCurrentPage];
+    REPageViewController *viewController = [self pageViewControllerForPage:_potentialIndex];
+    [self buildSelectionViewLinesWithPageView:[viewController pageView]];
     
     [self.pageController setViewControllers:@[viewController]
                                   direction:UIPageViewControllerNavigationDirectionForward
                                    animated:TRUE
                                  completion:nil];
-    
-    [self updateSelectionView];
-    [self updateProgressLabels];
-    [self updateProgressLabels];
 }
 
 - (IBAction) longPress:(UILongPressGestureRecognizer *)gesture
@@ -251,15 +272,12 @@
 
 #pragma mark - REMainReaderViewDelegate - 
   // TO DO 
-- (void) reader:(REMainReader *) readerView pageWillChanged:(NSUInteger)pageIndex
+- (void) reader:(REDocumentReader *) readerView pageWillChanged:(NSUInteger)pageIndex
 {
-    [self clearSelectionView];
 }
 
-- (void) reader:(REMainReader *) readerView pageDidChanged:(NSUInteger)pageIndex
+- (void) reader:(REDocumentReader *) readerView pageDidChanged:(NSUInteger)pageIndex
 {
-    [self updateSelectionView];
-    [self updateProgressLabels];
 }
 
 @end

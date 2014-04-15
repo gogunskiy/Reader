@@ -12,7 +12,7 @@
 
 @interface REPageViewController ()
 
-@property (nonatomic) REPageView *pageView;
+@property (nonatomic, assign) CGRect frame;
 
 @end
 
@@ -23,7 +23,9 @@
     self = [super init];
     if (self) 
     {
-        [[self view] setFrame:frame];
+        [[self view] setBackgroundColor:[UIColor whiteColor]];
+        
+        [self setFrame:frame];
         [self initializePageView];
     }
     
@@ -43,8 +45,7 @@
 
 - (void) initializePageView
 {
-    REPageView *pageView = [[REPageView alloc] initWithFrame:self.view.bounds];
-    [pageView setAutoresizingMask:UIViewAutoresizingFlexibleRightMargin | UIViewAutoresizingFlexibleLeftMargin | UIViewAutoresizingFlexibleBottomMargin | UIViewAutoresizingFlexibleTopMargin];
+    REPageView *pageView = [[REPageView alloc] initWithFrame:_frame];
     [pageView setBackgroundColor:[UIColor whiteColor]];
     
     [[self view] addSubview:pageView];

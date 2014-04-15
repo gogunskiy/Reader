@@ -26,6 +26,11 @@
 		63FEDC4F18FC5E8A007928D4 /* back512@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63FEDC4D18FC5E8A007928D4 /* back512@2x.png */; };
 		63FEDC5018FC5E8A007928D4 /* front512@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63FEDC4E18FC5E8A007928D4 /* front512@2x.png */; };
 		63FEDC5418FC68E7007928D4 /* REPageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 63FEDC5318FC68E7007928D4 /* REPageViewController.m */; };
+		790BC96C18FD412700A11566 /* REDocumentReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 790BC96B18FD412700A11566 /* REDocumentReader.m */; };
+		790BC97218FD73DE00A11566 /* IowanOldStyle-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 790BC96E18FD73DE00A11566 /* IowanOldStyle-Bold.ttf */; };
+		790BC97318FD73DE00A11566 /* IowanOldStyle-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 790BC96F18FD73DE00A11566 /* IowanOldStyle-BoldItalic.ttf */; };
+		790BC97418FD73DE00A11566 /* IowanOldStyle-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 790BC97018FD73DE00A11566 /* IowanOldStyle-Italic.ttf */; };
+		790BC97518FD73DE00A11566 /* IowanOldStyle-Roman.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 790BC97118FD73DE00A11566 /* IowanOldStyle-Roman.ttf */; };
 		797EBC2B18EC4A830049C061 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 797EBC2A18EC4A830049C061 /* Foundation.framework */; };
 		797EBC2D18EC4A830049C061 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 797EBC2C18EC4A830049C061 /* CoreGraphics.framework */; };
 		797EBC2F18EC4A830049C061 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 797EBC2E18EC4A830049C061 /* UIKit.framework */; };
@@ -40,7 +45,6 @@
 		797EBC8118EC4B3C0049C061 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 797EBC7518EC4B3C0049C061 /* Images.xcassets */; };
 		797EBC8318EC4B3C0049C061 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 797EBC7918EC4B3C0049C061 /* Main_iPad.storyboard */; };
 		797EBC8418EC4B3C0049C061 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 797EBC7B18EC4B3C0049C061 /* Main_iPhone.storyboard */; };
-		797EBC9118EC4CFC0049C061 /* REMainReader.m in Sources */ = {isa = PBXBuildFile; fileRef = 797EBC9018EC4CFC0049C061 /* REMainReader.m */; };
 		797EBC9318EC4DC40049C061 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 797EBC9218EC4DC40049C061 /* CoreText.framework */; };
 		797EBC9718EC51C40049C061 /* REAttributedElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 797EBC9618EC51C40049C061 /* REAttributedElement.m */; };
 		79A4FF2D18EEA82500F79347 /* REPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A4FF2C18EEA82500F79347 /* REPageView.m */; };
@@ -102,6 +106,12 @@
 		63FEDC4E18FC5E8A007928D4 /* front512@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "front512@2x.png"; sourceTree = "<group>"; };
 		63FEDC5218FC68E7007928D4 /* REPageViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REPageViewController.h; sourceTree = "<group>"; };
 		63FEDC5318FC68E7007928D4 /* REPageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REPageViewController.m; sourceTree = "<group>"; };
+		790BC96A18FD412700A11566 /* REDocumentReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REDocumentReader.h; sourceTree = "<group>"; };
+		790BC96B18FD412700A11566 /* REDocumentReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REDocumentReader.m; sourceTree = "<group>"; };
+		790BC96E18FD73DE00A11566 /* IowanOldStyle-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IowanOldStyle-Bold.ttf"; sourceTree = "<group>"; };
+		790BC96F18FD73DE00A11566 /* IowanOldStyle-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IowanOldStyle-BoldItalic.ttf"; sourceTree = "<group>"; };
+		790BC97018FD73DE00A11566 /* IowanOldStyle-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IowanOldStyle-Italic.ttf"; sourceTree = "<group>"; };
+		790BC97118FD73DE00A11566 /* IowanOldStyle-Roman.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IowanOldStyle-Roman.ttf"; sourceTree = "<group>"; };
 		797EBC2718EC4A830049C061 /* Reader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		797EBC2A18EC4A830049C061 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		797EBC2C18EC4A830049C061 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -120,8 +130,6 @@
 		797EBC7718EC4B3C0049C061 /* Reader-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Reader-Info.plist"; sourceTree = "<group>"; };
 		797EBC7A18EC4B3C0049C061 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		797EBC7C18EC4B3C0049C061 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
-		797EBC8F18EC4CFC0049C061 /* REMainReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REMainReader.h; sourceTree = "<group>"; };
-		797EBC9018EC4CFC0049C061 /* REMainReader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REMainReader.m; sourceTree = "<group>"; };
 		797EBC9218EC4DC40049C061 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		797EBC9518EC51C40049C061 /* REAttributedElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REAttributedElement.h; sourceTree = "<group>"; };
 		797EBC9618EC51C40049C061 /* REAttributedElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REAttributedElement.m; sourceTree = "<group>"; };
@@ -297,6 +305,26 @@
 			path = RERootViewController;
 			sourceTree = "<group>";
 		};
+		790BC96918FD412700A11566 /* REDocumentReader */ = {
+			isa = PBXGroup;
+			children = (
+				790BC96A18FD412700A11566 /* REDocumentReader.h */,
+				790BC96B18FD412700A11566 /* REDocumentReader.m */,
+			);
+			path = REDocumentReader;
+			sourceTree = "<group>";
+		};
+		790BC96D18FD73DE00A11566 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				790BC96E18FD73DE00A11566 /* IowanOldStyle-Bold.ttf */,
+				790BC96F18FD73DE00A11566 /* IowanOldStyle-BoldItalic.ttf */,
+				790BC97018FD73DE00A11566 /* IowanOldStyle-Italic.ttf */,
+				790BC97118FD73DE00A11566 /* IowanOldStyle-Roman.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		797EBC1E18EC4A830049C061 = {
 			isa = PBXGroup;
 			children = (
@@ -409,6 +437,7 @@
 		797EBC6F18EC4B3C0049C061 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				790BC96D18FD73DE00A11566 /* Fonts */,
 				63A76A6818FAA78800069B8A /* Images */,
 				797EBC7018EC4B3C0049C061 /* Data */,
 				797EBC7218EC4B3C0049C061 /* Other */,
@@ -470,6 +499,7 @@
 		797EBC8A18EC4CDE0049C061 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				790BC96918FD412700A11566 /* REDocumentReader */,
 				79E4AB9D18ED9AB1000003C7 /* ReaderController */,
 				79E4AB8818ED8101000003C7 /* ContentParsers */,
 			);
@@ -491,18 +521,8 @@
 			children = (
 				63A76A6C18FAE18400069B8A /* RESelectionTool */,
 				79A4FF2A18EEA81500F79347 /* REPageView */,
-				797EBC8E18EC4CDE0049C061 /* REMainReaderView */,
 			);
 			path = UI;
-			sourceTree = "<group>";
-		};
-		797EBC8E18EC4CDE0049C061 /* REMainReaderView */ = {
-			isa = PBXGroup;
-			children = (
-				797EBC8F18EC4CFC0049C061 /* REMainReader.h */,
-				797EBC9018EC4CFC0049C061 /* REMainReader.m */,
-			);
-			path = REMainReaderView;
 			sourceTree = "<group>";
 		};
 		797EBC9418EC51B30049C061 /* REAttributedElement */ = {
@@ -712,6 +732,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				797EBC8018EC4B3C0049C061 /* InfoPlist.strings in Resources */,
+				790BC97318FD73DE00A11566 /* IowanOldStyle-BoldItalic.ttf in Resources */,
 				797EBC8318EC4B3C0049C061 /* Main_iPad.storyboard in Resources */,
 				63FEDC4F18FC5E8A007928D4 /* back512@2x.png in Resources */,
 				79E7827A18F2E34A002B121B /* Settings.plist in Resources */,
@@ -724,7 +745,10 @@
 				797EBC8418EC4B3C0049C061 /* Main_iPhone.storyboard in Resources */,
 				63D4696618EF409A00E5E6E7 /* 000000000003.epub in Resources */,
 				797EBC8118EC4B3C0049C061 /* Images.xcassets in Resources */,
+				790BC97518FD73DE00A11566 /* IowanOldStyle-Roman.ttf in Resources */,
 				63FEDC5018FC5E8A007928D4 /* front512@2x.png in Resources */,
+				790BC97418FD73DE00A11566 /* IowanOldStyle-Italic.ttf in Resources */,
+				790BC97218FD73DE00A11566 /* IowanOldStyle-Bold.ttf in Resources */,
 				63A406D318F4379600021EAB /* section1.xhtml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -754,6 +778,7 @@
 				79E4ABA018ED9AC4000003C7 /* REReaderController.m in Sources */,
 				63D4695818EF3AE600E5E6E7 /* mztools.c in Sources */,
 				63D4695B18EF3AE600E5E6E7 /* ZipArchive.m in Sources */,
+				790BC96C18FD412700A11566 /* REDocumentReader.m in Sources */,
 				63D4695918EF3AE600E5E6E7 /* unzip.c in Sources */,
 				79E4AB9618ED9927000003C7 /* RXMLElement.m in Sources */,
 				79E4AB8B18ED8110000003C7 /* REBaseParser.m in Sources */,
@@ -765,7 +790,6 @@
 				79A9C39F18F820EB00AC36DE /* REBaseViewController.m in Sources */,
 				79E7827718F2DE02002B121B /* RESettings.m in Sources */,
 				797EBC7D18EC4B3C0049C061 /* REAppDelegate.m in Sources */,
-				797EBC9118EC4CFC0049C061 /* REMainReader.m in Sources */,
 				79A4FF2D18EEA82500F79347 /* REPageView.m in Sources */,
 				79A9C3A118F820EB00AC36DE /* REMainViewController.m in Sources */,
 				63D4696C18F0813000E5E6E7 /* REPathManager.m in Sources */,

@@ -65,7 +65,7 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
         
         [self setColor:[UIColor blackColor]];
         [self setFontSize:18];
-        [self setFontName:@"Helvetica"];
+        [self setFontName:@"IowanOldStyle-Italic"];
     }
     
     return self;
@@ -181,11 +181,15 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
         }
     }
     
+    CTFontRef font = CTFontCreateWithName(CFSTR("IowanOldStyle-Italic"), 16, NULL);
+
+    
     NSMutableAttributedString* elementString = [[NSMutableAttributedString alloc] initWithString:resultString];
     
     [elementString setAttributes:@{(id)kCTForegroundColorAttributeName : [self color],
                                    (id)kCTParagraphStyleAttributeName : (__bridge id)[self paragraphStyle],
-                                   (id)kCTKernAttributeName : @0}
+                                   (id)kCTKernAttributeName : @0,
+                                   (id)kCTFontAttributeName : (__bridge id)font}
                            range:NSMakeRange(0, elementString.length)];
     
     
