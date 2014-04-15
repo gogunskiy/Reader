@@ -113,6 +113,7 @@
                         <connections>
                             <outletCollection property="gestureRecognizers" destination="9aR-Zo-B0L" appends="YES" id="j7c-Ce-UnY"/>
                             <outletCollection property="gestureRecognizers" destination="wA8-18-gQh" appends="YES" id="DYQ-xe-XFE"/>
+                            <outletCollection property="gestureRecognizers" destination="jaJ-fg-zs1" appends="YES" id="zr6-bY-HlE"/>
                         </connections>
                     </view>
                     <nil key="simulatedTopBarMetrics"/>
@@ -138,6 +139,11 @@
                         <action selector="longPress:" destination="BYZ-38-t0r" id="um6-5n-uLR"/>
                     </connections>
                 </pongPressGestureRecognizer>
+                <swipeGestureRecognizer direction="right" numberOfTouchesRequired="2" id="jaJ-fg-zs1">
+                    <connections>
+                        <action selector="doubleLeftSwipe:" destination="BYZ-38-t0r" id="Dst-17-6ZE"/>
+                    </connections>
+                </swipeGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="690" y="-271"/>
         </scene>

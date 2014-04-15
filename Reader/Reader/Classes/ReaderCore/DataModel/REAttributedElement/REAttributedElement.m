@@ -63,9 +63,9 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
     {
         [self setChildren:[NSMutableArray new]];
         
-        [self setColor:[UIColor blackColor]];
-        [self setFontSize:18];
-        [self setFontName:@"IowanOldStyle-Italic"];
+        [self setColor:[UIColor colorWithRed:0.1 green:0.1 blue:0.1 alpha:1.0]];
+        [self setFontSize:20];
+        [self setFontName:@"IowanOldStyle-Roman"];
     }
     
     return self;
@@ -181,15 +181,12 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
         }
     }
     
-    CTFontRef font = CTFontCreateWithName(CFSTR("IowanOldStyle-Italic"), 16, NULL);
-
-    
     NSMutableAttributedString* elementString = [[NSMutableAttributedString alloc] initWithString:resultString];
     
     [elementString setAttributes:@{(id)kCTForegroundColorAttributeName : [self color],
                                    (id)kCTParagraphStyleAttributeName : (__bridge id)[self paragraphStyle],
                                    (id)kCTKernAttributeName : @0,
-                                   (id)kCTFontAttributeName : (__bridge id)font}
+                                   (id)kCTFontAttributeName : (__bridge id)[self _font]}
                            range:NSMakeRange(0, elementString.length)];
     
     
@@ -319,7 +316,7 @@ CGFloat MyGetWidthCallback( void* refCon)
 
 - (CTFontRef) _font
 {
-    return [self _fontWithName:[self name] size:[self _fontSizeWithElementName:[self name]]];
+    return [self _fontWithName:[self fontName] size:[self _fontSizeWithElementName:[self name]]];
 }
 
 - (void) applyFontStyle

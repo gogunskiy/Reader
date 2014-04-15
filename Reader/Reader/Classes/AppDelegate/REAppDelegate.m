@@ -16,6 +16,7 @@
 {
     [REGUIHelper customize];
     
+    /*
     for (NSString* family in [UIFont familyNames])
     {
         NSLog(@"%@", family);
@@ -24,7 +25,7 @@
         {
             NSLog(@"  %@", name);
         }
-    }
+    }*/
     
     NSString *bookPath = [[NSBundle mainBundle] resourcePath];
     

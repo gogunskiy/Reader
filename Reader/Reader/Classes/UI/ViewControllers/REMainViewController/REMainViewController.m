@@ -33,8 +33,6 @@
 
 @property (nonatomic) REDocumentReader *reader;
 
-@property (nonatomic) REPageViewController *pageViewController;
-
 @property (nonatomic, assign) NSUInteger potentialIndex;
 
 
@@ -196,8 +194,6 @@
     [viewController setCTFrame:[self.reader cTFrameAtIndex:page] 
                    attachments:[self.reader attachments]];
     
-    [self setPageViewController:viewController];
-    
     return viewController;
 }
 
@@ -218,7 +214,11 @@
     }
     
     REPageViewController *viewController = (REPageViewController *)[[pageViewController viewControllers] lastObject];
-    [self buildSelectionViewLinesWithPageView:[viewController pageView]];
+    
+    [self performSelector:@selector(buildSelectionViewLinesWithPageView:) 
+               withObject:[viewController pageView] 
+               afterDelay:0.5];
+    
 }
 
 #pragma mark - Actions -
@@ -241,7 +241,10 @@
     [[self reader] setCurrentFrame:_potentialIndex];
     
     REPageViewController *viewController = [self pageViewControllerForPage:_potentialIndex];
-    [self buildSelectionViewLinesWithPageView:[viewController pageView]];
+  
+    [self performSelector:@selector(buildSelectionViewLinesWithPageView:) 
+               withObject:[viewController pageView] 
+               afterDelay:0.5];
     
     [self.pageController setViewControllers:@[viewController]
                                   direction:UIPageViewControllerNavigationDirectionForward

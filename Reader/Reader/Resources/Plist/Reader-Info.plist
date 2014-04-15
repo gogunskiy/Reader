@@ -45,6 +45,7 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>IowanOldStyle-Italic.ttf</string>
+		<string>IowanOldStyle-Roman.ttf</string>
 	</array>
 </dict>
 </plist>
