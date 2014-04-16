@@ -8,8 +8,8 @@
 
 #import "RESelectionTool.h"
 
-static NSUInteger const LEFT_MARKER_TAG     = 134;
-static NSUInteger const RIGHT_MARKER_TAG    = 136;
+static NSUInteger const LEFT_MARKER_TAG     = 11134;
+static NSUInteger const RIGHT_MARKER_TAG    = 11136;
 
 static NSUInteger const MARKER_WIDTH        = 10;
 static NSUInteger const MARKER_HEIGHT       = 40;
@@ -59,7 +59,7 @@ static NSUInteger const MARKER_HEIGHT       = 40;
                                                  green:.0
                                                   blue:1.0
                                                  alpha:0.2]];
-        [view setHidden:FALSE];
+        [view setHidden:TRUE];
         [view setTag:i + 1];
         [self addSubview:view];
     }
@@ -112,11 +112,10 @@ static NSUInteger const MARKER_HEIGHT       = 40;
         {
             CGPoint location    = [gesture locationInView:self];
             
-            if (fabs(location.x - _previousPoint.x) > 20 && fabs(location.y - _previousPoint.y) > 20) 
-            {
+
                 if (_capturedLeftMarker || _capturedRightMarker) 
                 {
-                    for (int i = 1; i <= self.subviews.count; i++)
+                    for (int i = 1; i <= self.runs.count; i++)
                     {
                         UIView *view = [self viewWithTag:i];
                         
@@ -125,16 +124,15 @@ static NSUInteger const MARKER_HEIGHT       = 40;
                             if (_capturedLeftMarker) 
                             {
                                 _minIndex = i;
-                                
+                                break;
                             }
                             if (_capturedRightMarker) 
                             {
                                 _maxIndex = i;
+                                break;
                             }
-                        }
+                        
                     }
-                    
-                    [self setPreviousPoint:location];
                 }
             }
             
@@ -145,7 +143,8 @@ static NSUInteger const MARKER_HEIGHT       = 40;
             [self stopUpdate];
             [self setCapturedLeftMarker:FALSE];
             [self setCapturedRightMarker:FALSE];
-      
+            [self selectFrom:_minIndex to:_maxIndex];
+
             
             break;
         }
@@ -237,6 +236,11 @@ static NSUInteger const MARKER_HEIGHT       = 40;
 
             [self selectFrom:_minIndex to:_maxIndex];
 
+            [self addMarkersWithStartFrame:[[self viewWithTag:_minIndex] frame]
+                                  endFrame:[[self viewWithTag:_maxIndex] frame]];
+            
+            [self addGestureRecognizer];
+            
             return TRUE;
             
             break;
@@ -251,21 +255,28 @@ static NSUInteger const MARKER_HEIGHT       = 40;
 
 - (void) selectFrom:(NSInteger)startIndex to:(NSInteger)endIndex
 {
-    [self unSelectAll];
-    
-    [self setUserInteractionEnabled:TRUE];
-    
-    for (int i = startIndex; i <= endIndex; i++) 
+    for (int i = 1; i <= self.runs.count; i++) 
     {
-        [[self viewWithTag:i] setHidden:FALSE];
+        if (i >= startIndex && i <=endIndex) 
+        {
+            [[self viewWithTag:i] setHidden:FALSE];
+        }
+        else
+        {
+            [[self viewWithTag:i] setHidden:TRUE];
+        }
     }
-    
-    [self addMarkersWithStartFrame:[[self viewWithTag:startIndex] frame]
-                          endFrame:[[self viewWithTag:endIndex] frame]];
-    
-    [self addGestureRecognizer];
-}
+};
 
+
+- (void) updateMarkersFrom:(NSInteger)startIndex to:(NSInteger)endIndex
+{
+    CGRect startFrame   = [[self viewWithTag:startIndex] frame];
+    CGRect endFrame     = [[self viewWithTag:endIndex] frame];
+    
+    [[self viewWithTag:LEFT_MARKER_TAG] setFrame:CGRectMake(startFrame.origin.x + (startFrame.size.width - MARKER_WIDTH), startFrame.origin.y - (MARKER_HEIGHT - startFrame.size.height), MARKER_WIDTH, MARKER_HEIGHT)];
+    [[self viewWithTag:RIGHT_MARKER_TAG] setFrame:CGRectMake(endFrame.origin.x, endFrame.origin.y, MARKER_WIDTH, MARKER_HEIGHT)];
+}
 
 - (void) unSelectAll
 {
@@ -297,8 +308,7 @@ static NSUInteger const MARKER_HEIGHT       = 40;
 
 - (void) addGestureRecognizer
 {
-    UIPanGestureRecognizer *tapGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(tap:)];
-    [self addGestureRecognizer:tapGesture];
+    [self setUserInteractionEnabled:TRUE];
     
     UIPanGestureRecognizer *panGesture = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(move:)];
     [self addGestureRecognizer:panGesture];
@@ -306,7 +316,7 @@ static NSUInteger const MARKER_HEIGHT       = 40;
 
 - (void) startUpdate
 {
-    _timer = [NSTimer timerWithTimeInterval:0.1 
+    _timer = [NSTimer timerWithTimeInterval:0.05 
                                      target:self
                                    selector:@selector(update)
                                    userInfo:nil 
@@ -321,7 +331,7 @@ static NSUInteger const MARKER_HEIGHT       = 40;
 
 - (void) update
 {
-    [self selectFrom:_minIndex to:_maxIndex];
+    [self updateMarkersFrom:_minIndex to:_maxIndex];
 }
 
 @end
