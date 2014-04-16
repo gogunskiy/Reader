@@ -11,7 +11,7 @@
 static NSUInteger const LEFT_MARKER_TAG     = 11134;
 static NSUInteger const RIGHT_MARKER_TAG    = 11136;
 
-static NSUInteger const MARKER_WIDTH        = 6;
+static NSUInteger const MARKER_WIDTH        = 4;
 static NSUInteger const MARKER_HEIGHT       = 40;
 
 
@@ -24,8 +24,6 @@ static NSUInteger const MARKER_HEIGHT       = 40;
 @property (nonatomic, assign) NSInteger maxIndex;
 
 @property (nonatomic, strong) NSTimer *timer;
-
-@property (nonatomic, assign) CGPoint previousPoint;
 
 @end
 
@@ -45,9 +43,7 @@ static NSUInteger const MARKER_HEIGHT       = 40;
 
 
 - (void) buildLines
-{
-    [self clear];
-    
+{  
     [self setNeedsDisplay];
 }
 
@@ -60,7 +56,7 @@ static NSUInteger const MARKER_HEIGHT       = 40;
         frame = CGRectInset(frame, 0, -1.5);
         CGContextRef context = UIGraphicsGetCurrentContext();
         
-        if (i > _minIndex && i < _maxIndex) 
+        if (i >= _minIndex && i <= _maxIndex) 
         {
             CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.2);   
                   
@@ -81,23 +77,20 @@ static NSUInteger const MARKER_HEIGHT       = 40;
 
 - (BOOL) reset
 {
-    [self unSelectAll];
+    _minIndex = -1;
+    _maxIndex = -1;
+    
+    [[self viewWithTag:LEFT_MARKER_TAG] removeFromSuperview];
+    [[self viewWithTag:RIGHT_MARKER_TAG] removeFromSuperview];
+    
+    [self setNeedsDisplay];
+    
+    [self setUserInteractionEnabled:FALSE];
     
     return FALSE;
 }
 
-
-- (void) clear
-{
-    [[self viewWithTag:LEFT_MARKER_TAG] removeFromSuperview];
-    [[self viewWithTag:RIGHT_MARKER_TAG] removeFromSuperview];
-}
-
 #pragma mark - Actions -
-- (void) tap:(UITapGestureRecognizer *)gesture
-
-{
-}
 
 - (void) move:(UIPanGestureRecognizer *)gesture
 {
@@ -107,8 +100,7 @@ static NSUInteger const MARKER_HEIGHT       = 40;
         case UIGestureRecognizerStateBegan:
         {
             CGPoint location = [gesture locationInView:self];
-            [self setPreviousPoint:location];
-            
+          
             CGRect leftMarkerFrame = CGRectInset([self viewWithTag:LEFT_MARKER_TAG].frame, -80, -80);
             CGRect rightMarkerFrame = CGRectInset([self viewWithTag:RIGHT_MARKER_TAG].frame, -80, -80);
             
@@ -119,30 +111,30 @@ static NSUInteger const MARKER_HEIGHT       = 40;
         {
             CGPoint location    = [gesture locationInView:self];
             
-
-                if (_capturedLeftMarker || _capturedRightMarker) 
+            if (_capturedLeftMarker || _capturedRightMarker) 
+            {
+                for (int i = 0; i < self.runs.count; i++)
                 {
-                    for (int i = 0; i < self.runs.count; i++)
+                    NSDictionary *run = self.runs[i];
+                    CGRect frame = [run[@"frame"] CGRectValue];
+                    
+                    if (CGRectContainsPoint(frame, location))
                     {
-                        NSDictionary *run = self.runs[i];
-                        CGRect frame = [run[@"frame"] CGRectValue];
-                        
-                        if (CGRectContainsPoint(frame, location))
+                        if (_capturedLeftMarker) 
                         {
-                            if (_capturedLeftMarker) 
-                            {
-                                _minIndex = i < _maxIndex ? i : _minIndex;
-                                break;
-                            }
-                            if (_capturedRightMarker) 
-                            {
-                                _maxIndex = i > _minIndex ? i : _maxIndex;
-                                break;
-                            }
+                            _minIndex = i < _maxIndex ? i : _minIndex;
+                            break;
+                        }
+                        if (_capturedRightMarker) 
+                        {
+                            _maxIndex = i > _minIndex ? i : _maxIndex;
+                            break;
+                        }
                     }
-                }                    
-                    [self setNeedsDisplay];
-                    [self updateMarkersFrom:_minIndex to:_maxIndex];
+                }   
+                
+                [self setNeedsDisplay];
+                [self updateMarkersFrom:_minIndex to:_maxIndex];
             }
             
             break;
@@ -168,7 +160,7 @@ static NSUInteger const MARKER_HEIGHT       = 40;
     NSInteger leftMarkerTag = 0;
     NSInteger rightMarkerTag = 0;
     
-    [self unSelectAll];
+    [self reset];
     
     CGPoint location = [gesture locationInView:self];
     
@@ -271,33 +263,22 @@ static NSUInteger const MARKER_HEIGHT       = 40;
     CGRect startFrame   = [self.runs[startIndex][@"frame"] CGRectValue];
     CGRect endFrame   = [self.runs[endIndex][@"frame"] CGRectValue];
     
-    [[self viewWithTag:LEFT_MARKER_TAG] setFrame:CGRectMake(startFrame.origin.x + (startFrame.size.width - MARKER_WIDTH), startFrame.origin.y - (MARKER_HEIGHT - startFrame.size.height), MARKER_WIDTH, MARKER_HEIGHT)];
-    [[self viewWithTag:RIGHT_MARKER_TAG] setFrame:CGRectMake(endFrame.origin.x, endFrame.origin.y, MARKER_WIDTH, MARKER_HEIGHT)];
+    [[self viewWithTag:LEFT_MARKER_TAG] setFrame:CGRectMake(startFrame.origin.x - MARKER_WIDTH, startFrame.origin.y - (MARKER_HEIGHT - startFrame.size.height), MARKER_WIDTH, MARKER_HEIGHT)];
+    [[self viewWithTag:RIGHT_MARKER_TAG] setFrame:CGRectMake(endFrame.origin.x + endFrame.size.width, endFrame.origin.y, MARKER_WIDTH, MARKER_HEIGHT)];
 }
-
-- (void) unSelectAll
-{
-    _minIndex = -1;
-    _maxIndex = -1;
-    
-    [self setNeedsDisplay];
-    
-    [self setUserInteractionEnabled:FALSE];
-}
-
 
 - (void) addMarkersWithStartFrame:(CGRect)startFrame endFrame:(CGRect)endFrame
 {
     [[self viewWithTag:LEFT_MARKER_TAG] removeFromSuperview];
     
-    UIView *leftmarker = [[UIView alloc] initWithFrame:CGRectMake(startFrame.origin.x + (startFrame.size.width - MARKER_WIDTH), startFrame.origin.y - (MARKER_HEIGHT - startFrame.size.height), MARKER_WIDTH, MARKER_HEIGHT)];
+    UIView *leftmarker = [[UIView alloc] initWithFrame:CGRectMake(startFrame.origin.x - MARKER_WIDTH, startFrame.origin.y - (MARKER_HEIGHT - startFrame.size.height), MARKER_WIDTH, MARKER_HEIGHT)];
     [leftmarker setBackgroundColor:[UIColor blueColor]];
     [leftmarker setTag:LEFT_MARKER_TAG];
     [self addSubview:leftmarker];
     
     [[self viewWithTag:RIGHT_MARKER_TAG] removeFromSuperview];
     
-    UIView *rightmarker = [[UIView alloc] initWithFrame:CGRectMake(endFrame.origin.x, endFrame.origin.y, MARKER_WIDTH, MARKER_HEIGHT)];
+    UIView *rightmarker = [[UIView alloc] initWithFrame:CGRectMake(endFrame.origin.x + endFrame.size.width, endFrame.origin.y, MARKER_WIDTH, MARKER_HEIGHT)];
     [rightmarker setBackgroundColor:[UIColor blueColor]];
     [rightmarker setTag:RIGHT_MARKER_TAG];
     [self addSubview:rightmarker];

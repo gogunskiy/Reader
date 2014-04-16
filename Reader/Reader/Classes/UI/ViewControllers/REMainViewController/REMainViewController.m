@@ -121,7 +121,7 @@
     [NSObject cancelPreviousPerformRequestsWithTarget:self];
     [self performSelector:@selector(buildSelectionViewLinesWithPageView:) 
                withObject:pageView
-               afterDelay:2.0];
+               afterDelay:0.0];
 }
 
 - (void) buildSelectionViewLinesWithPageView:(REPageView *)pageView
@@ -132,7 +132,7 @@
 
 - (void) clearSelectionView
 {
-    [[self selectionView] clear];
+    [[self selectionView] reset];
 }
 
 - (void) initializeReader

@@ -16,7 +16,6 @@
 - (BOOL) longPress:(UILongPressGestureRecognizer *)gesture;
 
 - (void) buildLines;
-- (void) clear;
 - (BOOL) reset;
 
 @end
