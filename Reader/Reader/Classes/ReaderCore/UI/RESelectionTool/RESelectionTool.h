@@ -13,9 +13,10 @@
 @property (nonatomic) NSAttributedString *attributedString;
 @property (nonatomic) NSArray *runs;
 
-- (void) longPress:(UILongPressGestureRecognizer *)gesture;
+- (BOOL) longPress:(UILongPressGestureRecognizer *)gesture;
 
 - (void) buildLines;
 - (void) clear;
+- (BOOL) reset;
 
 @end

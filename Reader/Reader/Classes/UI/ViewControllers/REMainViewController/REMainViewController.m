@@ -35,7 +35,7 @@
 
 @property (nonatomic, assign) NSUInteger potentialIndex;
 @property (nonatomic, assign) BOOL pageIsAnimating;
-
+@property (nonatomic, assign) BOOL isSelectionEnabled;
 @end
 
 @implementation REMainViewController
@@ -116,10 +116,18 @@
      }];
 }
 
+- (void) updateSelectionView:(REPageView *)pageView
+{
+    [NSObject cancelPreviousPerformRequestsWithTarget:self];
+    [self performSelector:@selector(buildSelectionViewLinesWithPageView:) 
+               withObject:pageView
+               afterDelay:2.0];
+}
+
 - (void) buildSelectionViewLinesWithPageView:(REPageView *)pageView
 {
- //   [[self selectionView] setRuns:[pageView runs]];
-  //  [[self selectionView] buildLines];
+    [[self selectionView] setRuns:[pageView runs]];
+    [[self selectionView] buildLines];
 }
 
 - (void) clearSelectionView
@@ -160,8 +168,7 @@
 #pragma mark - UIPageViewControllerDataSource  -
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
-{
-    
+{    
     if (self.reader.currentFrame - 1 >= 0 && !_pageIsAnimating)
     {
         _potentialIndex = self.reader.currentFrame - 1;
@@ -175,7 +182,7 @@
 }
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerAfterViewController:(UIViewController *)viewController
-{
+{    
     if (self.reader.currentFrame + 1 < self.reader.framesCount && !_pageIsAnimating) 
     {
         _potentialIndex = self.reader.currentFrame + 1;
@@ -217,9 +224,7 @@
     
     REPageViewController *viewController = (REPageViewController *)[[pageViewController viewControllers] lastObject];
     
-    [self performSelector:@selector(buildSelectionViewLinesWithPageView:) 
-               withObject:[viewController pageView] 
-               afterDelay:0.5];
+    [self updateSelectionView:[viewController pageView]];
     
     [self setPageIsAnimating:FALSE];
 }
@@ -246,10 +251,8 @@
     [[self reader] setCurrentFrame:_potentialIndex];
     
     REPageViewController *viewController = [self pageViewControllerForPage:_potentialIndex];
-  
-    [self performSelector:@selector(buildSelectionViewLinesWithPageView:) 
-               withObject:[viewController pageView] 
-               afterDelay:0.5];
+    
+    [self updateSelectionView:[viewController pageView]];
     
     [self.pageController setViewControllers:@[viewController]
                                   direction:direction
@@ -259,7 +262,20 @@
 
 - (IBAction) longPress:(UILongPressGestureRecognizer *)gesture
 {
-    [[self selectionView] longPress:gesture];
+    switch (gesture.state)
+    {
+        case UIGestureRecognizerStateBegan:
+        {
+            _isSelectionEnabled = [[self selectionView] longPress:gesture];
+            
+            break;
+        }
+            
+            default:
+        {
+            break;
+        }
+    }
 }
 
 - (IBAction) doubleLeftSwipe:(UIGestureRecognizer *)sender
@@ -276,6 +292,7 @@
     {
         _toolbarModeEnabled = !_toolbarModeEnabled;
         [self updateElemnentsVisibility];
+        _isSelectionEnabled = [[self selectionView] reset];
     }
 }
 
