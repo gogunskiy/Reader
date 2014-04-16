@@ -342,11 +342,8 @@ CGFloat MyGetWidthCallback( void* refCon)
             {
                 NSString *key = [self.csss[i] allKeys][j];
                 NSDictionary *value = self.csss[i][key];
+                
                 if ([[key lowercaseString] rangeOfString:[classAttribute lowercaseString]].length) 
-                {
-                    [attributes addEntriesFromDictionary:value];
-                }
-                if ([[key lowercaseString] rangeOfString:[[self name] lowercaseString]].length && [[key lowercaseString] rangeOfString:@"."].length == 0)
                 {
                     [attributes addEntriesFromDictionary:value];
                 }
