@@ -23,7 +23,8 @@ static NSUInteger const MARKER_HEIGHT       = 40;
 @property (nonatomic, assign) NSInteger minIndex;
 @property (nonatomic, assign) NSInteger maxIndex;
 
-@property (nonatomic, strong) NSTimer *timer;
+
+@property (nonatomic, strong) UIMenuController *menuController;
 
 @end
 
@@ -35,10 +36,15 @@ static NSUInteger const MARKER_HEIGHT       = 40;
     
     if (self)
     {
-
+        
     }
     
     return self;
+}
+
+- (void)awakeFromNib
+{
+    [self initializeMenu];
 }
 
 
@@ -59,13 +65,10 @@ static NSUInteger const MARKER_HEIGHT       = 40;
         if (i >= _minIndex && i <= _maxIndex) 
         {
             CGContextSetRGBFillColor(context, 0.0, 0.0, 1.0, 0.2);   
-                  
         }
         else
         {
-            CGContextSetRGBFillColor(context, 1.0, 1.0, 1.0, 0.0);  
-
-            
+            CGContextSetRGBFillColor(context, 1.0, 1.0, 1.0, 0.0);
         }
         
         CGContextSetRGBStrokeColor(context, 1.0, 1.0, 1.0, 0.0); 
@@ -83,6 +86,8 @@ static NSUInteger const MARKER_HEIGHT       = 40;
     [[self viewWithTag:LEFT_MARKER_TAG] removeFromSuperview];
     [[self viewWithTag:RIGHT_MARKER_TAG] removeFromSuperview];
     
+    [[self menuController] setMenuVisible:FALSE animated:FALSE];
+    
     [self setNeedsDisplay];
     
     [self setUserInteractionEnabled:FALSE];
@@ -96,11 +101,13 @@ static NSUInteger const MARKER_HEIGHT       = 40;
 {
     switch (gesture.state)
     {
-         
+            
         case UIGestureRecognizerStateBegan:
         {
+            [self hideMenu];
+            
             CGPoint location = [gesture locationInView:self];
-          
+            
             CGRect leftMarkerFrame = CGRectInset([self viewWithTag:LEFT_MARKER_TAG].frame, -80, -80);
             CGRect rightMarkerFrame = CGRectInset([self viewWithTag:RIGHT_MARKER_TAG].frame, -80, -80);
             
@@ -110,6 +117,7 @@ static NSUInteger const MARKER_HEIGHT       = 40;
         case UIGestureRecognizerStateChanged:
         {
             CGPoint location    = [gesture locationInView:self];
+            
             
             if (_capturedLeftMarker || _capturedRightMarker) 
             {
@@ -131,8 +139,7 @@ static NSUInteger const MARKER_HEIGHT       = 40;
                             break;
                         }
                     }
-                }   
-                
+                }  
                 [self setNeedsDisplay];
                 [self updateMarkersFrom:_minIndex to:_maxIndex];
             }
@@ -144,9 +151,11 @@ static NSUInteger const MARKER_HEIGHT       = 40;
             [self setCapturedLeftMarker:FALSE];
             [self setCapturedRightMarker:FALSE];
             
+            [self showMenu];
+            
             break;
         }
-        
+            
         default:
         {
             break;
@@ -246,17 +255,94 @@ static NSUInteger const MARKER_HEIGHT       = 40;
             
             [self addGestureRecognizer];
             
+            [self showMenu];
+            
             return TRUE;
             
             break;
         }
     }
     
-    
     return FALSE;
 }
 
 #pragma mark - Private -
+
+- (void) initializeMenu
+{
+    UIMenuController *menu = [UIMenuController sharedMenuController];
+    UIMenuItem *copyMenuItem = [[UIMenuItem alloc] initWithTitle:@"Copy" action:@selector(copyAction)];
+    UIMenuItem *shareMenuItem = [[UIMenuItem alloc] initWithTitle:@"Share" action:@selector(shareAction)];
+    UIMenuItem *googleMenuItem = [[UIMenuItem alloc] initWithTitle:@"Google" action:@selector(googleAction)];
+    UIMenuItem *translateMenuItem = [[UIMenuItem alloc] initWithTitle:@"Translate" action:@selector(translateAction)];
+    
+    [menu setMenuItems:@[copyMenuItem, shareMenuItem, googleMenuItem, translateMenuItem]];
+    
+    [self setMenuController:menu];
+}
+
+- (void) showMenu
+{
+    CGRect minFrame   = [self.runs[_minIndex][@"frame"] CGRectValue];
+    CGRect maxFrame   = [self.runs[_maxIndex][@"frame"] CGRectValue];
+    
+    CGRect rect;
+    
+    rect.origin.x = 0;
+    rect.origin.y = MIN(CGRectGetMinY(minFrame), CGRectGetMinY(maxFrame));
+    
+    rect.size.width = self.frame.size.width;
+    rect.size.height =  MAX(CGRectGetMaxY(minFrame), CGRectGetMaxY(maxFrame)) - rect.origin.y;
+        
+    [[self menuController] setTargetRect:rect inView:self];
+    [[self menuController] setMenuVisible:YES animated:YES];
+    
+    [self becomeFirstResponder];
+}
+
+-(BOOL) canBecomeFirstResponder
+{
+    return TRUE;
+}
+
+- (void) hideMenu
+{
+    UIMenuController *theMenu = [UIMenuController sharedMenuController];
+    [theMenu setMenuVisible:NO animated:NO];
+}
+
+- (void) copyAction
+{
+    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+    pasteboard.string = [self textFrom:_minIndex to:_maxIndex];
+}
+
+- (void) shareAction
+{
+    
+}
+
+- (void) googleAction
+{
+    NSString *url = [[NSString stringWithFormat:@"https://www.google.com/search?q=%@", [self textFrom:_minIndex to:_maxIndex]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+}
+
+- (void) translateAction
+{
+    
+}
+
+- (NSString *) textFrom:(NSInteger)startIndex to:(NSInteger)endIndex
+{
+    NSString *string = [[self attributedString] string];
+    
+    NSRange start   = [self.runs[_minIndex][@"range"] rangeValue];
+    NSRange end     = [self.runs[_maxIndex][@"range"] rangeValue];
+    
+    return [string substringWithRange:NSMakeRange(start.location, end.location - start.location)];
+}
 
 - (void) updateMarkersFrom:(NSInteger)startIndex to:(NSInteger)endIndex
 {    
