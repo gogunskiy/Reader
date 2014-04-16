@@ -11,6 +11,7 @@
 #import "RESelectionTool.h"
 #import "REPageViewController.h"
 #import "REPageView.h"
+#import "REUtils.h"
 
 @interface REMainViewController ()
 
@@ -165,6 +166,17 @@
     [self.pageController didMoveToParentViewController:self];
 }
 
+- (void) showSocialActionSheet
+{
+    UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:@"Choose a sharing option" 
+                                                             delegate:self 
+                                                    cancelButtonTitle:nil 
+                                               destructiveButtonTitle:nil
+                                                    otherButtonTitles:@"Facebook", @"Twitter", @"SMS", @"Email", nil];
+    
+    [actionSheet showInView:[self view]];
+}
+
 #pragma mark - UIPageViewControllerDataSource  -
 
 - (UIViewController *)pageViewController:(UIPageViewController *)pageViewController viewControllerBeforeViewController:(UIViewController *)viewController
@@ -309,6 +321,72 @@
 
 - (void) reader:(REDocumentReader *) readerView pageDidChanged:(NSUInteger)pageIndex
 {
+}
+
+#pragma mark - RESelectionToolDelegate -
+
+-(void) selectionTool:(RESelectionTool *) selectionTool clickedItemWithType:(RESelectionToolActionType)type selectedText:(NSString *)selectedText
+{
+    switch (type) 
+    {
+        case RESelectionToolActionCopy:
+        {
+            UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
+            [pasteboard setString:selectedText];
+            
+            break;
+        }
+        case RESelectionToolActionShare:
+        {
+            [self showSocialActionSheet];
+            break;
+        }
+        case RESelectionToolActionGoogle:
+        {
+            [UTILS openGoogleWithText:[_selectionView text]];
+            
+            break;
+        }
+        case RESelectionToolActionTranslate:
+        {
+            [UTILS openTranslaterWithText:[_selectionView text]];
+            
+            break;
+        }
+        default:
+            break;
+    }
+}
+
+#pragma mark - UISctionSheetDelegate -
+
+- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) 
+    {
+        case 0:
+        {
+            [UTILS shareFacebookWithText:[_selectionView text] parentViewController:self];
+            break;
+        }   
+        case 1:
+        {
+            [UTILS shareTwitterWithText:[_selectionView text] parentViewController:self];
+            break;
+        }   
+        case 2:
+        {
+            [UTILS shareSMSWithText:[_selectionView text] parentViewController:self];
+            break;
+        }   
+        case 3:
+        {
+            [UTILS shareEmailWithText:[_selectionView text] parentViewController:self];
+            break;
+        }   
+        default:
+            break;
+    }
 }
 
 @end

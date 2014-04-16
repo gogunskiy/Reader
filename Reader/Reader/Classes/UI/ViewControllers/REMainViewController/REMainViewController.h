@@ -10,7 +10,7 @@
 #import "REBaseViewController.h"
 #import "REDocumentReader.h"
 
-@interface REMainViewController : REBaseViewController <UIPageViewControllerDataSource, UIPageViewControllerDelegate, REMainReaderDelegate>
+@interface REMainViewController : REBaseViewController <UIActionSheetDelegate, UIPageViewControllerDataSource, UIPageViewControllerDelegate, REMainReaderDelegate>
 
 @property (nonatomic) NSDictionary *documentInfo;
 

@@ -8,7 +8,19 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol RESelectionToolDelegate;
+
+typedef NS_ENUM(NSUInteger, RESelectionToolActionType) 
+{
+    RESelectionToolActionCopy,
+    RESelectionToolActionShare,
+    RESelectionToolActionGoogle,
+    RESelectionToolActionTranslate
+};
+
 @interface RESelectionTool : UIView
+
+@property (nonatomic, weak) IBOutlet NSObject <RESelectionToolDelegate> *delegate;
 
 @property (nonatomic) NSAttributedString *attributedString;
 @property (nonatomic) NSArray *runs;
@@ -17,5 +29,14 @@
 
 - (void) buildLines;
 - (BOOL) reset;
+
+- (NSString *) text;
+
+@end
+
+
+@protocol RESelectionToolDelegate
+
+-(void) selectionTool:(RESelectionTool *) selectionTool clickedItemWithType:(RESelectionToolActionType)type selectedText:(NSString *)selectedtText;
 
 @end

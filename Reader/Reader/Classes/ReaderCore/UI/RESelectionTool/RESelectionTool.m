@@ -95,6 +95,11 @@ static NSUInteger const MARKER_HEIGHT       = 40;
     return FALSE;
 }
 
+- (NSString *) text
+{
+    return [self textFrom:_minIndex to:_maxIndex];
+}
+
 #pragma mark - Actions -
 
 - (void) move:(UIPanGestureRecognizer *)gesture
@@ -313,25 +318,26 @@ static NSUInteger const MARKER_HEIGHT       = 40;
 
 - (void) copyAction
 {
-    UIPasteboard *pasteboard = [UIPasteboard generalPasteboard];
-    pasteboard.string = [self textFrom:_minIndex to:_maxIndex];
+    NSString *text = [self textFrom:_minIndex to:_maxIndex];
+    [[self delegate] selectionTool:self clickedItemWithType:RESelectionToolActionCopy selectedText:text];
 }
 
 - (void) shareAction
 {
-    
+    NSString *text = [self textFrom:_minIndex to:_maxIndex];
+    [[self delegate] selectionTool:self clickedItemWithType:RESelectionToolActionShare selectedText:text];
 }
 
 - (void) googleAction
 {
-    NSString *url = [[NSString stringWithFormat:@"https://www.google.com/search?q=%@", [self textFrom:_minIndex to:_maxIndex]] stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-    
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:url]];
+    NSString *text = [self textFrom:_minIndex to:_maxIndex];
+    [[self delegate] selectionTool:self clickedItemWithType:RESelectionToolActionGoogle selectedText:text];
 }
 
 - (void) translateAction
 {
-    
+    NSString *text = [self textFrom:_minIndex to:_maxIndex];
+    [[self delegate] selectionTool:self clickedItemWithType:RESelectionToolActionTranslate selectedText:text];
 }
 
 - (NSString *) textFrom:(NSInteger)startIndex to:(NSInteger)endIndex

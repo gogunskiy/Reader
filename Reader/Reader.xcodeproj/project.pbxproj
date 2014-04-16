@@ -31,6 +31,7 @@
 		790BC97318FD73DE00A11566 /* IowanOldStyle-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 790BC96F18FD73DE00A11566 /* IowanOldStyle-BoldItalic.ttf */; };
 		790BC97418FD73DE00A11566 /* IowanOldStyle-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 790BC97018FD73DE00A11566 /* IowanOldStyle-Italic.ttf */; };
 		790BC97518FD73DE00A11566 /* IowanOldStyle-Roman.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 790BC97118FD73DE00A11566 /* IowanOldStyle-Roman.ttf */; };
+		7929630E18FED73800C851C6 /* REUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 7929630D18FED73800C851C6 /* REUtils.m */; };
 		797EBC2B18EC4A830049C061 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 797EBC2A18EC4A830049C061 /* Foundation.framework */; };
 		797EBC2D18EC4A830049C061 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 797EBC2C18EC4A830049C061 /* CoreGraphics.framework */; };
 		797EBC2F18EC4A830049C061 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 797EBC2E18EC4A830049C061 /* UIKit.framework */; };
@@ -114,6 +115,8 @@
 		790BC96F18FD73DE00A11566 /* IowanOldStyle-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IowanOldStyle-BoldItalic.ttf"; sourceTree = "<group>"; };
 		790BC97018FD73DE00A11566 /* IowanOldStyle-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IowanOldStyle-Italic.ttf"; sourceTree = "<group>"; };
 		790BC97118FD73DE00A11566 /* IowanOldStyle-Roman.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IowanOldStyle-Roman.ttf"; sourceTree = "<group>"; };
+		7929630C18FED73800C851C6 /* REUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REUtils.h; sourceTree = "<group>"; };
+		7929630D18FED73800C851C6 /* REUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REUtils.m; sourceTree = "<group>"; };
 		797EBC2718EC4A830049C061 /* Reader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		797EBC2A18EC4A830049C061 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		797EBC2C18EC4A830049C061 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -260,6 +263,7 @@
 		63D4695C18EF3EFB00E5E6E7 /* Support */ = {
 			isa = PBXGroup;
 			children = (
+				7929630B18FED72A00C851C6 /* Utils */,
 				637A907C18FDC663001A1341 /* NSAttributedString+encoding */,
 				63356EF818F9AF120079DDF7 /* UIImage+Sizes */,
 				79E7827418F2DDED002B121B /* Settings */,
@@ -335,6 +339,15 @@
 				790BC97118FD73DE00A11566 /* IowanOldStyle-Roman.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		7929630B18FED72A00C851C6 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				7929630C18FED73800C851C6 /* REUtils.h */,
+				7929630D18FED73800C851C6 /* REUtils.m */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		797EBC1E18EC4A830049C061 = {
@@ -795,6 +808,7 @@
 				79E4AB9618ED9927000003C7 /* RXMLElement.m in Sources */,
 				79E4AB8B18ED8110000003C7 /* REBaseParser.m in Sources */,
 				79A9C3A018F820EB00AC36DE /* REContentViewController.m in Sources */,
+				7929630E18FED73800C851C6 /* REUtils.m in Sources */,
 				63D4695A18EF3AE600E5E6E7 /* zip.c in Sources */,
 				79E4AB9218ED8779000003C7 /* REDocument.m in Sources */,
 				797EBC7E18EC4B3C0049C061 /* main.m in Sources */,
