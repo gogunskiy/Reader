@@ -120,22 +120,11 @@
                         
                         switch (aligment)
                         {
-                            case kCTTextAlignmentLeft:
-                            {
-                                runBounds.origin.x = origins[index].x;
-                                break;
-                            }
                             case kCTTextAlignmentCenter:
                             {
                                 runBounds.origin.x = self.frame.size.width / 2 - runBounds.size.width / 2;
                                 break;
-                            }
-                            case kCTTextAlignmentRight:
-                            {
-                                runBounds.origin.x = self.frame.size.width - runBounds.size.width / 2 - origins[index].x;
-                                break;
-                            }
-                                
+                            }                               
                             default:
                             {
                                 runBounds.origin.x = origins[index].x + xOffset;
