@@ -24,6 +24,7 @@
                             sourcePath:(NSString *)sourcePath;
 
 - (void) loadDocumentWithPath:(NSString *)filePath
+                progressBlock:(void(^)(REDocument *document))progressBlock
               completionBlock:(void(^)(REDocument *document))completionBlock
                    errorBlock:(void(^)(NSError * error))errorBlock;
 

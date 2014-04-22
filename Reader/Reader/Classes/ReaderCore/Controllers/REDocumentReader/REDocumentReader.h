@@ -22,7 +22,9 @@
 
 @property (nonatomic) NSMutableArray *attachments;
 
-- (void) needsUpdatePagesWithFrame:(CGRect)frame;
+- (void) needsUpdatePagesWithFrame:(CGRect)frame                
+                     progressBlock:(void(^)(id frame))progressBlock
+                   completionBlock:(void(^)(void))completionBlock;
 
 - (NSUInteger) framesCount;
 

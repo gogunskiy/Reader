@@ -53,6 +53,8 @@
 		79A9C3A018F820EB00AC36DE /* REContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A9C39B18F820EB00AC36DE /* REContentViewController.m */; };
 		79A9C3A118F820EB00AC36DE /* REMainViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A9C39E18F820EB00AC36DE /* REMainViewController.m */; };
 		79A9C3A418F8210000AC36DE /* REGUIHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A9C3A318F8210000AC36DE /* REGUIHelper.m */; };
+		79B8BC631906B3E1004F0F1D /* RMDisplayLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B8BC601906B3E1004F0F1D /* RMDisplayLabel.m */; };
+		79B8BC641906B3E1004F0F1D /* RMDownloadIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B8BC621906B3E1004F0F1D /* RMDownloadIndicator.m */; };
 		79E4AB8B18ED8110000003C7 /* REBaseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E4AB8A18ED8110000003C7 /* REBaseParser.m */; };
 		79E4AB8E18ED811D000003C7 /* REEpubParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E4AB8D18ED811D000003C7 /* REEpubParser.m */; };
 		79E4AB9218ED8779000003C7 /* REDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E4AB9118ED8779000003C7 /* REDocument.m */; };
@@ -148,6 +150,10 @@
 		79A9C39E18F820EB00AC36DE /* REMainViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REMainViewController.m; sourceTree = "<group>"; };
 		79A9C3A218F8210000AC36DE /* REGUIHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REGUIHelper.h; sourceTree = "<group>"; };
 		79A9C3A318F8210000AC36DE /* REGUIHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REGUIHelper.m; sourceTree = "<group>"; };
+		79B8BC5F1906B3E1004F0F1D /* RMDisplayLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMDisplayLabel.h; sourceTree = "<group>"; };
+		79B8BC601906B3E1004F0F1D /* RMDisplayLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMDisplayLabel.m; sourceTree = "<group>"; };
+		79B8BC611906B3E1004F0F1D /* RMDownloadIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMDownloadIndicator.h; sourceTree = "<group>"; };
+		79B8BC621906B3E1004F0F1D /* RMDownloadIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMDownloadIndicator.m; sourceTree = "<group>"; };
 		79E4AB8918ED8110000003C7 /* REBaseParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REBaseParser.h; sourceTree = "<group>"; };
 		79E4AB8A18ED8110000003C7 /* REBaseParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REBaseParser.m; sourceTree = "<group>"; };
 		79E4AB8C18ED811D000003C7 /* REEpubParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REEpubParser.h; sourceTree = "<group>"; };
@@ -453,6 +459,7 @@
 		797EBC6E18EC4B3C0049C061 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				79B8BC5E1906B3E1004F0F1D /* LoadingIndicator */,
 				63D4694A18EF3AE600E5E6E7 /* ZipArchive */,
 				79E4AB9318ED9927000003C7 /* RaptureXML */,
 			);
@@ -613,6 +620,17 @@
 				79A9C39E18F820EB00AC36DE /* REMainViewController.m */,
 			);
 			path = REMainViewController;
+			sourceTree = "<group>";
+		};
+		79B8BC5E1906B3E1004F0F1D /* LoadingIndicator */ = {
+			isa = PBXGroup;
+			children = (
+				79B8BC5F1906B3E1004F0F1D /* RMDisplayLabel.h */,
+				79B8BC601906B3E1004F0F1D /* RMDisplayLabel.m */,
+				79B8BC611906B3E1004F0F1D /* RMDownloadIndicator.h */,
+				79B8BC621906B3E1004F0F1D /* RMDownloadIndicator.m */,
+			);
+			path = LoadingIndicator;
 			sourceTree = "<group>";
 		};
 		79E4AB8818ED8101000003C7 /* ContentParsers */ = {
@@ -805,6 +823,7 @@
 				63D4695B18EF3AE600E5E6E7 /* ZipArchive.m in Sources */,
 				790BC96C18FD412700A11566 /* REDocumentReader.m in Sources */,
 				63D4695918EF3AE600E5E6E7 /* unzip.c in Sources */,
+				79B8BC631906B3E1004F0F1D /* RMDisplayLabel.m in Sources */,
 				79E4AB9618ED9927000003C7 /* RXMLElement.m in Sources */,
 				79E4AB8B18ED8110000003C7 /* REBaseParser.m in Sources */,
 				79A9C3A018F820EB00AC36DE /* REContentViewController.m in Sources */,
@@ -814,6 +833,7 @@
 				797EBC7E18EC4B3C0049C061 /* main.m in Sources */,
 				79E4ABA618EDB41A000003C7 /* REChapter.m in Sources */,
 				79A9C39F18F820EB00AC36DE /* REBaseViewController.m in Sources */,
+				79B8BC641906B3E1004F0F1D /* RMDownloadIndicator.m in Sources */,
 				79E7827718F2DE02002B121B /* RESettings.m in Sources */,
 				797EBC7D18EC4B3C0049C061 /* REAppDelegate.m in Sources */,
 				79A4FF2D18EEA82500F79347 /* REPageView.m in Sources */,

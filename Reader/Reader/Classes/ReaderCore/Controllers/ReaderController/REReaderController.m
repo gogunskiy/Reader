@@ -68,6 +68,7 @@ static REReaderController *shared = nil;
 
 
 - (void) loadDocumentWithPath:(NSString *)filePath
+                progressBlock:(void(^)(REDocument *document))progressBlock
               completionBlock:(void(^)(REDocument *document))completionBlock
                    errorBlock:(void(^)(NSError * error))errorBlock
 {    
@@ -85,6 +86,8 @@ static REReaderController *shared = nil;
                                               completionBlock:^(REChapter *chapter)
               {
                   [[document chapters] addObject:chapter];
+                  
+                  progressBlock(document);
                   
                   if ([[document chapters] count] == [chaptersInfo count])
                   {

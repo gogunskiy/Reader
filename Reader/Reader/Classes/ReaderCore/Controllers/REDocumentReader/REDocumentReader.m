@@ -44,11 +44,16 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
     return self;
 }
 
-- (void) needsUpdatePagesWithFrame:(CGRect)frame
+- (void) needsUpdatePagesWithFrame:(CGRect)frame                
+                     progressBlock:(void(^)(id frame))progressBlock
+                   completionBlock:(void(^)(void))completionBlock
 {
-    [self createPagesWithFrame:frame];
-    [self initializeSnapshotView];
-    [self initializeScrollViewAtPage:1];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^
+                   {
+                       [self createPagesWithFrame:frame 
+                                    progressBlock:progressBlock 
+                                  completionBlock:completionBlock];
+                   });
 }
 
 - (NSUInteger) framesCount
@@ -58,14 +63,20 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
 
 - (CTFrameRef) cTFrameAtIndex:(NSInteger)index
 {
-    CTFrameRef ctFrame = (__bridge_retained CTFrameRef)_frames[index];
+    if (index < [_frames count]) 
+    {
+        CTFrameRef ctFrame = (__bridge_retained CTFrameRef)_frames[index];
+        return ctFrame;
+    }
     
-    return ctFrame;
+    return nil;
 }
 
 #pragma mark - Private -
 
-- (void) createPagesWithFrame:(CGRect)frame
+- (void) createPagesWithFrame:(CGRect)frame       
+                progressBlock:(void(^)(id frame))progressBlock
+              completionBlock:(void(^)(void))completionBlock
 {
     NSInteger pointer = 0;
   
@@ -135,20 +146,13 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
         
         
         [[self frames] addObject:(__bridge id)frame];
+        
+        progressBlock((__bridge id)frame);
     }
     
+    completionBlock();
+    
     CFRelease(path);
-}
-
-- (void) initializeSnapshotView
-{
-    UIImageView *view = [[UIImageView alloc] initWithFrame:CGRectZero];
-    [self setSnapshotView:view];
-}
-
-- (void) initializeScrollViewAtPage:(NSUInteger)page
-{    
-
 }
 
 - (NSString *) currentChapterTitle

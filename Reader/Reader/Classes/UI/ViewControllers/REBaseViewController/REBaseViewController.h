@@ -13,4 +13,8 @@
 - (void) pushViewControllerWithIdentifier:(Class)classId;
 - (UIStoryboard *) storyboard;
 
+- (void) startLoadingIndicatorWithCurrentValue:(NSInteger)value maxvalue:(NSInteger)maxValue;
+- (void) updateLoadingIndicatorWithCurrentValue:(NSInteger)value maxvalue:(NSInteger)maxValue;
+- (void) hideLoadingIndicator;
+
 @end

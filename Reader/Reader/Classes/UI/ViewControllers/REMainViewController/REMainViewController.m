@@ -47,16 +47,41 @@
     
     [self initializeReader];
     
+    [self startLoadingIndicatorWithCurrentValue:0 maxvalue:100];
+    
     [READER loadDocumentWithPath:[self documentInfo][@"file"]
+                   progressBlock:^(REDocument *document) 
+     {
+         NSArray *chaptersInfo = document.info[@"chapters"];
+         
+         [self updateLoadingIndicatorWithCurrentValue:document.chapters.count 
+                                             maxvalue:chaptersInfo.count];
+     } 
                  completionBlock:^(REDocument *document)
-    {
-        [[self reader] setDocument:document];
-        [[self reader] needsUpdatePagesWithFrame:self.readerViewPlaceHolder.bounds];
-        [self initializePageViewController];
-        
-        [[self selectionView] setAttributedString:[document attributedString]];
-        
-        [self updateUI];
+     {
+         [self hideLoadingIndicator];
+         
+         [[self reader] setDocument:document];
+         [[self selectionView] setAttributedString:[document attributedString]];
+         
+         [[self reader] needsUpdatePagesWithFrame:self.readerViewPlaceHolder.bounds 
+                                    progressBlock:^(id frame) 
+          {
+              dispatch_async(dispatch_get_main_queue(), ^
+                             {
+                                 if (self.reader.framesCount == 1) 
+                                 {
+                                     [self initializePageViewController];
+                                 }
+                                 
+                                 [self updateUI];
+                             });
+              
+          } 
+                                  completionBlock:^
+          {
+              
+          }];
     } 
                       errorBlock:^(NSError *error)
     {
@@ -145,25 +170,28 @@
 
 - (void) initializePageViewController
 {
-    self.pageController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl
-                                                          navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
-                                                                        options:nil];
-    [self.pageController setDelegate:self];
-    [self.pageController setDataSource:self];
-    
-    [self.pageController.view setFrame:self.view.bounds];
-    [self.pageController.view setBackgroundColor:[UIColor redColor]];
-    
-    [[self pageControllerViewPlaceHolder] addSubview:self.pageController.view];
-    
-    REPageViewController *viewController = [self pageViewControllerForPage:self.reader.currentFrame];
-    
-    [self.pageController setViewControllers:@[viewController]
-                                  direction:UIPageViewControllerNavigationDirectionForward
-                                   animated:NO
-                                 completion:nil];
-    
-    [self.pageController didMoveToParentViewController:self];
+    if (self.pageController == nil) 
+    {
+        self.pageController = [[UIPageViewController alloc] initWithTransitionStyle:UIPageViewControllerTransitionStylePageCurl
+                                                              navigationOrientation:UIPageViewControllerNavigationOrientationHorizontal
+                                                                            options:nil];
+        [self.pageController setDelegate:self];
+        [self.pageController setDataSource:self];
+        
+        [self.pageController.view setFrame:self.view.bounds];
+        [self.pageController.view setBackgroundColor:[UIColor redColor]];
+        
+        [[self pageControllerViewPlaceHolder] addSubview:self.pageController.view];
+        
+        REPageViewController *viewController = [self pageViewControllerForPage:self.reader.currentFrame];
+        
+        [self.pageController setViewControllers:@[viewController]
+                                      direction:UIPageViewControllerNavigationDirectionForward
+                                       animated:NO
+                                     completion:nil];
+        
+        [self.pageController didMoveToParentViewController:self];
+    }
 }
 
 - (void) showSocialActionSheet
