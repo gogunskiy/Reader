@@ -137,6 +137,8 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
             {
                 length = [endOfChapter integerValue] - pointer;
                 
+                CFRelease(frame);
+                
                 frame = CTFramesetterCreateFrame(_framesetter, CFRangeMake(pointer, length), path, NULL);
                 frameRange = CTFrameGetVisibleStringRange(frame);
             }
@@ -148,6 +150,8 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
         [[self frames] addObject:(__bridge id)frame];
         
         progressBlock((__bridge id)frame);
+        
+        CFRelease(frame);
     }
     
     completionBlock();

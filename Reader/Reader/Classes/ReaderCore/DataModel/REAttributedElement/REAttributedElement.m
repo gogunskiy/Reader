@@ -162,12 +162,15 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
     
     NSMutableAttributedString* elementString = [[NSMutableAttributedString alloc] initWithString:resultString];
     
+    CTFontRef font = [self _font];
+    
     [elementString setAttributes:@{(id)kCTForegroundColorAttributeName : [self color],
-                                   (id)kCTParagraphStyleAttributeName : (__bridge id)[self paragraphStyle],
+                                   (id)kCTParagraphStyleAttributeName : [self paragraphStyle],
                                    (id)kCTKernAttributeName : @0,
-                                   (id)kCTFontAttributeName : (__bridge id)[self _font]}
+                                   (id)kCTFontAttributeName : (__bridge id)font}
                            range:NSMakeRange(0, elementString.length)];
     
+    CFRelease(font);
     
     for (REInnerTagAttribute *attribute in attributes) 
     {
@@ -239,15 +242,20 @@ CGFloat MyGetWidthCallback( void* refCon)
 
 - (void) applyItalicFontInRange:(NSRange)range
 {
-    CTFontRef italicFont = CTFontCreateCopyWithSymbolicTraits([self _font], [self _fontSizeWithElementName:[self name]], NULL, kCTFontItalicTrait, kCTFontItalicTrait);
+    CTFontRef font = [self _font];
+    CTFontRef italicFont = CTFontCreateCopyWithSymbolicTraits(font, [self _fontSizeWithElementName:[self name]], NULL, kCTFontItalicTrait, kCTFontItalicTrait);
     [[self attributedString] addAttribute:(id)kCTFontAttributeName value: (__bridge id)italicFont range:range];
+    CFRelease(font);
     CFRelease(italicFont);
 }
 
 - (void) applyBoldFontInRange:(NSRange)range
 {
-    CTFontRef boldFont = CTFontCreateCopyWithSymbolicTraits([self _font], [self _fontSizeWithElementName:[self name]], NULL, kCTFontBoldTrait, kCTFontBoldTrait);
+    CTFontRef font = [self _font];
+    CTFontRef boldFont = CTFontCreateCopyWithSymbolicTraits(font, [self _fontSizeWithElementName:[self name]], NULL, kCTFontBoldTrait, kCTFontBoldTrait);
     [[self attributedString] addAttribute:(id)kCTFontAttributeName value: (__bridge id)boldFont range:range];
+    
+    CFRelease(font);
     CFRelease(boldFont);
 }
 
@@ -267,7 +275,9 @@ CGFloat MyGetWidthCallback( void* refCon)
 {
     NSDictionary *cssAttributes = [self _cssAttributes];
     
-    [self setParagraphStyle:[SETTINGS baseParagraphStyle]];
+    CTParagraphStyleRef paragraphStyle = [SETTINGS baseParagraphStyle];
+    [self setParagraphStyle:(__bridge id)paragraphStyle];
+    CFRelease(paragraphStyle);
     
     if (cssAttributes) 
     {
@@ -296,13 +306,17 @@ CGFloat MyGetWidthCallback( void* refCon)
             
             [self setAligment:aligment];
         
-            [self setParagraphStyle:[SETTINGS baseParagraphStyleWithAligment:aligment]];
+            CTParagraphStyleRef paragraphStyle = [SETTINGS baseParagraphStyleWithAligment:aligment];
+            [self setParagraphStyle:(__bridge id)paragraphStyle];
+            CFRelease(paragraphStyle);
         }
     }
 
     if ([[self name] rangeOfString:@"blockquote"].length)
     {
-        [self setParagraphStyle:[SETTINGS blockquoteParagraphStyle]];
+        CTParagraphStyleRef paragraphStyle = [SETTINGS blockquoteParagraphStyle];
+        [self setParagraphStyle:(__bridge id)paragraphStyle];
+        CFRelease(paragraphStyle);
     }
     
 }
@@ -340,8 +354,11 @@ CGFloat MyGetWidthCallback( void* refCon)
 
 - (void) applyFontStyle
 {
-    [[self attributedString] addAttribute:(id)kCTFontAttributeName value:(__bridge id)[self _font] range:NSMakeRange(0, self.attributedString.length)];
+    CTFontRef font = [self _font];
+    [[self attributedString] addAttribute:(id)kCTFontAttributeName value:(__bridge id)font range:NSMakeRange(0, self.attributedString.length)];
 
+    CFRelease(font);
+    
     NSDictionary *cssAttributes = [self _cssAttributes];
 
     if (cssAttributes)
