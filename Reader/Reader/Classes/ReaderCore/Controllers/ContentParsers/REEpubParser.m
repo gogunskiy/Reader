@@ -13,6 +13,7 @@
 #import "REAttributedElement.h"
 #import "RXMLElement.h"
 #import "REPathManager.h"
+#import "HTMLParser.h"
 
 static NSString * const MANIFEST_PATH                   =  @"META-INF/container.xml";
 static NSString * const CONTAINER_ROOTFILE_XPATH_KEY    =  @"//rootfile";
@@ -100,17 +101,19 @@ static dispatch_queue_t parseQueue;
         
         NSString *chapterContent = [NSString stringWithContentsOfFile:chapterPath encoding:NSUTF8StringEncoding error:nil];
         
-        RXMLElement *htmlTree = [[RXMLElement alloc] initFromHTMLString:chapterContent encoding:NSUTF8StringEncoding];
+        HTMLParser *htmlTree = [[HTMLParser alloc] initWithString:chapterContent error:nil];
+
         
         REChapter *chapter = [[REChapter alloc] init];
         [chapter setTitle:chapterInfo[@"title"]];
         
-        NSArray *elements = [self childAttributedElementsFor:htmlTree document:document];
+        NSArray *elements = [self childAttributedElementsFor:[htmlTree body] 
+                                                    document:document];
         
         for (REAttributedElement *element in elements)
         {
             [result appendAttributedString:[element attributedString]];
-            [result appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
+           // [result appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
         }
         
        [chapter setAttributedString:result];
@@ -124,29 +127,28 @@ static dispatch_queue_t parseQueue;
 
 }
 
-- (NSArray *) childAttributedElementsFor:(RXMLElement *)element document:(REDocument *)document
+- (NSArray *) childAttributedElementsFor:(HTMLNode *)element document:(REDocument *)document
 {
     NSMutableArray *attributedElements = [[NSMutableArray alloc] init];
     
-    NSArray *children = [element childrenWithRootXPath:@"//*"];
-    
-    for (RXMLElement *child in children)
+    for (HTMLNode *child in [element children])
     {
-        if (![[child tag] isInlineTag] && ![[child tag] isMetaTag])
+        if ([[child tagName] isEqualToString:@"div"]) 
+        {
+            NSArray * children = [self childAttributedElementsFor:child document:document];
+            [attributedElements addObjectsFromArray:children];
+        }
+        else if (![[child tagName] isInlineTag] && ![[child tagName] isMetaTag])
         {
             REAttributedElement *element = [[REAttributedElement alloc] init];
-            [element setText:[child xml]];
-            [element setName:[child tag]];
+            [element setText:[child rawContents]];
+            [element setName:[child tagName]];
             [element setImagesPath:document.info[@"imagesPath"]];
             [element setCsss:document.info[@"css"]];
             
             NSMutableDictionary *attributes = [[NSMutableDictionary alloc] init];
             
-            for (NSString *attrName in [child attributeNames])
-            {
-                attributes[[attrName lowercaseString]] = [[child attribute:attrName] lowercaseString];
-            }
-            
+            attributes[@"class"] = [[child className] lowercaseString] ? [[child className] lowercaseString] : @"";
             [element setAttributes:attributes];
             
             [element apply];

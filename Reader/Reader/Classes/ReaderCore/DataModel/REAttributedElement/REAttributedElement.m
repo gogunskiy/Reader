@@ -11,11 +11,12 @@
 
 typedef NS_OPTIONS(NSInteger, REInnerTagType)
 {
-    REInnerTagNone = 0,
-    REInnerTagBold = 1 << 1,
-    REInnerTagItalic = 1 << 2,
-    REInnerTagUnderlined = 1 << 3,
-    REInnerTagAttachment = 1 << 4,
+    REInnerTagNone          = 0,
+    REInnerTagBold          = 1 << 1,
+    REInnerTagItalic        = 1 << 2,
+    REInnerTagUnderlined    = 1 << 3,
+    REInnerTagAttachment    = 1 << 4,
+    REInnerTagTable         = 1 << 5
 };
 
 
@@ -23,6 +24,7 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
 
 @property (nonatomic, assign) NSInteger start;
 @property (nonatomic, assign) NSInteger end;
+
 @property (nonatomic, assign) REInnerTagType type;
 @property (nonatomic, strong) NSDictionary *info;
 
@@ -74,9 +76,12 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
 - (NSMutableAttributedString *) applyAttributedString
 {
     NSMutableString * inputString = [[NSMutableString alloc] initWithString:[self text]];
-    NSMutableString * resultString = [[NSMutableString alloc] initWithCapacity:[inputString length]];
-     
+    NSMutableString * resultString = [[NSMutableString alloc] init];
+    
     NSMutableArray * attributes = [[NSMutableArray alloc] init];
+    NSMutableString *tag = [[NSMutableString alloc] init];
+    
+    BOOL inTag = FALSE;
     
     REInnerTagAttribute *bAttribute = [[REInnerTagAttribute alloc] init];
     [bAttribute setType:REInnerTagBold];
@@ -87,78 +92,118 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
     REInnerTagAttribute *uAttribute = [[REInnerTagAttribute alloc] init];
     [uAttribute setType:REInnerTagUnderlined];
     
-    NSScanner *scanner = [NSScanner scannerWithString:inputString];
-    scanner.charactersToBeSkipped = NULL;
-    NSString *tempText = nil;
-    
-    while (![scanner isAtEnd])
+    for (int i = 0; i < [inputString length]; i++) 
     {
-        [scanner scanUpToString:@"<" intoString:&tempText];
+        NSString * character = [inputString substringWithRange:NSMakeRange(i, 1)];
         
-        if (tempText != nil)
-            [resultString appendString:tempText];
-        NSString *tag = nil;
-        [scanner scanUpToString:@">" intoString:&tag];
+        if ([character isEqualToString:@"<"])
+        {
+            inTag = TRUE;
+        }
         
-        if ([tag isEqualToString:@"<b"] || [tag isEqualToString:@"<strong"])
+        if (inTag) 
         {
-            [bAttribute setStart:resultString.length];
-        } 
-        else  if ([tag isEqualToString:@"<i"]) 
-        {
-            [iAttribute setStart:resultString.length];
-            
+            [tag appendString:character];
         }
-        else  if ([tag isEqualToString:@"<u"]) 
+        else
         {
-            [uAttribute setStart:resultString.length];
+            if ([character isEqualToString:@" "])
+            {
+                if (i)
+                {
+                    NSString * previousCharacter = [inputString substringWithRange:NSMakeRange(i - 1, 1)];
+                    
+                    if (![previousCharacter isEqualToString:@" "])
+                    {
+                        [resultString appendString:character];
+                    }
+                }
+            }
+            else
+            {
+                [resultString appendString:character];
+            }
         }
-        else if ([tag isEqualToString:@"</b"] || [tag isEqualToString:@"</strong"])
-        {
-            [bAttribute setEnd:resultString.length];
-            [attributes addObject:[bAttribute copy]];
-        } 
-        else  if ([tag isEqualToString:@"</i"]) 
-        {
-            [iAttribute setEnd:resultString.length];
-            [attributes addObject:[iAttribute copy]];
-        }
-        else  if ([tag isEqualToString:@"</u"]) 
-        {
-            [uAttribute setEnd:resultString.length];
-            [attributes addObject:[uAttribute copy]];
-        }
-        else  if ([tag isEqualToString:@"</br"] || [tag isEqualToString:@"<br"] || [tag isEqualToString:@"<br/"])
-        {
-            [resultString appendString:@"\n"];
-        }
-        else if ([tag rangeOfString:@"<img"].length)
-        {
-            [resultString appendString:@"  "];
-            
-            NSRange range= [[self text] rangeOfString:@"src=\""];
-            
-            NSString *fileName = [[self text] substringFromIndex:range.location + range.length];
-            fileName = [fileName substringToIndex:[fileName rangeOfString:@"\""].location];
-            
-            NSDictionary *attachment = @{@"aligment" : @(_aligment),  @"fileName" : [_imagesPath stringByAppendingPathComponent:[fileName lastPathComponent]], @"attachmentType" : @"image"};
-            
-            REInnerTagAttribute *attribute = [[REInnerTagAttribute alloc] init];
-            attribute.type = REInnerTagAttachment;
-            attribute.info = attachment;
-            attribute.start = resultString.length;
-            
-            attribute.end = resultString.length;
-            
-            [attributes addObject:attribute];
-        }
-
         
-        if (![scanner isAtEnd])
-            [scanner setScanLocation:[scanner scanLocation] + 1];
-        
-        tempText = nil;
+        if ([character isEqualToString:@">"])
+        {
+            inTag = FALSE;
+            
+            if ([tag isEqualToString:@"<b>"] || [tag isEqualToString:@"<strong>"])
+            {
+                [bAttribute setStart:resultString.length];
+            } 
+            else  if ([tag isEqualToString:@"<i>"]) 
+            {
+                [iAttribute setStart:resultString.length];
+                
+            }
+            else  if ([tag isEqualToString:@"<u>"]) 
+            {
+                [uAttribute setStart:resultString.length];
+            }
+            else if ([tag isEqualToString:@"</b>"] || [tag isEqualToString:@"</strong>"])
+            {
+                [bAttribute setEnd:resultString.length];
+                [attributes addObject:[bAttribute copy]];
+            } 
+            else  if ([tag isEqualToString:@"</i>"]) 
+            {
+                [iAttribute setEnd:resultString.length];
+                [attributes addObject:[iAttribute copy]];
+            }
+            else  if ([tag isEqualToString:@"</u>"]) 
+            {
+                [uAttribute setEnd:resultString.length];
+                [attributes addObject:[uAttribute copy]];
+            }
+            else  if ([tag isEqualToString:@"</br>"] || [tag isEqualToString:@"<br>"] || [tag isEqualToString:@"<br/>"])
+            {
+                [resultString appendString:@"\n"];
+            }
+            else if ([tag rangeOfString:@"<img"].length)
+            {
+                [resultString appendString:@"  "];
+                
+                NSRange range= [[self text] rangeOfString:@"src=\""];
+                
+                NSString *fileName = [[self text] substringFromIndex:range.location + range.length];
+                fileName = [fileName substringToIndex:[fileName rangeOfString:@"\""].location];
+                
+                NSDictionary *attachment = @{@"aligment" : @(_aligment),  @"fileName" : [_imagesPath stringByAppendingPathComponent:[fileName lastPathComponent]], @"attachmentType" : @"image"};
+                
+                REInnerTagAttribute *attribute = [[REInnerTagAttribute alloc] init];
+                attribute.type = REInnerTagAttachment;
+                attribute.info = attachment;
+                attribute.start = resultString.length;
+                
+                attribute.end = resultString.length;
+                
+                [attributes addObject:attribute];
+            }
+            else if ([tag rangeOfString:@"<table"].length)
+            {
+                REInnerTagAttribute *tableAttribute = [[REInnerTagAttribute alloc] init];
+                [tableAttribute setType:REInnerTagTable];
+                
+                NSRange tableEnd = [inputString rangeOfString:@"</table>"];
+                
+                tableAttribute.start =  resultString.length;
+                tableAttribute.end =  tableEnd.location + tableEnd.length;
+                    
+                NSLog(@"%@", [inputString substringWithRange:NSMakeRange(tableAttribute.start, tableAttribute.end - tableAttribute.start)]);
+                
+                i += tableAttribute.end - 1;
+                
+                [attributes addObject:tableAttribute];
+                
+                [resultString appendString:@"  "];
+            }
+            
+            tag = [NSMutableString stringWithFormat:@""];
+        }
     }
+
     
     NSMutableAttributedString* elementString = [[NSMutableAttributedString alloc] initWithString:resultString];
     

@@ -28,7 +28,7 @@ static NSDictionary *entityLookup = nil;
 {
 	static dispatch_once_t predicate;
 	dispatch_once(&predicate, ^{
-		metaTags = [[NSSet alloc] initWithObjects:@"html", @"link", @"div", @"title", @"body", @"head", @"meta", @"style", @"#COMMENT#", nil];
+		metaTags = [[NSSet alloc] initWithObjects:@"html", @"link", @"title", @"body", @"head", @"meta", @"style", @"#COMMENT#", nil];
 	});
 
 	return [metaTags containsObject:[self lowercaseString]];

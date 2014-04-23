@@ -49,6 +49,20 @@
                                    author:@"Moskva - Petushki"
                                sourcePath:[bookPath stringByAppendingPathComponent:@"Moskva - Petushki.epub"]];
     
+    [READER addDocumentToLibraryWithTitle:@"bezopasnoe_obschenie"
+                              description:@"bezopasnoe_obschenie"
+                                   author:@"bezopasnoe_obschenie"
+                               sourcePath:[bookPath stringByAppendingPathComponent:@"bezopasnoe_obschenie.epub"]];
+    
+    [READER addDocumentToLibraryWithTitle:@"Kak_my_prinimaem_reshenia"
+                              description:@"Kak_my_prinimaem_reshenia"
+                                   author:@"Kak_my_prinimaem_reshenia"
+                               sourcePath:[bookPath stringByAppendingPathComponent:@"Kak_my_prinimaem_reshenia.epub"]];
+    
+    [READER addDocumentToLibraryWithTitle:@"Akunin_-_Skazki_dlya_idiotov"
+                              description:@"Akunin_-_Skazki_dlya_idiotov"
+                                   author:@"Akunin_-_Skazki_dlya_idiotov"
+                               sourcePath:[bookPath stringByAppendingPathComponent:@"Akunin_-_Skazki_dlya_idiotov.epub"]];
     return YES;
 }
 							

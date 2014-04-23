@@ -55,6 +55,11 @@
 		79A9C3A418F8210000AC36DE /* REGUIHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A9C3A318F8210000AC36DE /* REGUIHelper.m */; };
 		79B8BC631906B3E1004F0F1D /* RMDisplayLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B8BC601906B3E1004F0F1D /* RMDisplayLabel.m */; };
 		79B8BC641906B3E1004F0F1D /* RMDownloadIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B8BC621906B3E1004F0F1D /* RMDownloadIndicator.m */; };
+		79B8BC6A1907F709004F0F1D /* HTMLNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B8BC671907F709004F0F1D /* HTMLNode.m */; };
+		79B8BC6B1907F709004F0F1D /* HTMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B8BC691907F709004F0F1D /* HTMLParser.m */; };
+		79B8BC6F1908023C004F0F1D /* bezopasnoe_obschenie.epub in Resources */ = {isa = PBXBuildFile; fileRef = 79B8BC6E1907FEFF004F0F1D /* bezopasnoe_obschenie.epub */; };
+		79B8BC701908023F004F0F1D /* Kak_my_prinimaem_reshenia.epub in Resources */ = {isa = PBXBuildFile; fileRef = 79B8BC6D1907FEF7004F0F1D /* Kak_my_prinimaem_reshenia.epub */; };
+		79B8BC7119080241004F0F1D /* Akunin_-_Skazki_dlya_idiotov.epub in Resources */ = {isa = PBXBuildFile; fileRef = 79B8BC6C1907FEE0004F0F1D /* Akunin_-_Skazki_dlya_idiotov.epub */; };
 		79E4AB8B18ED8110000003C7 /* REBaseParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E4AB8A18ED8110000003C7 /* REBaseParser.m */; };
 		79E4AB8E18ED811D000003C7 /* REEpubParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E4AB8D18ED811D000003C7 /* REEpubParser.m */; };
 		79E4AB9218ED8779000003C7 /* REDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 79E4AB9118ED8779000003C7 /* REDocument.m */; };
@@ -154,6 +159,13 @@
 		79B8BC601906B3E1004F0F1D /* RMDisplayLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMDisplayLabel.m; sourceTree = "<group>"; };
 		79B8BC611906B3E1004F0F1D /* RMDownloadIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RMDownloadIndicator.h; sourceTree = "<group>"; };
 		79B8BC621906B3E1004F0F1D /* RMDownloadIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RMDownloadIndicator.m; sourceTree = "<group>"; };
+		79B8BC661907F709004F0F1D /* HTMLNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTMLNode.h; sourceTree = "<group>"; };
+		79B8BC671907F709004F0F1D /* HTMLNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTMLNode.m; sourceTree = "<group>"; };
+		79B8BC681907F709004F0F1D /* HTMLParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HTMLParser.h; sourceTree = "<group>"; };
+		79B8BC691907F709004F0F1D /* HTMLParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HTMLParser.m; sourceTree = "<group>"; };
+		79B8BC6C1907FEE0004F0F1D /* Akunin_-_Skazki_dlya_idiotov.epub */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Akunin_-_Skazki_dlya_idiotov.epub"; sourceTree = "<group>"; };
+		79B8BC6D1907FEF7004F0F1D /* Kak_my_prinimaem_reshenia.epub */ = {isa = PBXFileReference; lastKnownFileType = file; path = Kak_my_prinimaem_reshenia.epub; sourceTree = "<group>"; };
+		79B8BC6E1907FEFF004F0F1D /* bezopasnoe_obschenie.epub */ = {isa = PBXFileReference; lastKnownFileType = file; path = bezopasnoe_obschenie.epub; sourceTree = "<group>"; };
 		79E4AB8918ED8110000003C7 /* REBaseParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REBaseParser.h; sourceTree = "<group>"; };
 		79E4AB8A18ED8110000003C7 /* REBaseParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REBaseParser.m; sourceTree = "<group>"; };
 		79E4AB8C18ED811D000003C7 /* REEpubParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REEpubParser.h; sourceTree = "<group>"; };
@@ -282,6 +294,9 @@
 		63D4696018EF409A00E5E6E7 /* Epub */ = {
 			isa = PBXGroup;
 			children = (
+				79B8BC6E1907FEFF004F0F1D /* bezopasnoe_obschenie.epub */,
+				79B8BC6D1907FEF7004F0F1D /* Kak_my_prinimaem_reshenia.epub */,
+				79B8BC6C1907FEE0004F0F1D /* Akunin_-_Skazki_dlya_idiotov.epub */,
 				63A406D218F4379600021EAB /* section1.xhtml */,
 				63A406D018F436AF00021EAB /* Moskva - Petushki.epub */,
 				63D4696118EF409A00E5E6E7 /* 000000000001.epub */,
@@ -459,6 +474,7 @@
 		797EBC6E18EC4B3C0049C061 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				79B8BC651907F709004F0F1D /* HTMLParser */,
 				79B8BC5E1906B3E1004F0F1D /* LoadingIndicator */,
 				63D4694A18EF3AE600E5E6E7 /* ZipArchive */,
 				79E4AB9318ED9927000003C7 /* RaptureXML */,
@@ -633,6 +649,17 @@
 			path = LoadingIndicator;
 			sourceTree = "<group>";
 		};
+		79B8BC651907F709004F0F1D /* HTMLParser */ = {
+			isa = PBXGroup;
+			children = (
+				79B8BC661907F709004F0F1D /* HTMLNode.h */,
+				79B8BC671907F709004F0F1D /* HTMLNode.m */,
+				79B8BC681907F709004F0F1D /* HTMLParser.h */,
+				79B8BC691907F709004F0F1D /* HTMLParser.m */,
+			);
+			path = HTMLParser;
+			sourceTree = "<group>";
+		};
 		79E4AB8818ED8101000003C7 /* ContentParsers */ = {
 			isa = PBXGroup;
 			children = (
@@ -778,8 +805,10 @@
 				790BC97318FD73DE00A11566 /* IowanOldStyle-BoldItalic.ttf in Resources */,
 				797EBC8318EC4B3C0049C061 /* Main_iPad.storyboard in Resources */,
 				63FEDC4F18FC5E8A007928D4 /* back512@2x.png in Resources */,
+				79B8BC6F1908023C004F0F1D /* bezopasnoe_obschenie.epub in Resources */,
 				79E7827A18F2E34A002B121B /* Settings.plist in Resources */,
 				63D4696418EF409A00E5E6E7 /* 000000000001.epub in Resources */,
+				79B8BC7119080241004F0F1D /* Akunin_-_Skazki_dlya_idiotov.epub in Resources */,
 				79E4ABA218ED9D76000003C7 /* chapter-001.xml in Resources */,
 				63A76A6A18FAA78800069B8A /* dot@2x.png in Resources */,
 				63D4696518EF409A00E5E6E7 /* 000000000002.epub in Resources */,
@@ -791,6 +820,7 @@
 				790BC97518FD73DE00A11566 /* IowanOldStyle-Roman.ttf in Resources */,
 				63FEDC5018FC5E8A007928D4 /* front512@2x.png in Resources */,
 				790BC97418FD73DE00A11566 /* IowanOldStyle-Italic.ttf in Resources */,
+				79B8BC701908023F004F0F1D /* Kak_my_prinimaem_reshenia.epub in Resources */,
 				790BC97218FD73DE00A11566 /* IowanOldStyle-Bold.ttf in Resources */,
 				63A406D318F4379600021EAB /* section1.xhtml in Resources */,
 			);
@@ -825,12 +855,14 @@
 				63D4695918EF3AE600E5E6E7 /* unzip.c in Sources */,
 				79B8BC631906B3E1004F0F1D /* RMDisplayLabel.m in Sources */,
 				79E4AB9618ED9927000003C7 /* RXMLElement.m in Sources */,
+				79B8BC6B1907F709004F0F1D /* HTMLParser.m in Sources */,
 				79E4AB8B18ED8110000003C7 /* REBaseParser.m in Sources */,
 				79A9C3A018F820EB00AC36DE /* REContentViewController.m in Sources */,
 				7929630E18FED73800C851C6 /* REUtils.m in Sources */,
 				63D4695A18EF3AE600E5E6E7 /* zip.c in Sources */,
 				79E4AB9218ED8779000003C7 /* REDocument.m in Sources */,
 				797EBC7E18EC4B3C0049C061 /* main.m in Sources */,
+				79B8BC6A1907F709004F0F1D /* HTMLNode.m in Sources */,
 				79E4ABA618EDB41A000003C7 /* REChapter.m in Sources */,
 				79A9C39F18F820EB00AC36DE /* REBaseViewController.m in Sources */,
 				79B8BC641906B3E1004F0F1D /* RMDownloadIndicator.m in Sources */,
