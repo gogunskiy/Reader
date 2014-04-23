@@ -18,7 +18,7 @@ static NSDictionary *entityLookup = nil;
 {
 	static dispatch_once_t predicate;
 	dispatch_once(&predicate, ^{
-		inlineTags = [[NSSet alloc] initWithObjects:@"font", @"b", @"strong", @"em", @"i", @"sub", @"sup", @"u", @"a", @"img", @"del", @"br", @"span", nil];
+		inlineTags = [[NSSet alloc] initWithObjects:@"font", @"b", @"strong", @"em", @"i", @"sub", @"sup", @"u", @"a", @"del", @"br", @"span", nil];
 	});
 	
 	return [inlineTags containsObject:[self lowercaseString]];

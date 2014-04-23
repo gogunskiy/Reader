@@ -113,7 +113,6 @@ static dispatch_queue_t parseQueue;
         for (REAttributedElement *element in elements)
         {
             [result appendAttributedString:[element attributedString]];
-           // [result appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
         }
         
        [chapter setAttributedString:result];
