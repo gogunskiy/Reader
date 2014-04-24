@@ -1,15 +1,16 @@
 //
-//  REAttributedElement.h
+//  RETextElement.h
 //  Reader
 //
-//  Created by Vladimir Gogunsky on 4/2/14.
+//  Created by Vladimir Gogunsky on 4/24/14.
 //  Copyright (c) 2014 Vladimir Gogunsky. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
 #import <CoreText/CoreText.h>
+#import "HTMLNode.h"
 
-@interface REAttributedElement : NSObject
+@interface RETextElement : NSObject
 
 @property (nonatomic, strong) id paragraphStyle;
 @property (nonatomic) NSString * fontName;
@@ -18,16 +19,17 @@
 
 @property (nonatomic) NSMutableArray *children;
 
-@property (nonatomic) NSString * name;
+
+@property (nonatomic) HTMLNode *node;
+
+
 @property (nonatomic) NSString * imagesPath;
-@property (nonatomic) NSArray * csss;
-@property (nonatomic) NSDictionary * attributes;
+@property (nonatomic) NSDictionary * css;
+@property (nonatomic) NSMutableDictionary * attributes;
 @property (nonatomic) NSString * text;
 @property (nonatomic) UIColor *color;
 @property (nonatomic, assign) CTTextAlignment aligment;
 
-@property (nonatomic) NSMutableAttributedString *attributedString;
-
-- (void) apply;
+- (NSMutableAttributedString *) attributedString;
 
 @end

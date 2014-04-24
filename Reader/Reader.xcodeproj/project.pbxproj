@@ -48,6 +48,8 @@
 		797EBC8418EC4B3C0049C061 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 797EBC7B18EC4B3C0049C061 /* Main_iPhone.storyboard */; };
 		797EBC9318EC4DC40049C061 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 797EBC9218EC4DC40049C061 /* CoreText.framework */; };
 		797EBC9718EC51C40049C061 /* REAttributedElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 797EBC9618EC51C40049C061 /* REAttributedElement.m */; };
+		7985369019091B7700FCD96F /* RETextElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 7985368F19091B7700FCD96F /* RETextElement.m */; };
+		7985369419093B3000FCD96F /* NSString+CSS.m in Sources */ = {isa = PBXBuildFile; fileRef = 7985369319093B3000FCD96F /* NSString+CSS.m */; };
 		79A4FF2D18EEA82500F79347 /* REPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A4FF2C18EEA82500F79347 /* REPageView.m */; };
 		79A9C39F18F820EB00AC36DE /* REBaseViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A9C39818F820EB00AC36DE /* REBaseViewController.m */; };
 		79A9C3A018F820EB00AC36DE /* REContentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A9C39B18F820EB00AC36DE /* REContentViewController.m */; };
@@ -145,6 +147,10 @@
 		797EBC9218EC4DC40049C061 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
 		797EBC9518EC51C40049C061 /* REAttributedElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REAttributedElement.h; sourceTree = "<group>"; };
 		797EBC9618EC51C40049C061 /* REAttributedElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REAttributedElement.m; sourceTree = "<group>"; };
+		7985368E19091B7700FCD96F /* RETextElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RETextElement.h; sourceTree = "<group>"; };
+		7985368F19091B7700FCD96F /* RETextElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RETextElement.m; sourceTree = "<group>"; };
+		7985369219093B3000FCD96F /* NSString+CSS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CSS.h"; sourceTree = "<group>"; };
+		7985369319093B3000FCD96F /* NSString+CSS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+CSS.m"; sourceTree = "<group>"; };
 		79A4FF2B18EEA82500F79347 /* REPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REPageView.h; sourceTree = "<group>"; };
 		79A4FF2C18EEA82500F79347 /* REPageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REPageView.m; sourceTree = "<group>"; };
 		79A9C39718F820EB00AC36DE /* REBaseViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REBaseViewController.h; sourceTree = "<group>"; };
@@ -326,6 +332,8 @@
 		63E12CA718F173FD005032EA /* NSString+HTML */ = {
 			isa = PBXGroup;
 			children = (
+				7985369219093B3000FCD96F /* NSString+CSS.h */,
+				7985369319093B3000FCD96F /* NSString+CSS.m */,
 				63E12CA818F173FD005032EA /* NSString+HTML.h */,
 				63E12CA918F173FD005032EA /* NSString+HTML.m */,
 			);
@@ -578,6 +586,8 @@
 			children = (
 				797EBC9518EC51C40049C061 /* REAttributedElement.h */,
 				797EBC9618EC51C40049C061 /* REAttributedElement.m */,
+				7985368E19091B7700FCD96F /* RETextElement.h */,
+				7985368F19091B7700FCD96F /* RETextElement.m */,
 			);
 			path = REAttributedElement;
 			sourceTree = "<group>";
@@ -857,6 +867,8 @@
 				79E4AB9618ED9927000003C7 /* RXMLElement.m in Sources */,
 				79B8BC6B1907F709004F0F1D /* HTMLParser.m in Sources */,
 				79E4AB8B18ED8110000003C7 /* REBaseParser.m in Sources */,
+				7985369419093B3000FCD96F /* NSString+CSS.m in Sources */,
+				7985369019091B7700FCD96F /* RETextElement.m in Sources */,
 				79A9C3A018F820EB00AC36DE /* REContentViewController.m in Sources */,
 				7929630E18FED73800C851C6 /* REUtils.m in Sources */,
 				63D4695A18EF3AE600E5E6E7 /* zip.c in Sources */,

@@ -10,10 +10,11 @@
 #import "REChapter.h"
 #import "ZipArchive.h"
 #import "NSString+HTML.h"
-#import "REAttributedElement.h"
 #import "RXMLElement.h"
 #import "REPathManager.h"
 #import "HTMLParser.h"
+#import "RETextElement.h"
+#import "NSString+CSS.h"
 
 static NSString * const MANIFEST_PATH                   =  @"META-INF/container.xml";
 static NSString * const CONTAINER_ROOTFILE_XPATH_KEY    =  @"//rootfile";
@@ -100,17 +101,39 @@ static dispatch_queue_t parseQueue;
         NSString *chapterPath = chapterInfo[@"hrefFull"];
         
         NSString *chapterContent = [NSString stringWithContentsOfFile:chapterPath encoding:NSUTF8StringEncoding error:nil];
-        
-        HTMLParser *htmlTree = [[HTMLParser alloc] initWithString:chapterContent error:nil];
 
-        
+        HTMLParser *htmlTree = [[HTMLParser alloc] initWithString:chapterContent 
+                                                            error:nil];
+
         REChapter *chapter = [[REChapter alloc] init];
         [chapter setTitle:chapterInfo[@"title"]];
         
-        NSArray *elements = [self childAttributedElementsFor:[htmlTree body] 
-                                                    document:document];
+        HTMLNode *head = [htmlTree head];
         
-        for (REAttributedElement *element in elements)
+        NSArray *documentStyles = document.info[@"css"];
+        
+        NSArray *cssLinks = [head findChildrenWithAttribute:@"type" matchingName:@"text/css" allowPartial:TRUE];
+        
+        NSMutableDictionary *cssValues = [NSMutableDictionary new];
+        
+        for (HTMLNode *cssLink in cssLinks) 
+        {
+            NSString * href = [cssLink getAttributeNamed:@"href"];
+            
+            for (NSDictionary *style in documentStyles) 
+            {
+                if ([style[@"href"] isEqualToString:href]) 
+                {
+                    [cssValues addEntriesFromDictionary:style[@"css"]];
+                }
+            }
+        }
+        
+        NSArray *elements = [self childAttributedElementsFor:[htmlTree body] 
+                                                    document:document 
+                                                         css:cssValues];
+        
+        for (RETextElement *element in elements)
         {
             [result appendAttributedString:[element attributedString]];
         }
@@ -126,38 +149,61 @@ static dispatch_queue_t parseQueue;
 
 }
 
-- (NSArray *) childAttributedElementsFor:(HTMLNode *)element document:(REDocument *)document
+- (NSArray *) childAttributedElementsFor:(HTMLNode *)element document:(REDocument *)document css:(NSDictionary *)css
 {
     NSMutableArray *attributedElements = [[NSMutableArray alloc] init];
     
     for (HTMLNode *child in [element children])
     {
-        if ([[child tagName] isEqualToString:@"div"]) 
-        {
-            NSArray * children = [self childAttributedElementsFor:child document:document];
-            [attributedElements addObjectsFromArray:children];
-        }
-        else if (![[child tagName] isInlineTag] && ![[child tagName] isMetaTag])
-        {
-            REAttributedElement *element = [[REAttributedElement alloc] init];
-            [element setText:[child rawContents]];
-            [element setName:[child tagName]];
-            [element setImagesPath:document.info[@"imagesPath"]];
-            [element setCsss:document.info[@"css"]];
-            
-            NSMutableDictionary *attributes = [[NSMutableDictionary alloc] init];
-            
-            attributes[@"class"] = [[child className] lowercaseString] ? [[child className] lowercaseString] : @"";
-            [element setAttributes:attributes];
-            
-            [element apply];
-            
-            [attributedElements addObject:element];
-        }
+        RETextElement *textElement = [[RETextElement alloc] init];
+        
+        NSArray * children = [self childAttributedElementsFor:child 
+                                                     document:document 
+                                                        css:css];
+        
+        [[textElement children] addObjectsFromArray:children];
+        
+        [textElement setText:[self textForNode:child]];
+        [textElement setNode:child];
+        [textElement setImagesPath:document.info[@"imagesPath"]];
+        [textElement setCss:css];
+    
+        [attributedElements addObject:textElement];
     }
     
     return attributedElements;
 }
+
+- (NSString *) textForNode:(HTMLNode *)node
+{
+    NSString *text = @"";
+    
+    if ([node nodetype] == HTMLTextNode) 
+    {
+        text = [node rawContents];
+    } 
+    else
+    {
+        text = [node contents];
+    }
+
+    return text ? text : @"";
+}
+
+/*
+|- CHILD TAG = div  ==  (null) == <div><img src="IMG_2.png"><span><p>Some <u><i>text</i></u> here <b> and bold text </b> and text again </p></span></div>
+|-- CHILD TAG = img  ==  (null) == <img src="IMG_2.png">
+|-- CHILD TAG = span  ==  (null) == <span><p>Some <u><i>text</i></u> here <b> and bold text </b> and text again </p></span>
+|---- CHILD TAG = p  ==  Some  == <p>Some <u><i>text</i></u> here <b> and bold text </b> and text again </p>
+|----- CHILD TAG = text  ==  (null) == Some 
+|----- CHILD TAG = u  ==  (null) == <u><i>text</i></u>
+|------- CHILD TAG = i  ==  text == <i>text</i>
+|-------- CHILD TAG = text  ==  (null) == text
+|----- CHILD TAG = text  ==  (null) ==  here 
+|----- CHILD TAG = b  ==   and bold text  == <b> and bold text </b>
+|--------- CHILD TAG = text  ==  (null) ==  and bold text 
+|----- CHILD TAG = text  ==  (null) ==  and text again 
+*/
 
 #pragma mark - File Management -
 
@@ -245,47 +291,13 @@ static dispatch_queue_t parseQueue;
          
          if ([[element attribute:META_TYPE_XML_KEY] isEqualToString:META_TYPE_CSS_KEY])
          {
-             NSMutableDictionary *dict = [[NSMutableDictionary alloc] init];
-             
              NSString *cssString = [NSString stringWithContentsOfFile:elementInfo[HREF_FULL_XML_KEY] 
                                                              encoding:NSUTF8StringEncoding 
                                                                 error:nil];
              
-             cssString = [cssString stringByReplacingOccurrencesOfString:@"\n" withString:@""];
-             cssString = [cssString stringByReplacingOccurrencesOfString:@"\t" withString:@""];
-             cssString = [cssString stringByReplacingOccurrencesOfString:@" " withString:@""];
-             cssString = [cssString stringByReplacingOccurrencesOfString:@"\"" withString:@""];
-             cssString = [cssString stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+             [elementInfo setObject:[cssString dictionaryOfCSSStyles] forKey:@"css"];
              
-             NSArray *elements = [cssString componentsSeparatedByString:@"}"];
-             
-             for (NSString *chunk in elements) 
-             {
-                 NSArray *parts = [chunk componentsSeparatedByString:@"{"];
-                 
-                 if (parts.count > 1) 
-                 {
-                     NSArray *attributes = [parts[1] componentsSeparatedByString:@";"];
-                     
-                     NSMutableDictionary *attrs = [[NSMutableDictionary alloc] init];
-                     
-                     for (NSString *attr in attributes) 
-                     {
-                         NSArray *parts = [attr componentsSeparatedByString:@":"];
-                         if (parts.count > 1) 
-                         {
-                             NSString *key = parts[0];
-                             NSString *value = parts[1];
-
-                             attrs[key] = value;
-                         }
-
-                     }
-                     dict[parts[0]] = attrs;
-                 }
-             }
-             
-             [styles addObject:dict];
+             [styles addObject:elementInfo];
          }
          
          if ([[element attribute:META_TYPE_XML_KEY] isEqualToString:META_TYPE_IMAGE_KEY])

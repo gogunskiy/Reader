@@ -68,6 +68,7 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
         [self setColor:[UIColor colorWithRed:0.1 green:0.1 blue:0.1 alpha:1.0]];
         [self setFontSize:20];
         [self setFontName:@"IowanOldStyle-Roman"];
+        [self setAttributedString:[[NSMutableAttributedString alloc] initWithString:@""]];
     }
     
     return self;

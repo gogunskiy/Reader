@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "REAttributedElement.h"
 
 @interface REChapter : NSObject
 

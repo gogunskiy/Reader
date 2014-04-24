@@ -8,7 +8,6 @@
 
 #import "REDocumentReader.h"
 #import "REChapter.h"
-#import "REAttributedElement.h"
 #import "REPageView.h"
 
 
