@@ -7,6 +7,7 @@
 //
 
 #import "RETextElement.h"
+#import "UIImage+Sizes.h"
 
 @implementation RETextElement
 
@@ -33,18 +34,45 @@
     
        if ([[self children] count]) 
     {
-        for (RETextElement *element in [self children]) 
+        if ([[[self node] tagName] isEqualToString:@"table"])
         {
-            [attributedString appendAttributedString:[element attributedString]];
+            for (RETextElement *element in [self children]) 
+            {
+                NSLog(@"%@", element.node.tagName);
+                
+                if ([element.node.tagName isEqualToString:@"thead"] || [element.node.tagName isEqualToString:@"tbody"]) 
+                {
+                    BOOL isHeader = [element.node.tagName isEqualToString:@"thead"];
+                
+                    NSArray *rows = [self tableRowDataWithElement:element isHeader:isHeader];
+                    
+                    for (NSDictionary *rowData in rows) 
+                    {
+                        [attributedString appendAttributedString:[[NSAttributedString alloc] initWithString:@"\u200a"]];
+                        
+                        CTRunDelegateRef delegate = [self createTableDelegateWithInfo:rowData];
+                        [attributedString addAttribute:(id)kCTRunDelegateAttributeName value:(__bridge id)delegate range:NSMakeRange(attributedString.length - 1, 1)];
+                        
+                        CFRelease(delegate);
+                    }
+                } 
+            }
+        }
+        else
+        {
+            for (RETextElement *element in [self children]) 
+            {
+                [attributedString appendAttributedString:[element attributedString]];
+            }  
         }
     }
     else
     {
         [attributedString appendAttributedString:[[NSAttributedString alloc] initWithString:[self text]]];
-     
+        
         CTFontRef font = [self _font];
         
-
+        
         
         CTParagraphStyleRef paragraphStyle = [SETTINGS baseParagraphStyle];
         [self setParagraphStyle:(__bridge id)paragraphStyle];
@@ -53,7 +81,7 @@
         [attributedString addAttribute:(id)kCTParagraphStyleAttributeName   value:[self paragraphStyle] range:NSMakeRange(0, attributedString.length)];
         [attributedString addAttribute:(id)kCTKernAttributeName             value: @0                   range:NSMakeRange(0, attributedString.length)];
         
-        if (self.node.nodetype == HTMLTextNode) 
+        if ([[[self node] tagName] isEqualToString:@"text"])
         {
             BOOL isBold, isItalic, isUnderlined;
             
@@ -78,12 +106,31 @@
             }
             else 
             {
-                [attributedString addAttribute:(id)kCTFontAttributeName             value:(__bridge id)font     range:NSMakeRange(0, attributedString.length)];
+                [attributedString addAttribute:(id)kCTFontAttributeName value:(__bridge id)font range:NSMakeRange(0, attributedString.length)];
             }
+            
+            CFRelease(font);
+            CFRelease(paragraphStyle);
         }
-
-        CFRelease(font);
-        CFRelease(paragraphStyle);
+        else if ([[[self node] tagName] isEqualToString:@"img"])
+        {
+            [attributedString appendAttributedString:[[NSAttributedString alloc] initWithString:@"\u200a"]];
+            
+            NSString *fileName = [[self node] getAttributeNamed:@"src"];
+            NSDictionary *attachment = @{@"aligment" : @(2),  @"fileName" : [_imagesPath stringByAppendingPathComponent:[fileName lastPathComponent]], @"attachmentType" : @"image"};
+            
+            CTRunDelegateCallbacks callbacks;
+            callbacks.version = kCTRunDelegateVersion1;
+            callbacks.dealloc = ImageDeallocationCallback;
+            callbacks.getAscent = ImageGetAscentCallback;
+            callbacks.getDescent = ImageGetDescentCallback;
+            callbacks.getWidth = ImageGetWidthCallback;
+            CTRunDelegateRef delegate = CTRunDelegateCreate(&callbacks, (__bridge_retained void *)attachment);
+            
+            [attributedString addAttribute:(id)kCTRunDelegateAttributeName value:(__bridge id)delegate range:NSMakeRange(attributedString.length - 1, 1)];
+            
+            CFRelease(delegate);
+        }
     }
 
     return attributedString;
@@ -158,5 +205,107 @@
 {
    [*attributedString addAttribute:(NSString*)kCTUnderlineStyleAttributeName value:[NSNumber numberWithInt:1] range:range];
 }
+
+- (NSArray *) tableRowDataWithElement:(RETextElement *)element isHeader:(BOOL)isHeader
+{
+    NSMutableArray *rows = [NSMutableArray new];
+    
+    NSString *rowTag = isHeader ? @"th" : @"td";
+    
+    for (RETextElement *theadRowElement in [element children]) 
+    {
+        if ([theadRowElement.node.tagName isEqualToString:@"tr"]) 
+        {
+            NSMutableDictionary *rowData = [[NSMutableDictionary alloc] init];
+            [rowData setObject:[NSMutableArray new] forKey:@"cells"];
+            [rowData setObject:@"tableRow"          forKey:@"attachmentType"];
+            [rowData setObject:rowTag               forKey:@"userData"];
+            [rowData setObject:@2                   forKey:@"aligment"];
+            
+            for (RETextElement *thElement in [theadRowElement children]) 
+            {
+                if ([thElement.node.tagName isEqualToString:rowTag]) 
+                {
+                    NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] init];
+                    
+                    [attributedString appendAttributedString:[thElement attributedString]];
+                    [rowData[@"cells"] addObject:@{@"attributedString" : attributedString}];
+                }
+            }  
+            
+            [rows addObject:rowData];
+        }
+    }
+    
+    return rows;
+}
+
+- (CTRunDelegateRef) createTableDelegateWithInfo:(NSDictionary *)info
+{
+    CTRunDelegateCallbacks callbacks;
+    callbacks.version = kCTRunDelegateVersion1;
+    callbacks.dealloc = TableDeallocationCallback;
+    callbacks.getAscent = TableGetAscentCallback;
+    callbacks.getDescent = TableGetDescentCallback;
+    callbacks.getWidth = TableGetWidthCallback;
+    CTRunDelegateRef delegate = CTRunDelegateCreate(&callbacks, (__bridge_retained void *)info);
+    
+    return delegate;
+}
+
+
+void ImageDeallocationCallback( void* refCon )
+{
+    
+}
+
+CGFloat ImageGetAscentCallback( void *refCon )
+{
+    NSDictionary *info = (__bridge NSDictionary *)refCon;
+    CGSize size = [UIImage sizeOfImageAtURL:[NSURL fileURLWithPath:info[@"fileName"]]];
+    
+    NSDictionary *dict = [SETTINGS attachmentMaxSize];
+    
+    CGFloat maxHeight = [dict[@"height"] floatValue];
+    
+    return size.height / 2 > maxHeight / 2 ? maxHeight / 2 : size.height / 2;
+}
+
+CGFloat ImageGetDescentCallback( void *refCon )
+{
+    return ImageGetAscentCallback(refCon);
+}
+
+CGFloat ImageGetWidthCallback( void* refCon)
+{
+    NSDictionary *dict = [SETTINGS attachmentMaxSize];
+    NSDictionary *info = (__bridge NSDictionary *)refCon;
+    CGSize size = [UIImage sizeOfImageAtURL:[NSURL fileURLWithPath:info[@"fileName"]]];
+    
+    CGFloat width = size.width > [dict[@"width"] floatValue] ? [dict[@"width"] floatValue] :  size.width;
+    
+    return width;
+}
+
+void TableDeallocationCallback( void* refCon )
+{
+    
+}
+
+CGFloat TableGetAscentCallback( void *refCon )
+{
+    return 60.0;
+}
+
+CGFloat TableGetDescentCallback( void *refCon )
+{
+    return TableGetAscentCallback(refCon);
+}
+
+CGFloat TableGetWidthCallback( void* refCon)
+{
+    return 600;
+}
+
 
 @end

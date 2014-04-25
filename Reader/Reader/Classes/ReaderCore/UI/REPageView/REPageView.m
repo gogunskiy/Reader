@@ -110,7 +110,7 @@
                         runBounds.size.height = ascent + descent;
                         
                         CGFloat xOffset = CTLineGetOffsetForStringIndex(line, CTRunGetStringRange(run).location, NULL); //9
-                        runBounds.origin.x = origins[index].x + xOffset; //self.frame.size.width / 2 - runBounds.size.width / 2;
+
                         runBounds.origin.y = origins[index].y;
                         runBounds.origin.y -= descent;
                         runBounds.origin.y = self.frame.size.height - CGRectGetMaxY(runBounds);
@@ -132,12 +132,32 @@
                             }
                         }
                         
-                        UIImageView *view = [[UIImageView alloc] initWithFrame:runBounds];
-                        UIImage *image = [[UIImage alloc] initWithContentsOfFile:attachment[@"attachmentPath"]];
-                        [view setContentMode:UIViewContentModeScaleAspectFit];
-                        [view setImage:image];
-                        [view setBackgroundColor:[UIColor clearColor]];
-                        [self addSubview:view];
+                        if ([attachment[@"attachmentType"] isEqualToString:@"image"]) 
+                        {
+                            UIImageView *view = [[UIImageView alloc] initWithFrame:runBounds];
+                            UIImage *image = [[UIImage alloc] initWithContentsOfFile:attachment[@"fileName"]];
+                            [view setContentMode:UIViewContentModeScaleAspectFit];
+                            [view setImage:image];
+                            [view setBackgroundColor:[UIColor clearColor]];
+                            [self addSubview:view];
+                        }
+                        else if ([attachment[@"attachmentType"] isEqualToString:@"tableRow"]) 
+                        {
+                            UIImageView *view = [[UIImageView alloc] initWithFrame:runBounds];
+                            if ([attachment[@"userData"] isEqualToString:@"th"]) 
+                            {
+                                [view setBackgroundColor:[UIColor lightGrayColor]];
+                            }
+                            else
+                            {
+                                [view setBackgroundColor:[UIColor whiteColor]];
+                            }
+                            
+                            [[view layer] setBorderWidth:2.0];
+                            [[view layer] setBorderColor:[UIColor darkGrayColor].CGColor];
+                            
+                            [self addSubview:view];
+                        }
                     }
                 }
             }

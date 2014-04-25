@@ -238,10 +238,6 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
         {
             CTRunDelegateCallbacks callbacks;
             callbacks.version = kCTRunDelegateVersion1;
-            callbacks.dealloc = MyDeallocationCallback;
-            callbacks.getAscent = MyGetAscentCallback;
-            callbacks.getDescent = MyGetDescentCallback;
-            callbacks.getWidth = MyGetWidthCallback;
             CTRunDelegateRef delegate = CTRunDelegateCreate(&callbacks, (__bridge_retained void *)attribute.info);
             
             [elementString addAttribute:(id)kCTRunDelegateAttributeName value:(__bridge id)delegate range:NSMakeRange(attribute.start - 1, 1)];
@@ -249,40 +245,6 @@ typedef NS_OPTIONS(NSInteger, REInnerTagType)
     }
     
     return elementString;
-}
-
-
-void MyDeallocationCallback( void* refCon )
-{
-    
-}
-
-CGFloat MyGetAscentCallback( void *refCon )
-{
-    NSDictionary *info = (__bridge NSDictionary *)refCon;
-    CGSize size = [UIImage sizeOfImageAtURL:[NSURL fileURLWithPath:info[@"fileName"]]];
-    
-    NSDictionary *dict = [SETTINGS attachmentMaxSize];
-    
-    CGFloat maxHeight = [dict[@"height"] floatValue];
-    
-    return size.height / 2 > maxHeight / 2 ? maxHeight / 2 : size.height / 2;
-}
-
-CGFloat MyGetDescentCallback( void *refCon )
-{
-    return MyGetAscentCallback(refCon);
-}
-
-CGFloat MyGetWidthCallback( void* refCon)
-{
-    NSDictionary *dict = [SETTINGS attachmentMaxSize];
-    NSDictionary *info = (__bridge NSDictionary *)refCon;
-    CGSize size = [UIImage sizeOfImageAtURL:[NSURL fileURLWithPath:info[@"fileName"]]];
-    
-    CGFloat width = size.width > [dict[@"width"] floatValue] ? [dict[@"width"] floatValue] :  size.width;
-    
-    return width;
 }
 
 

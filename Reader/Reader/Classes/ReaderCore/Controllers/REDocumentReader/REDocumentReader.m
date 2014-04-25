@@ -98,9 +98,7 @@ typedef NS_ENUM(NSInteger, RESnapshotViewAnimationType)
                  NSDictionary *info = (NSDictionary *)CTRunDelegateGetRefCon(delegate);
                  
                  NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithDictionary:info];
-                 [dict setObject:dict[@"fileName"] forKey:@"attachmentPath"];
                  [dict setObject:@(range.location) forKey:@"location"];
-                 
                  [[self attachments] addObject:dict];
              }
          }
