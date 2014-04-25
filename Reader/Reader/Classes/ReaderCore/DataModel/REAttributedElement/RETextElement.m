@@ -31,7 +31,7 @@
 {
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] init];
     
-    if ([[self children] count]) 
+       if ([[self children] count]) 
     {
         for (RETextElement *element in [self children]) 
         {
@@ -41,39 +41,85 @@
     else
     {
         [attributedString appendAttributedString:[[NSAttributedString alloc] initWithString:[self text]]];
-    }
-    
-    CTFontRef font = [self _font];
-    
-    CTParagraphStyleRef paragraphStyle = [SETTINGS baseParagraphStyle];
-    [self setParagraphStyle:(__bridge id)paragraphStyle];
-    
-    [attributedString setAttributes:@{(id)kCTForegroundColorAttributeName : [self color],
-                                      (id)kCTParagraphStyleAttributeName : [self paragraphStyle],
-                                      (id)kCTKernAttributeName : @0}
-                              range:NSMakeRange(0, attributedString.length)];
-   
-    
-    if (self.node.nodetype == HTMLStrongNode) 
-    {
-        CTFontRef boldFont = CTFontCreateCopyWithSymbolicTraits(font, CTFontGetSize(font), NULL, kCTFontBoldTrait, kCTFontBoldTrait);
-        [attributedString addAttribute:(id)kCTFontAttributeName value: (__bridge id)boldFont range:NSMakeRange(0, attributedString.length)];
+     
+        CTFontRef font = [self _font];
         
-        NSLog(@"%@ : %@ %@", self.node.tagName, self.node.contents, self.node.rawContents);
+
         
-    //    [self applyBoldAttributedString:&attributedString range:NSMakeRange(0, attributedString.length)];
+        CTParagraphStyleRef paragraphStyle = [SETTINGS baseParagraphStyle];
+        [self setParagraphStyle:(__bridge id)paragraphStyle];
+        
+        [attributedString addAttribute:(id)kCTForegroundColorAttributeName  value:[self color]          range:NSMakeRange(0, attributedString.length)];
+        [attributedString addAttribute:(id)kCTParagraphStyleAttributeName   value:[self paragraphStyle] range:NSMakeRange(0, attributedString.length)];
+        [attributedString addAttribute:(id)kCTKernAttributeName             value: @0                   range:NSMakeRange(0, attributedString.length)];
+        
+        if (self.node.nodetype == HTMLTextNode) 
+        {
+            BOOL isBold, isItalic, isUnderlined;
+            
+            [self isBold:&isBold italic:&isItalic underlined:&isUnderlined];
+            
+            if (isBold || isItalic || isUnderlined) 
+            {
+                if (isBold) 
+                {
+                    [self applyBoldAttributedString:&attributedString range:NSMakeRange(0, attributedString.length)];
+                }
+                
+                if (isItalic) 
+                {
+                    [self applyItalicAttributedString:&attributedString range:NSMakeRange(0, attributedString.length)];
+                }
+                
+                if (isUnderlined) 
+                {
+                    [self applyUnderlinedAttributedString:&attributedString range:NSMakeRange(0, attributedString.length)];
+                }
+            }
+            else 
+            {
+                [attributedString addAttribute:(id)kCTFontAttributeName             value:(__bridge id)font     range:NSMakeRange(0, attributedString.length)];
+            }
+        }
+
+        CFRelease(font);
+        CFRelease(paragraphStyle);
     }
 
+    return attributedString;
+}
+
+- (void) isBold:(BOOL *)bold italic:(BOOL *)italic underlined:(BOOL *)underlined
+{
+    HTMLNode *node = self.node.parent;
     
-    CFRelease(font);
-    CFRelease(paragraphStyle);
+    BOOL isBold = FALSE;
+    BOOL isItalic = FALSE;
+    BOOL isUnderlined = FALSE;
     
-    if ([self.node.tagName isEqualToString:@"i"]) 
+    while (node->_node && ![node.tagName isEqualToString:@"body"]) 
     {
-        [self applyItalicAttributedString:&attributedString range:NSMakeRange(0, attributedString.length)];
+        if (node.nodetype == HTMLStrongNode) 
+        {
+            isBold = TRUE;
+        }
+        
+        if ([node.tagName isEqualToString:@"i"] || [node.tagName isEqualToString:@"em"]) 
+        {
+            isItalic = TRUE;
+        }
+        
+        if ([node.tagName isEqualToString:@"u"]) 
+        {
+            isUnderlined = TRUE;
+        }
+        
+        node = node.parent;
     }
     
-    return attributedString;
+    *bold = isBold;
+    *italic = isItalic;
+    *underlined = isUnderlined;
 }
 
 - (CTFontRef) _font
@@ -96,8 +142,6 @@
     
     CFRelease(font);
     CFRelease(boldFont);
-    
-    NSLog(@"%@", *attributedString);
 }
 
 - (void) applyItalicAttributedString:(NSMutableAttributedString **)attributedString range:(NSRange)range 
@@ -108,6 +152,11 @@
     
     CFRelease(font);
     CFRelease(italicFont);
+}
+
+- (void) applyUnderlinedAttributedString:(NSMutableAttributedString **)attributedString range:(NSRange)range 
+{
+   [*attributedString addAttribute:(NSString*)kCTUnderlineStyleAttributeName value:[NSNumber numberWithInt:1] range:range];
 }
 
 @end
