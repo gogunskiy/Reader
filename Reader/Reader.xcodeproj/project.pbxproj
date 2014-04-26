@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		63356EFB18F9AF2C0079DDF7 /* UIImage+Sizes.m in Sources */ = {isa = PBXBuildFile; fileRef = 63356EFA18F9AF2C0079DDF7 /* UIImage+Sizes.m */; };
+		63998D20190AD2A8006709C4 /* evgenii_onegin_.epub in Resources */ = {isa = PBXBuildFile; fileRef = 63998D1F190AD2A8006709C4 /* evgenii_onegin_.epub */; };
 		63A406D118F436AF00021EAB /* Moskva - Petushki.epub in Resources */ = {isa = PBXBuildFile; fileRef = 63A406D018F436AF00021EAB /* Moskva - Petushki.epub */; };
 		63A406D318F4379600021EAB /* section1.xhtml in Resources */ = {isa = PBXBuildFile; fileRef = 63A406D218F4379600021EAB /* section1.xhtml */; };
 		63A76A6A18FAA78800069B8A /* dot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63A76A6918FAA78800069B8A /* dot@2x.png */; };
@@ -90,6 +91,7 @@
 		63356EFA18F9AF2C0079DDF7 /* UIImage+Sizes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Sizes.m"; sourceTree = "<group>"; };
 		637A907D18FDC663001A1341 /* NSAttributedString+Encoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+Encoding.h"; sourceTree = "<group>"; };
 		637A907E18FDC663001A1341 /* NSAttributedString+Encoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAttributedString+Encoding.m"; sourceTree = "<group>"; };
+		63998D1F190AD2A8006709C4 /* evgenii_onegin_.epub */ = {isa = PBXFileReference; lastKnownFileType = file; path = evgenii_onegin_.epub; sourceTree = "<group>"; };
 		63A406D018F436AF00021EAB /* Moskva - Petushki.epub */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Moskva - Petushki.epub"; sourceTree = "<group>"; };
 		63A406D218F4379600021EAB /* section1.xhtml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; name = section1.xhtml; path = Reader/Resources/Data/section1.xhtml; sourceTree = SOURCE_ROOT; };
 		63A76A6918FAA78800069B8A /* dot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dot@2x.png"; sourceTree = "<group>"; };
@@ -300,6 +302,7 @@
 		63D4696018EF409A00E5E6E7 /* Epub */ = {
 			isa = PBXGroup;
 			children = (
+				63998D1F190AD2A8006709C4 /* evgenii_onegin_.epub */,
 				79B8BC6E1907FEFF004F0F1D /* bezopasnoe_obschenie.epub */,
 				79B8BC6D1907FEF7004F0F1D /* Kak_my_prinimaem_reshenia.epub */,
 				79B8BC6C1907FEE0004F0F1D /* Akunin_-_Skazki_dlya_idiotov.epub */,
@@ -819,6 +822,7 @@
 				79E7827A18F2E34A002B121B /* Settings.plist in Resources */,
 				63D4696418EF409A00E5E6E7 /* 000000000001.epub in Resources */,
 				79B8BC7119080241004F0F1D /* Akunin_-_Skazki_dlya_idiotov.epub in Resources */,
+				63998D20190AD2A8006709C4 /* evgenii_onegin_.epub in Resources */,
 				79E4ABA218ED9D76000003C7 /* chapter-001.xml in Resources */,
 				63A76A6A18FAA78800069B8A /* dot@2x.png in Resources */,
 				63D4696518EF409A00E5E6E7 /* 000000000002.epub in Resources */,

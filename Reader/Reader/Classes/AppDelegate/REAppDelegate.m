@@ -63,6 +63,15 @@
                               description:@"Akunin_-_Skazki_dlya_idiotov"
                                    author:@"Akunin_-_Skazki_dlya_idiotov"
                                sourcePath:[bookPath stringByAppendingPathComponent:@"Akunin_-_Skazki_dlya_idiotov.epub"]];
+    
+    [READER addDocumentToLibraryWithTitle:@"evgenii_onegin"
+                              description:@"evgenii_onegin"
+                                   author:@"Pushkin"
+                               sourcePath:[bookPath stringByAppendingPathComponent:@"evgenii_onegin_.epub"]];
+    
+    
+    
+    
     return YES;
 }
 							
