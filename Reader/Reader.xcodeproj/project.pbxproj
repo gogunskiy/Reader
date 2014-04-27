@@ -13,6 +13,7 @@
 		63A406D318F4379600021EAB /* section1.xhtml in Resources */ = {isa = PBXBuildFile; fileRef = 63A406D218F4379600021EAB /* section1.xhtml */; };
 		63A76A6A18FAA78800069B8A /* dot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63A76A6918FAA78800069B8A /* dot@2x.png */; };
 		63A76A6F18FAE1A100069B8A /* RESelectionTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A76A6E18FAE1A100069B8A /* RESelectionTool.m */; };
+		63D064DA190D2E0700B9E66C /* NSString+Trimming.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D064D9190D2E0700B9E66C /* NSString+Trimming.m */; };
 		63D4695718EF3AE600E5E6E7 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 63D4694D18EF3AE600E5E6E7 /* ioapi.c */; };
 		63D4695818EF3AE600E5E6E7 /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 63D4694F18EF3AE600E5E6E7 /* mztools.c */; };
 		63D4695918EF3AE600E5E6E7 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 63D4695118EF3AE600E5E6E7 /* unzip.c */; };
@@ -97,6 +98,8 @@
 		63A76A6918FAA78800069B8A /* dot@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "dot@2x.png"; sourceTree = "<group>"; };
 		63A76A6D18FAE1A100069B8A /* RESelectionTool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RESelectionTool.h; sourceTree = "<group>"; };
 		63A76A6E18FAE1A100069B8A /* RESelectionTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RESelectionTool.m; sourceTree = "<group>"; };
+		63D064D8190D2E0700B9E66C /* NSString+Trimming.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Trimming.h"; sourceTree = "<group>"; };
+		63D064D9190D2E0700B9E66C /* NSString+Trimming.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Trimming.m"; sourceTree = "<group>"; };
 		63D4694C18EF3AE600E5E6E7 /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
 		63D4694D18EF3AE600E5E6E7 /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
 		63D4694E18EF3AE600E5E6E7 /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
@@ -339,6 +342,8 @@
 				7985369319093B3000FCD96F /* NSString+CSS.m */,
 				63E12CA818F173FD005032EA /* NSString+HTML.h */,
 				63E12CA918F173FD005032EA /* NSString+HTML.m */,
+				63D064D8190D2E0700B9E66C /* NSString+Trimming.h */,
+				63D064D9190D2E0700B9E66C /* NSString+Trimming.m */,
 			);
 			path = "NSString+HTML";
 			sourceTree = "<group>";
@@ -863,6 +868,7 @@
 				79E4AB8E18ED811D000003C7 /* REEpubParser.m in Sources */,
 				63356EFB18F9AF2C0079DDF7 /* UIImage+Sizes.m in Sources */,
 				79E4ABA018ED9AC4000003C7 /* REReaderController.m in Sources */,
+				63D064DA190D2E0700B9E66C /* NSString+Trimming.m in Sources */,
 				63D4695818EF3AE600E5E6E7 /* mztools.c in Sources */,
 				63D4695B18EF3AE600E5E6E7 /* ZipArchive.m in Sources */,
 				790BC96C18FD412700A11566 /* REDocumentReader.m in Sources */,

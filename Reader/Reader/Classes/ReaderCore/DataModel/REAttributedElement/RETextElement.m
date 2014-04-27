@@ -8,6 +8,18 @@
 
 #import "RETextElement.h"
 #import "UIImage+Sizes.h"
+#import "NSString+Trimming.h"
+
+@interface RETextElement()
+
+@property (nonatomic, assign) BOOL isBold;
+@property (nonatomic, assign) BOOL isItalic;
+@property (nonatomic, assign) BOOL isUnderlined;
+@property (nonatomic, assign) CTTextAlignment aligment;
+
+@property (nonatomic, strong) NSDictionary *attributes;
+
+@end
 
 @implementation RETextElement
 
@@ -67,8 +79,11 @@
     else
     {
         _text = [[self text] stringByReplacingOccurrencesOfString:@"\t" withString:@""];
-        
+        _text = [_text stringByTrimmingLeadingWhitespaceCharacters];
+     
         [attributedString appendAttributedString:[[NSAttributedString alloc] initWithString:[self text]]];
+        
+        [self buildAttributes];
         
         CTFontRef font = [self _font];
         
@@ -81,23 +96,19 @@
         
         if ([[[self node] tagName] isEqualToString:@"text"])
         {
-            BOOL isBold, isItalic, isUnderlined;
-            
-            [self isBold:&isBold italic:&isItalic underlined:&isUnderlined];
-            
-            if (isBold || isItalic || isUnderlined) 
+            if (_isBold || _isItalic || _isUnderlined)
             {
-                if (isBold) 
+                if (_isBold)
                 {
                     [self applyBoldAttributedString:&attributedString range:NSMakeRange(0, attributedString.length)];
                 }
                 
-                if (isItalic) 
+                if (_isItalic)
                 {
                     [self applyItalicAttributedString:&attributedString range:NSMakeRange(0, attributedString.length)];
                 }
                 
-                if (isUnderlined) 
+                if (_isUnderlined)
                 {
                     [self applyUnderlinedAttributedString:&attributedString range:NSMakeRange(0, attributedString.length)];
                 }
@@ -134,39 +145,6 @@
     return attributedString;
 }
 
-- (void) isBold:(BOOL *)bold italic:(BOOL *)italic underlined:(BOOL *)underlined
-{
-    HTMLNode *node = self.node.parent;
-    
-    BOOL isBold = FALSE;
-    BOOL isItalic = FALSE;
-    BOOL isUnderlined = FALSE;
-    
-    while (node->_node && ![node.tagName isEqualToString:@"body"]) 
-    {
-        if (node.nodetype == HTMLStrongNode) 
-        {
-            isBold = TRUE;
-        }
-        
-        if ([node.tagName isEqualToString:@"i"] || [node.tagName isEqualToString:@"em"]) 
-        {
-            isItalic = TRUE;
-        }
-        
-        if ([node.tagName isEqualToString:@"u"]) 
-        {
-            isUnderlined = TRUE;
-        }
-        
-        node = node.parent;
-    }
-    
-    *bold = isBold;
-    *italic = isItalic;
-    *underlined = isUnderlined;
-}
-
 - (CTFontRef) _font
 {
     return [self _fontWithName:_fontName 
@@ -177,7 +155,7 @@
 {
     CGFloat size = [self fontSize];
     
-    NSString *value = [self AllCss][@"font-size"];
+    NSString *value = [self attributes][@"font-size"];
     
     if (value)
     {
@@ -320,11 +298,11 @@ CGFloat TableGetWidthCallback( void* refCon)
 }
 
 
-- (CTTextAlignment) aligment
+- (CTTextAlignment) getAligment
 {
     CTTextAlignment aligment = kCTTextAlignmentJustified;
     
-    NSString *value = [self AllCss][@"text-align"];
+    NSString *value = [self attributes][@"text-align"];
     
     if (value)
     {
@@ -349,14 +327,30 @@ CGFloat TableGetWidthCallback( void* refCon)
     return aligment;
 }
 
-- (NSMutableDictionary *) AllCss
+- (void) fontAttributesForNode:(RETextElement *)parent
 {
-    
-    if ([self.node.tagName isEqualToString:@"img"])
+    BOOL isBoldStyle    = [[self attributes][@"font-weight"] isEqualToString:@"bold"] ? TRUE : FALSE;
+    BOOL isItalicStyle  = [[self attributes][@"font-style"] isEqualToString:@"italic"] ? TRUE : FALSE;
+    BOOL isUnderline  = [[self attributes][@"text-decoration"] isEqualToString:@"underline"] ? TRUE : FALSE;
+
+    if (parent.node.nodetype == HTMLStrongNode || isBoldStyle)
     {
-        NSLog(@"FOUND");
+        [self setIsBold:TRUE];
     }
     
+    if ([parent.node.tagName isEqualToString:@"i"] || [parent.node.tagName isEqualToString:@"em"] || isItalicStyle)
+    {
+        [self setIsItalic:TRUE];
+    }
+    
+    if ([parent.node.tagName isEqualToString:@"u"] || isUnderline)
+    {
+        [self setIsUnderlined:TRUE];
+    }
+}
+
+- (void) buildAttributes
+{
     NSMutableArray *nodesTree = [[NSMutableArray alloc] init];
     if ([self.css count])
     {
@@ -372,6 +366,8 @@ CGFloat TableGetWidthCallback( void* refCon)
             [nodesTree insertObject:parent atIndex:0];
         }
         
+        [self fontAttributesForNode:parent];
+        
         parent = parent.parent;
     }
     
@@ -382,7 +378,10 @@ CGFloat TableGetWidthCallback( void* refCon)
         [css addEntriesFromDictionary:element.css];
     }
     
-    return css;
+  //  NSLog(@"%@", css);
+    
+    [self setAttributes:css];
+    [self setAligment:[self getAligment]];
 }
 
 

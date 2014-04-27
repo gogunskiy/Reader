@@ -31,6 +31,6 @@
 
 - (NSMutableAttributedString *) attributedString;
 
-- (CTTextAlignment) aligment;
+
 
 @end
