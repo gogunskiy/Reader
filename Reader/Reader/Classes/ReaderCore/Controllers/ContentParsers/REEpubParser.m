@@ -122,7 +122,7 @@ static dispatch_queue_t parseQueue;
             
             for (NSDictionary *style in documentStyles) 
             {
-                if ([style[@"href"] isEqualToString:href]) 
+                if ([[style[@"href"] lastPathComponent] isEqualToString:[href lastPathComponent]])
                 {
                     [cssValues addEntriesFromDictionary:style[@"css"]];
                 }
@@ -131,7 +131,8 @@ static dispatch_queue_t parseQueue;
         
         NSArray *elements = [self childAttributedElementsFor:[htmlTree body] 
                                                     document:document 
-                                                         css:cssValues];
+                                                         css:cssValues
+                                                      parent:nil];
         
         for (RETextElement *element in elements)
         {
@@ -149,7 +150,7 @@ static dispatch_queue_t parseQueue;
 
 }
 
-- (NSArray *) childAttributedElementsFor:(HTMLNode *)element document:(REDocument *)document css:(NSDictionary *)css
+- (NSArray *) childAttributedElementsFor:(HTMLNode *)element document:(REDocument *)document css:(NSDictionary *)css parent:(RETextElement *)parent
 {
     NSMutableArray *attributedElements = [[NSMutableArray alloc] init];
     
@@ -157,17 +158,38 @@ static dispatch_queue_t parseQueue;
     {
         RETextElement *textElement = [[RETextElement alloc] init];
         
-        NSArray * children = [self childAttributedElementsFor:child 
-                                                     document:document 
-                                                        css:css];
-        
-        [[textElement children] addObjectsFromArray:children];
-        
         [textElement setText:[self textForNode:child]];
         [textElement setNode:child];
+        [textElement setParent:parent];
         [textElement setImagesPath:document.info[@"imagesPath"]];
-        [textElement setCss:css];
-    
+        
+        for (NSString *key in [css allKeys])
+        {
+            if ([key isEqualToString:[child tagName]])
+            {
+                [[textElement css] addEntriesFromDictionary:css[key]];
+            }
+        }
+        for (NSString *key in [css allKeys])
+        {
+            NSString *className = [child className];
+            
+            if (className)
+            {
+                if ([key rangeOfString:className].length)
+                {
+                    [[textElement css] addEntriesFromDictionary:css[key]];
+                }
+            }
+        }
+        
+        NSArray * children = [self childAttributedElementsFor:child
+                                                     document:document 
+                                                        css:css
+                                                       parent:textElement];
+                
+        [[textElement children] addObjectsFromArray:children];
+        
         [attributedElements addObject:textElement];
     }
     
@@ -189,21 +211,6 @@ static dispatch_queue_t parseQueue;
 
     return text ? text : @"";
 }
-
-/*
-|- CHILD TAG = div  ==  (null) == <div><img src="IMG_2.png"><span><p>Some <u><i>text</i></u> here <b> and bold text </b> and text again </p></span></div>
-|-- CHILD TAG = img  ==  (null) == <img src="IMG_2.png">
-|-- CHILD TAG = span  ==  (null) == <span><p>Some <u><i>text</i></u> here <b> and bold text </b> and text again </p></span>
-|---- CHILD TAG = p  ==  Some  == <p>Some <u><i>text</i></u> here <b> and bold text </b> and text again </p>
-|----- CHILD TAG = text  ==  (null) == Some 
-|----- CHILD TAG = u  ==  (null) == <u><i>text</i></u>
-|------- CHILD TAG = i  ==  text == <i>text</i>
-|-------- CHILD TAG = text  ==  (null) == text
-|----- CHILD TAG = text  ==  (null) ==  here 
-|----- CHILD TAG = b  ==   and bold text  == <b> and bold text </b>
-|--------- CHILD TAG = text  ==  (null) ==  and bold text 
-|----- CHILD TAG = text  ==  (null) ==  and text again 
-*/
 
 #pragma mark - File Management -
 

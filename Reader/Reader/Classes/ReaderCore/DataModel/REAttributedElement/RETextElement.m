@@ -18,7 +18,7 @@
     if (self) 
     {
         [self setChildren:[NSMutableArray new]];
-        [self setAttributes:[NSMutableDictionary new]];
+        [self setCss:[NSMutableDictionary new]];
         
         [self setColor:[UIColor colorWithRed:0.1 green:0.1 blue:0.1 alpha:1.0]];
         [self setFontSize:20];
@@ -32,14 +32,12 @@
 {
     NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] init];
     
-       if ([[self children] count]) 
+    if ([[self children] count])
     {
         if ([[[self node] tagName] isEqualToString:@"table"])
         {
             for (RETextElement *element in [self children]) 
             {
-                NSLog(@"%@", element.node.tagName);
-                
                 if ([element.node.tagName isEqualToString:@"thead"] || [element.node.tagName isEqualToString:@"tbody"]) 
                 {
                     BOOL isHeader = [element.node.tagName isEqualToString:@"thead"];
@@ -68,13 +66,13 @@
     }
     else
     {
+        _text = [[self text] stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+        
         [attributedString appendAttributedString:[[NSAttributedString alloc] initWithString:[self text]]];
         
         CTFontRef font = [self _font];
         
-        
-        
-        CTParagraphStyleRef paragraphStyle = [SETTINGS baseParagraphStyle];
+        CTParagraphStyleRef paragraphStyle = [SETTINGS baseParagraphStyleWithAligment:[self aligment]];
         [self setParagraphStyle:(__bridge id)paragraphStyle];
         
         [attributedString addAttribute:(id)kCTForegroundColorAttributeName  value:[self color]          range:NSMakeRange(0, attributedString.length)];
@@ -117,7 +115,7 @@
             [attributedString appendAttributedString:[[NSAttributedString alloc] initWithString:@"\u200a"]];
             
             NSString *fileName = [[self node] getAttributeNamed:@"src"];
-            NSDictionary *attachment = @{@"aligment" : @(2),  @"fileName" : [_imagesPath stringByAppendingPathComponent:[fileName lastPathComponent]], @"attachmentType" : @"image"};
+            NSDictionary *attachment = @{@"aligment" : @([self aligment]),  @"fileName" : [_imagesPath stringByAppendingPathComponent:[fileName lastPathComponent]], @"attachmentType" : @"image"};
             
             CTRunDelegateCallbacks callbacks;
             callbacks.version = kCTRunDelegateVersion1;
@@ -172,7 +170,21 @@
 - (CTFontRef) _font
 {
     return [self _fontWithName:_fontName 
-                          size:_fontSize];
+                          size:[self _fontSize]];
+}
+
+- (CGFloat) _fontSize
+{
+    CGFloat size = [self fontSize];
+    
+    NSString *value = [self AllCss][@"font-size"];
+    
+    if (value)
+    {
+        size *= [value floatValue];
+    }
+    
+    return size;
 }
 
 - (CTFontRef) _fontWithName:(NSString *)name size:(CGFloat)size
@@ -220,7 +232,7 @@
             [rowData setObject:[NSMutableArray new] forKey:@"cells"];
             [rowData setObject:@"tableRow"          forKey:@"attachmentType"];
             [rowData setObject:rowTag               forKey:@"userData"];
-            [rowData setObject:@2                   forKey:@"aligment"];
+            [rowData setObject:@([self aligment])  forKey:@"aligment"];
             
             for (RETextElement *thElement in [theadRowElement children]) 
             {
@@ -305,6 +317,72 @@ CGFloat TableGetDescentCallback( void *refCon )
 CGFloat TableGetWidthCallback( void* refCon)
 {
     return 600;
+}
+
+
+- (CTTextAlignment) aligment
+{
+    CTTextAlignment aligment = kCTTextAlignmentJustified;
+    
+    NSString *value = [self AllCss][@"text-align"];
+    
+    if (value)
+    {
+        if ([value isEqualToString:@"left"])
+        {
+            aligment = kCTTextAlignmentLeft;
+        }
+        else if ([value isEqualToString:@"right"])
+        {
+            aligment = kCTTextAlignmentRight;
+        }
+        else if ([value isEqualToString:@"center"])
+        {
+            aligment = kCTTextAlignmentCenter;
+        }
+        else if ([value isEqualToString:@"justify"])
+        {
+            aligment = kCTTextAlignmentJustified;
+        }
+    }
+    
+    return aligment;
+}
+
+- (NSMutableDictionary *) AllCss
+{
+    
+    if ([self.node.tagName isEqualToString:@"img"])
+    {
+        NSLog(@"FOUND");
+    }
+    
+    NSMutableArray *nodesTree = [[NSMutableArray alloc] init];
+    if ([self.css count])
+    {
+        [nodesTree addObject:self];
+    }
+    
+    RETextElement *parent = self.parent;
+    
+    while (parent)
+    {
+        if ([parent.css count])
+        {
+            [nodesTree insertObject:parent atIndex:0];
+        }
+        
+        parent = parent.parent;
+    }
+    
+    NSMutableDictionary *css = [[NSMutableDictionary alloc] initWithDictionary:self.css];
+    
+    for (RETextElement *element in nodesTree)
+    {
+        [css addEntriesFromDictionary:element.css];
+    }
+    
+    return css;
 }
 
 

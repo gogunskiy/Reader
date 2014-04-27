@@ -18,18 +18,19 @@
 @property (nonatomic, assign) CGFloat fontSize;
 
 @property (nonatomic) NSMutableArray *children;
+@property (nonatomic) RETextElement *parent;
 
 
 @property (nonatomic) HTMLNode *node;
 
 
 @property (nonatomic) NSString * imagesPath;
-@property (nonatomic) NSDictionary * css;
-@property (nonatomic) NSMutableDictionary * attributes;
+@property (nonatomic) NSMutableDictionary * css;
 @property (nonatomic) NSString * text;
 @property (nonatomic) UIColor *color;
-@property (nonatomic, assign) CTTextAlignment aligment;
 
 - (NSMutableAttributedString *) attributedString;
+
+- (CTTextAlignment) aligment;
 
 @end
