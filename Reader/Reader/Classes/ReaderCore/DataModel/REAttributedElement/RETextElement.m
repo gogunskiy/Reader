@@ -68,6 +68,17 @@
                 } 
             }
         }
+        else if ([self.node.tagName isEqualToString:@"ul"])
+        {
+            for (RETextElement *element in [self children])
+            {
+                NSLog(@"LIST ITEM = %@; %@", element.node.tagName, element.node.contents);
+            }
+        }
+        else if ([self.node.tagName isEqualToString:@"ol"])
+        {
+            
+        }
         else
         {
             for (RETextElement *element in [self children]) 
@@ -78,9 +89,15 @@
     }
     else
     {
-        _text = [[self text] stringByReplacingOccurrencesOfString:@"\t" withString:@""];
+        _text = [_text stringByReplacingOccurrencesOfString:@"\t" withString:@""];
         _text = [_text stringByTrimmingLeadingWhitespaceCharacters];
      
+        if ([_text rangeOfString:@"Одним"].length)
+        {
+            NSLog(@"%@", self.parent.text);
+            NSLog(@"%@", _text);
+        }
+        
         [attributedString appendAttributedString:[[NSAttributedString alloc] initWithString:[self text]]];
         
         [self buildAttributes];
@@ -377,8 +394,6 @@ CGFloat TableGetWidthCallback( void* refCon)
     {
         [css addEntriesFromDictionary:element.css];
     }
-    
-  //  NSLog(@"%@", css);
     
     [self setAttributes:css];
     [self setAligment:[self getAligment]];
