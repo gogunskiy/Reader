@@ -58,7 +58,7 @@
                     
                     for (NSDictionary *rowData in rows) 
                     {
-                        [attributedString appendAttributedString:[[NSAttributedString alloc] initWithString:@"\u200a"]];
+                        [attributedString appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
                         
                         CTRunDelegateRef delegate = [self createTableDelegateWithInfo:rowData];
                         [attributedString addAttribute:(id)kCTRunDelegateAttributeName value:(__bridge id)delegate range:NSMakeRange(attributedString.length - 1, 1)];
@@ -83,20 +83,25 @@
         {
             for (RETextElement *element in [self children]) 
             {
-                [attributedString appendAttributedString:[element attributedString]];
-            }  
+                NSAttributedString *string = [element attributedString];
+                if (string)
+                {
+                    [attributedString appendAttributedString:string];
+                }
+            }
+            
+            if ([self.node.tagName isEqualToString:@"p"] || [self.node.tagName rangeOfString:@"h"].length)
+            {
+                [attributedString appendAttributedString:[[NSAttributedString alloc] initWithString:@"\n"]];
+            }
         }
     }
     else
     {
         _text = [_text stringByReplacingOccurrencesOfString:@"\t" withString:@""];
-        _text = [_text stringByTrimmingLeadingWhitespaceCharacters];
-     
-        if ([_text rangeOfString:@"Одним"].length)
-        {
-            NSLog(@"%@", self.parent.text);
-            NSLog(@"%@", _text);
-        }
+        _text = [_text stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+        _text = [_text stringByReplacingOccurrencesOfString:@"\r" withString:@""];
+        _text = [_text stringByReplacingOccurrencesOfString:@"  " withString:@""];
         
         [attributedString appendAttributedString:[[NSAttributedString alloc] initWithString:[self text]]];
         
@@ -113,6 +118,11 @@
         
         if ([[[self node] tagName] isEqualToString:@"text"])
         {
+            if ([_text isEqualToString:@""] || !_text)
+            {
+                return nil;
+            }
+            
             if (_isBold || _isItalic || _isUnderlined)
             {
                 if (_isBold)
@@ -140,7 +150,7 @@
         }
         else if ([[[self node] tagName] isEqualToString:@"img"])
         {
-            [attributedString appendAttributedString:[[NSAttributedString alloc] initWithString:@"\u200a"]];
+            [attributedString appendAttributedString:[[NSAttributedString alloc] initWithString:@" "]];
             
             NSString *fileName = [[self node] getAttributeNamed:@"src"];
             NSDictionary *attachment = @{@"aligment" : @([self aligment]),  @"fileName" : [_imagesPath stringByAppendingPathComponent:[fileName lastPathComponent]], @"attachmentType" : @"image"};

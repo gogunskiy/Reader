@@ -13,6 +13,6 @@
 @property (nonatomic) NSString *title;
 @property (nonatomic) NSString *subTitle;
 
-@property (nonatomic) NSAttributedString *attributedString;
+@property (nonatomic) NSMutableAttributedString *attributedString;
 
 @end

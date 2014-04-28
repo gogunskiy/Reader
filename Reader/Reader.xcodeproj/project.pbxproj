@@ -14,6 +14,8 @@
 		63A76A6A18FAA78800069B8A /* dot@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 63A76A6918FAA78800069B8A /* dot@2x.png */; };
 		63A76A6F18FAE1A100069B8A /* RESelectionTool.m in Sources */ = {isa = PBXBuildFile; fileRef = 63A76A6E18FAE1A100069B8A /* RESelectionTool.m */; };
 		63D064DA190D2E0700B9E66C /* NSString+Trimming.m in Sources */ = {isa = PBXBuildFile; fileRef = 63D064D9190D2E0700B9E66C /* NSString+Trimming.m */; };
+		63D064DD190E44A000B9E66C /* Imperiya angelov.epub in Resources */ = {isa = PBXBuildFile; fileRef = 63D064DB190E44A000B9E66C /* Imperiya angelov.epub */; };
+		63D064DE190E44A000B9E66C /* Tanatonavti.epub in Resources */ = {isa = PBXBuildFile; fileRef = 63D064DC190E44A000B9E66C /* Tanatonavti.epub */; };
 		63D4695718EF3AE600E5E6E7 /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = 63D4694D18EF3AE600E5E6E7 /* ioapi.c */; };
 		63D4695818EF3AE600E5E6E7 /* mztools.c in Sources */ = {isa = PBXBuildFile; fileRef = 63D4694F18EF3AE600E5E6E7 /* mztools.c */; };
 		63D4695918EF3AE600E5E6E7 /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = 63D4695118EF3AE600E5E6E7 /* unzip.c */; };
@@ -100,6 +102,8 @@
 		63A76A6E18FAE1A100069B8A /* RESelectionTool.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RESelectionTool.m; sourceTree = "<group>"; };
 		63D064D8190D2E0700B9E66C /* NSString+Trimming.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+Trimming.h"; sourceTree = "<group>"; };
 		63D064D9190D2E0700B9E66C /* NSString+Trimming.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Trimming.m"; sourceTree = "<group>"; };
+		63D064DB190E44A000B9E66C /* Imperiya angelov.epub */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Imperiya angelov.epub"; sourceTree = "<group>"; };
+		63D064DC190E44A000B9E66C /* Tanatonavti.epub */ = {isa = PBXFileReference; lastKnownFileType = file; path = Tanatonavti.epub; sourceTree = "<group>"; };
 		63D4694C18EF3AE600E5E6E7 /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = crypt.h; sourceTree = "<group>"; };
 		63D4694D18EF3AE600E5E6E7 /* ioapi.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ioapi.c; sourceTree = "<group>"; };
 		63D4694E18EF3AE600E5E6E7 /* ioapi.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ioapi.h; sourceTree = "<group>"; };
@@ -305,6 +309,8 @@
 		63D4696018EF409A00E5E6E7 /* Epub */ = {
 			isa = PBXGroup;
 			children = (
+				63D064DB190E44A000B9E66C /* Imperiya angelov.epub */,
+				63D064DC190E44A000B9E66C /* Tanatonavti.epub */,
 				63998D1F190AD2A8006709C4 /* evgenii_onegin_.epub */,
 				79B8BC6E1907FEFF004F0F1D /* bezopasnoe_obschenie.epub */,
 				79B8BC6D1907FEF7004F0F1D /* Kak_my_prinimaem_reshenia.epub */,
@@ -822,6 +828,7 @@
 				797EBC8018EC4B3C0049C061 /* InfoPlist.strings in Resources */,
 				790BC97318FD73DE00A11566 /* IowanOldStyle-BoldItalic.ttf in Resources */,
 				797EBC8318EC4B3C0049C061 /* Main_iPad.storyboard in Resources */,
+				63D064DD190E44A000B9E66C /* Imperiya angelov.epub in Resources */,
 				63FEDC4F18FC5E8A007928D4 /* back512@2x.png in Resources */,
 				79B8BC6F1908023C004F0F1D /* bezopasnoe_obschenie.epub in Resources */,
 				79E7827A18F2E34A002B121B /* Settings.plist in Resources */,
@@ -831,6 +838,7 @@
 				79E4ABA218ED9D76000003C7 /* chapter-001.xml in Resources */,
 				63A76A6A18FAA78800069B8A /* dot@2x.png in Resources */,
 				63D4696518EF409A00E5E6E7 /* 000000000002.epub in Resources */,
+				63D064DE190E44A000B9E66C /* Tanatonavti.epub in Resources */,
 				63D7A17618F5BCE7002769E5 /* Content.plist in Resources */,
 				63A406D118F436AF00021EAB /* Moskva - Petushki.epub in Resources */,
 				797EBC8418EC4B3C0049C061 /* Main_iPhone.storyboard in Resources */,

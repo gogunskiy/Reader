@@ -56,14 +56,27 @@ static REReaderController *shared = nil;
                                 author:(NSString *)author
                             sourcePath:(NSString *)sourcePath
 {
-    NSString *destinationPath = [REPathManager copyDocumentToLibrary:sourcePath];
-    
-    NSArray *result = [[self content] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(file=%@)", destinationPath]];
-    
-    if (result.count == 0)
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^
     {
-        [[self content] addObject:@{@"title" : title, @"description" : description, @"author" : author, @"file" : destinationPath}];
-    }
+        REBaseParser * parser = [REBaseParser parserForType:REParserTypeEpub];
+        
+        NSString *destinationPath = [REPathManager copyDocumentToLibrary:sourcePath];
+        
+        NSString * booksDirectory = [[REPathManager booksDirectory] stringByAppendingPathComponent:[[destinationPath lastPathComponent] stringByDeletingPathExtension]];
+        
+        [parser unzipDocument:destinationPath
+                    directory:booksDirectory
+                   completion:^(BOOL saved)
+         {
+             NSArray *result = [[self content] filteredArrayUsingPredicate:[NSPredicate predicateWithFormat:@"(file=%@)", destinationPath]];
+             
+             if (result.count == 0)
+             {
+                 [[self content] addObject:@{@"title" : title, @"description" : description, @"author" : author, @"file" : destinationPath}];
+             }
+         }];
+    });
+
 }
 
 

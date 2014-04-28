@@ -69,8 +69,15 @@
                                    author:@"Pushkin"
                                sourcePath:[bookPath stringByAppendingPathComponent:@"evgenii_onegin_.epub"]];
     
+    [READER addDocumentToLibraryWithTitle:@"Imperiya angelov"
+                              description:@"Imperiya angelov"
+                                   author:@"Verber"
+                               sourcePath:[bookPath stringByAppendingPathComponent:@"Imperiya angelov.epub"]];
     
-    
+    [READER addDocumentToLibraryWithTitle:@"Tanatonavti"
+                              description:@"Tanatonavti"
+                                   author:@"Verber"
+                               sourcePath:[bookPath stringByAppendingPathComponent:@"Tanatonavti.epub"]];
     
     return YES;
 }

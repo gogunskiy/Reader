@@ -30,4 +30,6 @@ typedef NS_ENUM(NSInteger, REParserType)
                                   completionBlock:(void(^)(REChapter *chapter))completionBlock
                                        errorBlock:(void(^)(NSError * error))errorBlock;
 
+- (void) unzipDocument:(NSString *)epubPath directory:(NSString *)directory completion:(void(^)(BOOL saved))completion;
+
 @end

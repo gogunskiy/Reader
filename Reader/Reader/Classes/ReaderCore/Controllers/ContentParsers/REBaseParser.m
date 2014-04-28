@@ -53,4 +53,9 @@
 
 }
 
+- (void) unzipDocument:(NSString *)epubPath directory:(NSString *)directory completion:(void(^)(BOOL saved))completion
+{
+    
+}
+
 @end

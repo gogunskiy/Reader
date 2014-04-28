@@ -8,13 +8,13 @@
 
 #import "REEpubParser.h"
 #import "REChapter.h"
-#import "ZipArchive.h"
 #import "NSString+HTML.h"
 #import "RXMLElement.h"
 #import "REPathManager.h"
 #import "HTMLParser.h"
 #import "RETextElement.h"
 #import "NSString+CSS.h"
+#import "ZipArchive.h"
 
 static NSString * const MANIFEST_PATH                   =  @"META-INF/container.xml";
 static NSString * const CONTAINER_ROOTFILE_XPATH_KEY    =  @"//rootfile";
@@ -68,25 +68,20 @@ static dispatch_queue_t parseQueue;
     NSString * booksDirectory = [[REPathManager booksDirectory] stringByAppendingPathComponent:[[path lastPathComponent] stringByDeletingPathExtension]];
     
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^
-    {
-        [self unzipEpub:path
-              directory:booksDirectory
-             completion:^(BOOL saved)
-        {
-            [self parseManifestAndGetOpfPath:booksDirectory
-                                  completion:^(NSString *path)
-             {
-                 [self bookFromOPFFilePath:[booksDirectory stringByAppendingPathComponent:path]
-                                completion:^(NSDictionary *bookInfo)
-                  {
-                      REDocument *document = [[REDocument alloc] init];
-                      [document setInfo:bookInfo];
-                      
-                      completionBlock(document);
-                  }];
-             }];
-        }];
-    });
+                   {
+                       [self parseManifestAndGetOpfPath:booksDirectory
+                                             completion:^(NSString *path)
+                        {
+                            [self bookFromOPFFilePath:[booksDirectory stringByAppendingPathComponent:path]
+                                           completion:^(NSDictionary *bookInfo)
+                             {
+                                 REDocument *document = [[REDocument alloc] init];
+                                 [document setInfo:bookInfo];
+                                 
+                                 completionBlock(document);
+                             }];
+                        }];
+                   });
 }
 
 - (void) parseChapterToAttributedStringInDoucment:(REDocument *)document
@@ -136,7 +131,11 @@ static dispatch_queue_t parseQueue;
         
         for (RETextElement *element in elements)
         {
-            [result appendAttributedString:[element attributedString]];
+            NSAttributedString *string = [element attributedString];
+            if (string)
+            {
+                [result appendAttributedString:string];
+            }
         }
         
        [chapter setAttributedString:result];
@@ -214,7 +213,7 @@ static dispatch_queue_t parseQueue;
 
 #pragma mark - File Management -
 
-- (void) unzipEpub:(NSString *)epubPath directory:(NSString *)directory completion:(void(^)(BOOL saved))completion
+- (void) unzipDocument:(NSString *)epubPath directory:(NSString *)directory completion:(void(^)(BOOL saved))completion
 {
     if ([REPathManager fileExists:directory])
     {
