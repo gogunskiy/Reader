@@ -23,4 +23,5 @@
 - (void) shareEmailWithText:(NSString *)text parentViewController:(UIViewController *)parentViewController;
 - (void) shareSMSWithText:(NSString *)text parentViewController:(UIViewController *)parentViewController;
 
+- (void) changeBrightness:(CGFloat)deltaValue;
 @end

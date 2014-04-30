@@ -76,6 +76,22 @@ static REUtils *shared = nil;
     }
 }
 
+- (void) changeBrightness:(CGFloat)deltaValue
+{
+    CGFloat newBrightness = [[UIScreen mainScreen] brightness] + deltaValue;
+    
+    if (newBrightness > 1.0)
+    {
+        newBrightness = 1.0;
+    }
+    if (newBrightness < .0)
+    {
+        newBrightness = 0.0;
+    }
+    
+    [[UIScreen mainScreen] setBrightness:newBrightness];
+}
+
 #pragma mark - Private - 
 
 - (void) shareWithServiceType:(NSString *)serviceType text:(NSString *)text  parentViewController:(UIViewController *)parentViewController

@@ -117,6 +117,8 @@
                             <outletCollection property="gestureRecognizers" destination="9aR-Zo-B0L" appends="YES" id="j7c-Ce-UnY"/>
                             <outletCollection property="gestureRecognizers" destination="wA8-18-gQh" appends="YES" id="DYQ-xe-XFE"/>
                             <outletCollection property="gestureRecognizers" destination="jaJ-fg-zs1" appends="YES" id="zr6-bY-HlE"/>
+                            <outletCollection property="gestureRecognizers" destination="bcA-Ue-346" appends="YES" id="yCp-XT-iqD"/>
+                            <outletCollection property="gestureRecognizers" destination="rla-62-LaH" appends="YES" id="uEB-pp-yOa"/>
                         </connections>
                     </view>
                     <nil key="simulatedTopBarMetrics"/>
@@ -145,6 +147,16 @@
                 <swipeGestureRecognizer direction="right" numberOfTouchesRequired="2" id="jaJ-fg-zs1">
                     <connections>
                         <action selector="doubleLeftSwipe:" destination="BYZ-38-t0r" id="Dst-17-6ZE"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer delaysTouchesBegan="YES" direction="up" numberOfTouchesRequired="2" id="bcA-Ue-346">
+                    <connections>
+                        <action selector="upSwipe:" destination="BYZ-38-t0r" id="qUg-Ss-s0I"/>
+                    </connections>
+                </swipeGestureRecognizer>
+                <swipeGestureRecognizer delaysTouchesBegan="YES" direction="down" numberOfTouchesRequired="2" id="rla-62-LaH">
+                    <connections>
+                        <action selector="downSwipe:" destination="BYZ-38-t0r" id="BxX-rO-QF1"/>
                     </connections>
                 </swipeGestureRecognizer>
             </objects>

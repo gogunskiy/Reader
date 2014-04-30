@@ -336,6 +336,17 @@
     }
 }
 
+- (IBAction) upSwipe:(UIGestureRecognizer *)sender
+{
+    [UTILS changeBrightness:0.1];
+}
+
+- (IBAction) downSwipe:(UIGestureRecognizer *)sender
+{
+    [UTILS changeBrightness:-0.1];
+}
+
+
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation
 {
     // TO DO :
