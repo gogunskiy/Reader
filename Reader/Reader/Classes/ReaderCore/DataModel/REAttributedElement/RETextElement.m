@@ -109,6 +109,11 @@
         
         CTFontRef font = [self _font];
         
+        if ([[[self node] tagName] isEqualToString:@"text"] && _text.length < 50 && _aligment == kCTTextAlignmentJustified)
+        {
+            [self setAligment:kCTTextAlignmentLeft];
+        }
+        
         CTParagraphStyleRef paragraphStyle = [SETTINGS baseParagraphStyleWithAligment:[self aligment]];
         [self setParagraphStyle:(__bridge id)paragraphStyle];
         
