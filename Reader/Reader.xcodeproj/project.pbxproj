@@ -51,7 +51,6 @@
 		797EBC8318EC4B3C0049C061 /* Main_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 797EBC7918EC4B3C0049C061 /* Main_iPad.storyboard */; };
 		797EBC8418EC4B3C0049C061 /* Main_iPhone.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 797EBC7B18EC4B3C0049C061 /* Main_iPhone.storyboard */; };
 		797EBC9318EC4DC40049C061 /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 797EBC9218EC4DC40049C061 /* CoreText.framework */; };
-		797EBC9718EC51C40049C061 /* REAttributedElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 797EBC9618EC51C40049C061 /* REAttributedElement.m */; };
 		7985369019091B7700FCD96F /* RETextElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 7985368F19091B7700FCD96F /* RETextElement.m */; };
 		7985369419093B3000FCD96F /* NSString+CSS.m in Sources */ = {isa = PBXBuildFile; fileRef = 7985369319093B3000FCD96F /* NSString+CSS.m */; };
 		79A4FF2D18EEA82500F79347 /* REPageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 79A4FF2C18EEA82500F79347 /* REPageView.m */; };
@@ -154,8 +153,6 @@
 		797EBC7A18EC4B3C0049C061 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPad.storyboard; sourceTree = "<group>"; };
 		797EBC7C18EC4B3C0049C061 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main_iPhone.storyboard; sourceTree = "<group>"; };
 		797EBC9218EC4DC40049C061 /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
-		797EBC9518EC51C40049C061 /* REAttributedElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REAttributedElement.h; sourceTree = "<group>"; };
-		797EBC9618EC51C40049C061 /* REAttributedElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REAttributedElement.m; sourceTree = "<group>"; };
 		7985368E19091B7700FCD96F /* RETextElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RETextElement.h; sourceTree = "<group>"; };
 		7985368F19091B7700FCD96F /* RETextElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RETextElement.m; sourceTree = "<group>"; };
 		7985369219093B3000FCD96F /* NSString+CSS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+CSS.h"; sourceTree = "<group>"; };
@@ -598,8 +595,6 @@
 		797EBC9418EC51B30049C061 /* REAttributedElement */ = {
 			isa = PBXGroup;
 			children = (
-				797EBC9518EC51C40049C061 /* REAttributedElement.h */,
-				797EBC9618EC51C40049C061 /* REAttributedElement.m */,
 				7985368E19091B7700FCD96F /* RETextElement.h */,
 				7985368F19091B7700FCD96F /* RETextElement.m */,
 			);
@@ -868,7 +863,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				797EBC9718EC51C40049C061 /* REAttributedElement.m in Sources */,
 				63FEDC5418FC68E7007928D4 /* REPageViewController.m in Sources */,
 				63A76A6F18FAE1A100069B8A /* RESelectionTool.m in Sources */,
 				63D4695718EF3AE600E5E6E7 /* ioapi.c in Sources */,
