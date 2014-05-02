@@ -36,6 +36,8 @@
 		790BC97418FD73DE00A11566 /* IowanOldStyle-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 790BC97018FD73DE00A11566 /* IowanOldStyle-Italic.ttf */; };
 		790BC97518FD73DE00A11566 /* IowanOldStyle-Roman.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 790BC97118FD73DE00A11566 /* IowanOldStyle-Roman.ttf */; };
 		7929630E18FED73800C851C6 /* REUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 7929630D18FED73800C851C6 /* REUtils.m */; };
+		79637B7B1913F07200EFF663 /* REContentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 79637B791913F07200EFF663 /* REContentTableViewCell.m */; };
+		79637B7C1913F07200EFF663 /* REContentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79637B7A1913F07200EFF663 /* REContentTableViewCell.xib */; };
 		797EBC2B18EC4A830049C061 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 797EBC2A18EC4A830049C061 /* Foundation.framework */; };
 		797EBC2D18EC4A830049C061 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 797EBC2C18EC4A830049C061 /* CoreGraphics.framework */; };
 		797EBC2F18EC4A830049C061 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 797EBC2E18EC4A830049C061 /* UIKit.framework */; };
@@ -134,6 +136,9 @@
 		790BC97118FD73DE00A11566 /* IowanOldStyle-Roman.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "IowanOldStyle-Roman.ttf"; sourceTree = "<group>"; };
 		7929630C18FED73800C851C6 /* REUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REUtils.h; sourceTree = "<group>"; };
 		7929630D18FED73800C851C6 /* REUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REUtils.m; sourceTree = "<group>"; };
+		79637B781913F07200EFF663 /* REContentTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = REContentTableViewCell.h; sourceTree = "<group>"; };
+		79637B791913F07200EFF663 /* REContentTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = REContentTableViewCell.m; sourceTree = "<group>"; };
+		79637B7A1913F07200EFF663 /* REContentTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = REContentTableViewCell.xib; sourceTree = "<group>"; };
 		797EBC2718EC4A830049C061 /* Reader.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Reader.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		797EBC2A18EC4A830049C061 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		797EBC2C18EC4A830049C061 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -390,6 +395,24 @@
 			path = Utils;
 			sourceTree = "<group>";
 		};
+		79637B761913F04F00EFF663 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				79637B771913F04F00EFF663 /* REContentTableViewCell */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
+		79637B771913F04F00EFF663 /* REContentTableViewCell */ = {
+			isa = PBXGroup;
+			children = (
+				79637B781913F07200EFF663 /* REContentTableViewCell.h */,
+				79637B791913F07200EFF663 /* REContentTableViewCell.m */,
+				79637B7A1913F07200EFF663 /* REContentTableViewCell.xib */,
+			);
+			path = REContentTableViewCell;
+			sourceTree = "<group>";
+		};
 		797EBC1E18EC4A830049C061 = {
 			isa = PBXGroup;
 			children = (
@@ -642,6 +665,7 @@
 		79A9C39918F820EB00AC36DE /* REContentViewController */ = {
 			isa = PBXGroup;
 			children = (
+				79637B761913F04F00EFF663 /* Cells */,
 				79A9C39A18F820EB00AC36DE /* REContentViewController.h */,
 				79A9C39B18F820EB00AC36DE /* REContentViewController.m */,
 			);
@@ -826,6 +850,7 @@
 				63D064DD190E44A000B9E66C /* Imperiya angelov.epub in Resources */,
 				63FEDC4F18FC5E8A007928D4 /* back512@2x.png in Resources */,
 				79B8BC6F1908023C004F0F1D /* bezopasnoe_obschenie.epub in Resources */,
+				79637B7C1913F07200EFF663 /* REContentTableViewCell.xib in Resources */,
 				79E7827A18F2E34A002B121B /* Settings.plist in Resources */,
 				63D4696418EF409A00E5E6E7 /* 000000000001.epub in Resources */,
 				79B8BC7119080241004F0F1D /* Akunin_-_Skazki_dlya_idiotov.epub in Resources */,
@@ -871,6 +896,7 @@
 				63356EFB18F9AF2C0079DDF7 /* UIImage+Sizes.m in Sources */,
 				79E4ABA018ED9AC4000003C7 /* REReaderController.m in Sources */,
 				63D064DA190D2E0700B9E66C /* NSString+Trimming.m in Sources */,
+				79637B7B1913F07200EFF663 /* REContentTableViewCell.m in Sources */,
 				63D4695818EF3AE600E5E6E7 /* mztools.c in Sources */,
 				63D4695B18EF3AE600E5E6E7 /* ZipArchive.m in Sources */,
 				790BC96C18FD412700A11566 /* REDocumentReader.m in Sources */,

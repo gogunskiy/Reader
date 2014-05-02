@@ -9,6 +9,12 @@
 #import <UIKit/UIKit.h>
 #import "REBaseViewController.h"
 
+NS_ENUM(NSUInteger, RESortingType)
+{
+    RESortingByName,
+    RESortingByAuthor
+};
+
 @interface REContentViewController : REBaseViewController <UITableViewDataSource, UITableViewDelegate>
 
 @end

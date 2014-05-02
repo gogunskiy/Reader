@@ -10,12 +10,16 @@
 #import "REReaderController.h"
 #import "REMainViewController.h"
 #import "REPathManager.h"
+#import "REContentTableViewCell.h"
+
 
 
 @interface REContentViewController ()
 
 @property (nonatomic) IBOutlet UITableView *tableView;
 @property (nonatomic) NSArray *items;
+@property (nonatomic) enum RESortingType sorting;
+
 
 @end
 
@@ -24,32 +28,73 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    [self setItems:[READER documents]];
+    _sorting = RESortingByName;
+    [self setItems:[self sortItems:[READER documents]]];
     [[self tableView] reloadData];
+}
+
+- (NSArray *) sortItems:(NSArray *)items
+{
+    NSString *sortKey= @"title";
+    
+    switch (_sorting) 
+    {
+        case RESortingByAuthor:
+        {
+            sortKey = @"author";
+            
+            break;   
+        }
+            
+        default:
+        {
+            sortKey= @"title";
+            
+            break;
+        }
+    }
+    
+    return [items sortedArrayUsingComparator:^NSComparisonResult(NSDictionary *obj1, NSDictionary *obj2) 
+            {
+                if ([obj1[sortKey] lowercaseString] > [obj2[sortKey] lowercaseString]) 
+                {
+                    return NSOrderedAscending;
+                }
+                else
+                {
+                    return NSOrderedDescending;
+                }
+            }];
 }
 
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [self.items count];
+    return [_items count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
+    REContentTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell"];
     
     if (cell == nil)
     {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:@"Cell"];
+        cell = [[NSBundle mainBundle] loadNibNamed:NSStringFromClass([REContentTableViewCell class]) owner:self options:nil][0];
         [cell setAccessoryType: UITableViewCellAccessoryDisclosureIndicator];
         [cell setSelectionStyle: UITableViewCellSelectionStyleNone];
     }
     
-    NSDictionary * item = [self items][indexPath.row];
-    [[cell textLabel] setText:item[@"title"]];
+    NSDictionary * item = _items[indexPath.row];
+ 
+    [cell setupWithInfo:item];
     
     return cell;
+}
+
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 100;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
