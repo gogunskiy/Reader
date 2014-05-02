@@ -365,7 +365,7 @@ CGFloat TableGetWidthCallback( void* refCon)
     BOOL isItalicStyle  = [[self attributes][@"font-style"] isEqualToString:@"italic"] ? TRUE : FALSE;
     BOOL isUnderline  = [[self attributes][@"text-decoration"] isEqualToString:@"underline"] ? TRUE : FALSE;
 
-    if (parent.node.nodetype == HTMLStrongNode || isBoldStyle)
+    if ([parent.node.tagName isEqualToString:@"b"] || [parent.node.tagName isEqualToString:@"strong"] || isBoldStyle)
     {
         [self setIsBold:TRUE];
     }
@@ -412,6 +412,10 @@ CGFloat TableGetWidthCallback( void* refCon)
     
     [self setAttributes:css];
     [self setAligment:[self getAligment]];
+    
+    
+    [self fontAttributesForNode:self];
+    
 }
 
 
