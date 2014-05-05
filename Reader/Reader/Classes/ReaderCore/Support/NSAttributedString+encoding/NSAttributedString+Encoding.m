@@ -7,7 +7,7 @@
 //
 
 #import "NSAttributedString+Encoding.h"
-#import "NSDictionary+OPCoreText.h"
+
 
 const struct NSAttributedStringArchiveKeys {
     __unsafe_unretained NSString *rootString;
@@ -38,6 +38,13 @@ const struct NSAttributedStringArchiveKeys NSAttributedStringArchiveKeys = {
     return [NSKeyedArchiver archivedDataWithRootObject:[self dictionaryRepresentation]];
 }
 
+- (BOOL)writeToFile:(NSString *)path atomically:(BOOL)useAuxiliaryFile {
+    
+    NSData *data = [self convertToData];
+    
+    return [data writeToFile:path atomically:useAuxiliaryFile];
+}
+
 @end
 
 
@@ -58,8 +65,8 @@ const struct NSAttributedStringArchiveKeys NSAttributedStringArchiveKeys = {
             
             if ([key isEqual:(NSString*)kCTFontAttributeName])
             {
-                CTFontRef fontRef = [attr createFontRef];
-                [retVal addAttribute:key value:(__bridge_transfer id)fontRef range:range];
+             //   CTFontRef fontRef = [attr createFontRef];
+              //  [retVal addAttribute:key value:(__bridge_transfer id)fontRef range:range];
             }
             else if([key isEqualToString:(NSString*)kCTForegroundColorFromContextAttributeName] ||
                     [key isEqualToString:(NSString*)kCTKernAttributeName] ||
@@ -80,8 +87,8 @@ const struct NSAttributedStringArchiveKeys NSAttributedStringArchiveKeys = {
             }
             else if([key isEqualToString:(NSString*)kCTParagraphStyleAttributeName])
             {
-                CTParagraphStyleRef paragraphStyleRef = [attr createParagraphStyleRef];
-                [retVal addAttribute:key value:(__bridge_transfer id)paragraphStyleRef range:range];
+         //       CTParagraphStyleRef paragraphStyleRef = [attr createParagraphStyleRef];
+         //       [retVal addAttribute:key value:(__bridge_transfer id)paragraphStyleRef range:range];
             }
             else if([key isEqualToString:(NSString*)kCTGlyphInfoAttributeName])
             {
@@ -120,7 +127,7 @@ const struct NSAttributedStringArchiveKeys NSAttributedStringArchiveKeys = {
             
             if ([key isEqual:(NSString*)kCTFontAttributeName])
             {
-                [attributeDictionary setObject:[[NSDictionary alloc] initWithFontRef:(__bridge CTFontRef)attr] forKey:key];
+          //      [attributeDictionary setObject:[[NSDictionary alloc] initWithFontRef:(__bridge CTFontRef)attr] forKey:key];
             }
             else if([key isEqualToString:(NSString*)kCTForegroundColorFromContextAttributeName] ||
                     [key isEqualToString:(NSString*)kCTKernAttributeName] ||
@@ -141,7 +148,7 @@ const struct NSAttributedStringArchiveKeys NSAttributedStringArchiveKeys = {
             }
             else if([key isEqualToString:(NSString*)kCTParagraphStyleAttributeName])
             {
-                [attributeDictionary setObject:[[NSDictionary alloc] initWithParagraphStyleRef:(__bridge CTParagraphStyleRef)attr] forKey:key];
+              //  [attributeDictionary setObject:[[NSDictionary alloc] initWithParagraphStyleRef:(__bridge CTParagraphStyleRef)attr] forKey:key];
             }
             else if([key isEqualToString:(NSString*)kCTGlyphInfoAttributeName])
             {

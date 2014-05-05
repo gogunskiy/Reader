@@ -22,4 +22,6 @@
  */
 -(NSData*) convertToData;
 
+- (BOOL)writeToFile:(NSString *)path atomically:(BOOL)useAuxiliaryFile;
+
 @end

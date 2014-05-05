@@ -35,6 +35,7 @@
 		790BC97318FD73DE00A11566 /* IowanOldStyle-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 790BC96F18FD73DE00A11566 /* IowanOldStyle-BoldItalic.ttf */; };
 		790BC97418FD73DE00A11566 /* IowanOldStyle-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 790BC97018FD73DE00A11566 /* IowanOldStyle-Italic.ttf */; };
 		790BC97518FD73DE00A11566 /* IowanOldStyle-Roman.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 790BC97118FD73DE00A11566 /* IowanOldStyle-Roman.ttf */; };
+		79282FC11917B38B00D72C7F /* NSAttributedString+Encoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 637A907E18FDC663001A1341 /* NSAttributedString+Encoding.m */; };
 		7929630E18FED73800C851C6 /* REUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = 7929630D18FED73800C851C6 /* REUtils.m */; };
 		79637B7B1913F07200EFF663 /* REContentTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 79637B791913F07200EFF663 /* REContentTableViewCell.m */; };
 		79637B7C1913F07200EFF663 /* REContentTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 79637B7A1913F07200EFF663 /* REContentTableViewCell.xib */; };
@@ -907,6 +908,7 @@
 				79E4AB8B18ED8110000003C7 /* REBaseParser.m in Sources */,
 				7985369419093B3000FCD96F /* NSString+CSS.m in Sources */,
 				7985369019091B7700FCD96F /* RETextElement.m in Sources */,
+				79282FC11917B38B00D72C7F /* NSAttributedString+Encoding.m in Sources */,
 				79A9C3A018F820EB00AC36DE /* REContentViewController.m in Sources */,
 				7929630E18FED73800C851C6 /* REUtils.m in Sources */,
 				63D4695A18EF3AE600E5E6E7 /* zip.c in Sources */,

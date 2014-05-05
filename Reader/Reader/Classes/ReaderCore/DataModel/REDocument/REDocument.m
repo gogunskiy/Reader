@@ -8,6 +8,7 @@
 
 #import "REDocument.h"
 #import "REChapter.h"
+#import "REPathManager.h"
 
 @implementation REDocument
 
@@ -27,9 +28,17 @@
 {
     NSMutableAttributedString *result = [[NSMutableAttributedString alloc] init];
     
+    NSInteger index = 0; 
+    
     for (REChapter *chapter in [self chapters])
     {
-        [result appendAttributedString: [chapter attributedString]];
+        index ++;
+        NSAttributedString *chapterString =  [chapter attributedString];
+        
+        [result appendAttributedString:chapterString];
+        
+        [chapterString writeToFile:[[REPathManager booksDirectory] stringByAppendingPathComponent:[NSString stringWithFormat:@"%d.plist", index]] 
+                        atomically:TRUE];
         
         if ([[self chapters] indexOfObject:chapter] < [[self chapters] count] - 1) 
         {
